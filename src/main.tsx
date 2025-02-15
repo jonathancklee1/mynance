@@ -13,7 +13,41 @@ const theme = createTheme({
         },
         secondary: {
             main: "#3A5491",
-            contrastText: "#0C0637",
+            contrastText: "#fff",
+        },
+        text: {
+            primary: "#fff",
+            secondary: "#000",
+        },
+    },
+    components: {
+        MuiTextField: {
+            styleOverrides: {
+                root: {
+                    color: "#fff",
+                    backgroundColor: "#0C0637",
+                    borderRadius: 5,
+                    "& .css-17est1k-MuiFormLabel-root-MuiInputLabel-root": {
+                        color: "#FFF",
+                    },
+                    "& .css-17est1k-MuiFormLabel-root-MuiInputLabel-root.Mui-focused":
+                        {
+                            color: "#FFF",
+                        },
+                    "& .css-tsjiwq-MuiFormLabel-root-MuiInputLabel-root": {
+                        color: "#FFF",
+                    },
+                },
+            },
+        },
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    color: "#fff",
+                    backgroundColor: "#3A5491",
+                    borderRadius: 5,
+                },
+            },
         },
     },
 });

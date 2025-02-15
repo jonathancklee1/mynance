@@ -1,9 +1,21 @@
-import { Box, Button, Container, Paper, Stack } from "@mui/material";
+import { Box, Button, Container, Paper, Stack, styled } from "@mui/material";
 import NavBar from "../components/NavBar";
 import Typography from "@mui/material/Typography";
 import Textbox from "../components/Textbox";
+import { useState } from "react";
 
 function Landing() {
+    const [name, setName] = useState("");
+    const [themeSelected, setThemeSelected] = useState("");
+    console.log(themeSelected);
+    const ThemeButton = styled(Button)(() => {
+        return {
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            background: "transparent",
+        };
+    });
     return (
         <Container
             sx={{
@@ -43,7 +55,13 @@ function Landing() {
                     >
                         Enter your name
                     </Typography>
-                    <Textbox />
+                    <Textbox
+                        onChange={(e) => {
+                            setName(e.target.value);
+                            console.log(e.target.value);
+                        }}
+                        value={name}
+                    />
                 </Box>
                 <Box width={"100%"} marginBottom={12}>
                     <Typography
@@ -63,9 +81,42 @@ function Landing() {
                             alignItems: "center",
                         }}
                     >
-                        <Paper>Paper 1</Paper>
-                        <Paper>Paper 2</Paper>
-                        <Paper>Item 3</Paper>
+                        <ThemeButton onClick={() => setThemeSelected("theme1")}>
+                            <Box
+                                width={32}
+                                height={32}
+                                bgcolor={"white"}
+                                borderRadius={"100%"}
+                                marginBottom={2}
+                            ></Box>
+                            <Typography variant="body1" fontWeight={"bold"}>
+                                Theme 1
+                            </Typography>
+                        </ThemeButton>
+                        <ThemeButton onClick={() => setThemeSelected("theme2")}>
+                            <Box
+                                width={32}
+                                height={32}
+                                bgcolor={"white"}
+                                borderRadius={"100%"}
+                                marginBottom={2}
+                            ></Box>
+                            <Typography variant="body1" fontWeight={"bold"}>
+                                Theme 2
+                            </Typography>
+                        </ThemeButton>
+                        <ThemeButton onClick={() => setThemeSelected("theme3")}>
+                            <Box
+                                width={32}
+                                height={32}
+                                bgcolor={"white"}
+                                borderRadius={"100%"}
+                                marginBottom={2}
+                            ></Box>
+                            <Typography variant="body1" fontWeight={"bold"}>
+                                Theme 3
+                            </Typography>
+                        </ThemeButton>
                     </Stack>
                 </Box>
                 <Button variant="contained" color="secondary">
