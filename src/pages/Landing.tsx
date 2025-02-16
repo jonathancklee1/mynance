@@ -1,12 +1,15 @@
-import { Box, Button, Container, Paper, Stack, styled } from "@mui/material";
+import { Box, Button, Container, Stack, styled } from "@mui/material";
 import NavBar from "../components/NavBar";
 import Typography from "@mui/material/Typography";
 import Textbox from "../components/Textbox";
-import { useState } from "react";
+import { SetStateAction, useEffect, useRef, useState } from "react";
+import { Link } from "react-router";
 
 function Landing() {
     const [name, setName] = useState("");
     const [themeSelected, setThemeSelected] = useState("");
+    const [height, setHeight] = useState(0);
+
     console.log(themeSelected);
     const ThemeButton = styled(Button)(() => {
         return {
@@ -16,22 +19,30 @@ function Landing() {
             background: "transparent",
         };
     });
+    const componentRef = useRef(null);
+    useEffect(() => {
+        const height = componentRef.current.offsetHeight;
+        console.log(height);
+        setHeight(height);
+    }, []);
+
     return (
         <Container
             sx={{
-                height: "100vh",
+                minHeight: "100vh",
                 p: 0,
                 backgroundColor: "primary.main",
                 color: "primary.contrastText",
             }}
         >
-            <NavBar></NavBar>
+            <NavBar ref={componentRef}></NavBar>
             <Container
                 sx={{
-                    height: "100%",
+                    minHeight: `calc(100vh - ${height}px)`,
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
+                    justifyContent: "center",
                     paddingBlock: 10,
                     backgroundColor: "primary.main",
                 }}
@@ -45,7 +56,13 @@ function Landing() {
                 >
                     Welcome to MYNANCE!
                 </Typography>
-                <Box width={"100%"} marginBottom={12}>
+                <Box
+                    width={"100%"}
+                    marginBottom={12}
+                    display={"flex"}
+                    flexDirection={"column"}
+                    alignItems={"center"}
+                >
                     <Typography
                         variant="h4"
                         component={"h2"}
@@ -56,7 +73,9 @@ function Landing() {
                         Enter your name
                     </Typography>
                     <Textbox
-                        onChange={(e) => {
+                        onChange={(e: {
+                            target: { value: SetStateAction<string> };
+                        }) => {
                             setName(e.target.value);
                             console.log(e.target.value);
                         }}
@@ -119,9 +138,11 @@ function Landing() {
                         </ThemeButton>
                     </Stack>
                 </Box>
-                <Button variant="contained" color="secondary">
-                    Go to Dashboard
-                </Button>
+                <Link to={"/dashboard"}>
+                    <Button variant="contained" color="secondary">
+                        Go to Dashboard
+                    </Button>
+                </Link>
             </Container>
         </Container>
     );

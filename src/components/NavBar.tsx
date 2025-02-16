@@ -1,8 +1,10 @@
-import { Toolbar, Typography } from "@mui/material";
+import { Box, Toolbar, Typography } from "@mui/material";
+import { forwardRef } from "react";
 
-function NavBar() {
+const NavBar = forwardRef<HTMLDivElement>((props, ref) => {
     return (
         <Toolbar
+            ref={ref}
             component={"nav"}
             sx={{
                 backgroundColor: "primary.main",
@@ -17,13 +19,22 @@ function NavBar() {
                     paddingBlock: 4,
                 },
                 color: "primary.contrastText",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
             }}
         >
             <Typography variant="h5" sx={{ fontWeight: "bold" }}>
                 MYNANCE
             </Typography>
+            <Box
+                borderRadius={"100%"}
+                bgcolor={"white"}
+                height={24}
+                width={24}
+            ></Box>
         </Toolbar>
     );
-}
+});
 
 export default NavBar;
