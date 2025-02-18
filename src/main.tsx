@@ -61,8 +61,19 @@ const theme = createTheme({
                     "& .css-1umw9bq-MuiSvgIcon-root": {
                         fill: "#fff",
                     },
+                    textAlign: "center",
+                    height: "100px",
                 },
             },
+        },
+    },
+    breakpoints: {
+        values: {
+            xs: 0,
+            sm: 769,
+            md: 1024,
+            lg: 1281,
+            xl: 1440,
         },
     },
 });
