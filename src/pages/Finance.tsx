@@ -6,6 +6,9 @@ import Card from "../components/Card";
 import { Box, Stack, Typography } from "@mui/material";
 import { PieChart } from "@mui/x-charts/PieChart";
 import AssetsBlock from "../components/finance-components/AssetsBlock";
+import ExpensesBlock from "../components/finance-components/ExpensesBlock";
+import ProgressBlock from "../components/finance-components/ProgressBlock";
+import ExpensePieBlock from "../components/finance-components/ExpensePieBlock";
 function Finance() {
     return (
         <>
@@ -13,6 +16,7 @@ function Finance() {
             <Grid
                 container
                 spacing={2}
+                marginBottom={"100px"}
                 sx={{ p: 2, backgroundColor: "primary.main" }}
             >
                 <Grid size={{ xs: 12, md: 6 }} sx={{}}>
@@ -47,8 +51,45 @@ function Finance() {
                         <AssetsBlock></AssetsBlock>
                     </Card>
                 </Grid>
-                <Grid size={{ xs: 12, md: 6 }}></Grid>
-                <Grid size={{ xs: 12, md: 6 }}></Grid>
+                <Grid size={{ xs: 12, md: 6 }}>
+                    <Card>
+                        <Typography
+                            variant="h5"
+                            color={"primary.contrastText"}
+                            sx={{ fontWeight: "bold", textAlign: "center" }}
+                            marginBottom={2}
+                        >
+                            My Weekly Expenses
+                        </Typography>
+                        <ExpensesBlock></ExpensesBlock>
+                    </Card>
+                </Grid>
+                <Grid size={{ xs: 12, md: 6 }}>
+                    <Card>
+                        <Typography
+                            variant="h5"
+                            color={"primary.contrastText"}
+                            sx={{ fontWeight: "bold", textAlign: "center" }}
+                            marginBottom={2}
+                        >
+                            My Expense Progress
+                        </Typography>
+                        <ProgressBlock></ProgressBlock>
+                    </Card>
+                </Grid>
+                <Grid size={{ xs: 12, md: 6 }}>
+                    <Card>
+                        <Typography
+                            variant="h5"
+                            color={"primary.contrastText"}
+                            sx={{ fontWeight: "bold", textAlign: "center" }}
+                            marginBottom={2}
+                        >
+                            Expense Diversity
+                        </Typography>
+                        <ExpensePieBlock></ExpensePieBlock>
+                    </Card>
+                </Grid>
             </Grid>
             <BottomNav></BottomNav>
         </>

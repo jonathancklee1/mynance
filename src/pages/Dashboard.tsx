@@ -23,6 +23,7 @@ function Dashboard() {
                 spacing={2}
                 minHeight={"100vh"}
                 sx={{ p: 2, backgroundColor: "primary.main" }}
+                marginBottom={"100px"}
             >
                 <Grid size={8}>
                     <Item>size=8</Item>

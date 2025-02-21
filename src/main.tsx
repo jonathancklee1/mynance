@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App.tsx";
 import { BrowserRouter } from "react-router";
 import { ThemeProvider } from "@emotion/react";
-import { colors, createTheme } from "@mui/material";
+import { createTheme } from "@mui/material";
 const theme = createTheme({
     palette: {
         primary: {
@@ -18,7 +18,7 @@ const theme = createTheme({
             contrastText: "#fff",
         },
         text: {
-            primary: "#000",
+            primary: "#fff",
             secondary: "#fff",
         },
     },

@@ -20,6 +20,7 @@ const BottomNav = () => {
                 right: 0,
                 zIndex: 1,
                 backgroundColor: "primary.main",
+                width: "100vw",
             }}
         >
             <BottomNavigationAction

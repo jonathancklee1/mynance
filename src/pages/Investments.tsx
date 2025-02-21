@@ -11,6 +11,7 @@ function Investments() {
                 container
                 spacing={2}
                 minHeight={"100vh"}
+                marginBottom={"100px"}
                 sx={{ p: 2, backgroundColor: "primary.main" }}
             >
                 <Grid size={8}></Grid>

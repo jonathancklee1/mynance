@@ -2,7 +2,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { PieChart } from "@mui/x-charts";
 import React from "react";
 
-function AssetsBlock() {
+function ExpensePieBlock() {
     const assetData = [
         { id: 0, value: 10, label: "series A", colour: "#FFF" },
         { id: 1, value: 15, label: "series B", colour: "#FFF" },
@@ -27,17 +27,6 @@ function AssetsBlock() {
                 slotProps={{
                     legend: { hidden: true },
                 }}
-                // slotProps={{
-                //     legend: {
-                //         direction: "row",
-                //         position: {
-                //             vertical: "bottom",
-                //             horizontal: "middle",
-                //         },
-                //         padding: 0,
-                //     },
-                // }}
-
                 margin={{ bottom: 40 }}
             />
             <Box sx={{ width: "100%" }}>
@@ -73,4 +62,4 @@ function AssetsBlock() {
     );
 }
 
-export default AssetsBlock;
+export default ExpensePieBlock;
