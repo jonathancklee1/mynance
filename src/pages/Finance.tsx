@@ -9,6 +9,7 @@ import AssetsBlock from "../components/finance-components/AssetsBlock";
 import ExpensesBlock from "../components/finance-components/ExpensesBlock";
 import ProgressBlock from "../components/finance-components/ProgressBlock";
 import ExpensePieBlock from "../components/finance-components/ExpensePieBlock";
+import RecurringExpenseBlock from "../components/finance-components/RecurringExpenseBlock";
 function Finance() {
     return (
         <>
@@ -88,6 +89,19 @@ function Finance() {
                             Expense Diversity
                         </Typography>
                         <ExpensePieBlock></ExpensePieBlock>
+                    </Card>
+                </Grid>
+                <Grid size={{ xs: 12, md: 6 }}>
+                    <Card>
+                        <Typography
+                            variant="h5"
+                            color={"primary.contrastText"}
+                            sx={{ fontWeight: "bold", textAlign: "center" }}
+                            marginBottom={2}
+                        >
+                            Recurring Expenses
+                        </Typography>
+                        <RecurringExpenseBlock></RecurringExpenseBlock>
                     </Card>
                 </Grid>
             </Grid>

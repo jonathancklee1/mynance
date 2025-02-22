@@ -1,6 +1,5 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { PieChart } from "@mui/x-charts";
-import React from "react";
 
 function ExpensePieBlock() {
     const assetData = [
@@ -37,6 +36,7 @@ function ExpensePieBlock() {
                             alignItems={"center"}
                             justifyContent={"space-between"}
                             gap={2}
+                            key={asset.id}
                         >
                             <Box
                                 borderRadius={"100%"}

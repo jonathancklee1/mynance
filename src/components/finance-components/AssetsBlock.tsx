@@ -48,6 +48,7 @@ function AssetsBlock() {
                             alignItems={"center"}
                             justifyContent={"space-between"}
                             gap={2}
+                            key={asset.id}
                         >
                             <Box
                                 borderRadius={"100%"}
