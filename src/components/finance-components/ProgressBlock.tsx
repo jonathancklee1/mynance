@@ -14,7 +14,7 @@ function ProgressBlock() {
             >
                 You have{" "}
                 <Typography
-                    variant="body1"
+                    variant="h6"
                     sx={{
                         fontWeight: "bold",
                         display: "inline-block",
@@ -23,7 +23,18 @@ function ProgressBlock() {
                 >
                     $400
                 </Typography>{" "}
-                left out of your $700 total expense budget
+                left out of your{" "}
+                <Typography
+                    variant="h6"
+                    sx={{
+                        fontWeight: "bold",
+                        display: "inline-block",
+                        color: "primary.main",
+                    }}
+                >
+                    $700
+                </Typography>{" "}
+                total expense budget
             </Typography>
             <ProgressBarWithLabel></ProgressBarWithLabel>
             {/* <LinearProgress variant="determinate" value={80} /> */}

@@ -10,14 +10,14 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 
 function RecurringExpenseBlock() {
     const recurringExpenses = [
-        { name: "Groceries", amount: 50 },
-        { name: "Utilities", amount: 100 },
-        { name: "Entertainment", amount: 75 },
+        { id: 0, name: "Groceries", amount: 50 },
+        { id: 1, name: "Utilities", amount: 100 },
+        { id: 2, name: "Entertainment", amount: 75 },
     ];
     return (
         <List sx={{ width: "100%" }}>
             {recurringExpenses.map((expense) => (
-                <ListItem disablePadding>
+                <ListItem disablePadding key={expense.id}>
                     <ListItemButton sx={{ paddingBottom: 0 }}>
                         <ListItemIcon
                             sx={{

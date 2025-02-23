@@ -1,15 +1,14 @@
-import React from "react";
 import NavBar from "../components/NavBar";
 import Grid from "@mui/material/Grid2";
 import BottomNav from "../components/BottomNav";
 import Card from "../components/Card";
-import { Box, Stack, Typography } from "@mui/material";
-import { PieChart } from "@mui/x-charts/PieChart";
+import { Typography } from "@mui/material";
 import AssetsBlock from "../components/finance-components/AssetsBlock";
 import ExpensesBlock from "../components/finance-components/ExpensesBlock";
 import ProgressBlock from "../components/finance-components/ProgressBlock";
 import ExpensePieBlock from "../components/finance-components/ExpensePieBlock";
 import RecurringExpenseBlock from "../components/finance-components/RecurringExpenseBlock";
+import ExpensesTableBlock from "../components/finance-components/ExpensesTableBlock";
 function Finance() {
     return (
         <>
@@ -18,9 +17,9 @@ function Finance() {
                 container
                 spacing={2}
                 marginBottom={"100px"}
-                sx={{ p: 2, backgroundColor: "primary.main" }}
+                sx={{ p: 2, backgroundColor: "primary.main", paddingBottom: 8 }}
             >
-                <Grid size={{ xs: 12, md: 6 }} sx={{}}>
+                <Grid size={{ xs: 12, md: 6 }}>
                     <Card>
                         <Typography
                             variant="h5"
@@ -103,6 +102,9 @@ function Finance() {
                         </Typography>
                         <RecurringExpenseBlock></RecurringExpenseBlock>
                     </Card>
+                </Grid>
+                <Grid size={{ xs: 12, md: 6 }}>
+                    <ExpensesTableBlock></ExpensesTableBlock>
                 </Grid>
             </Grid>
             <BottomNav></BottomNav>
