@@ -1,8 +1,7 @@
 import NavBar from "../components/NavBar";
-import Grid from "@mui/material/Grid2";
 import BottomNav from "../components/BottomNav";
 import Card from "../components/Card";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import AssetsBlock from "../components/finance-components/AssetsBlock";
 import ExpensesBlock from "../components/finance-components/ExpensesBlock";
 import ProgressBlock from "../components/finance-components/ProgressBlock";
@@ -13,13 +12,37 @@ function Finance() {
     return (
         <>
             <NavBar></NavBar>
-            <Grid
-                container
-                spacing={2}
-                marginBottom={"100px"}
-                sx={{ p: 2, backgroundColor: "primary.main", paddingBottom: 8 }}
+            {/* Grid Container */}
+            <Box
+                sx={{
+                    px: 2,
+                    py: 2,
+                    backgroundColor: "primary.main",
+                    paddingBottom: 8,
+                    gridTemplateRows: "auto",
+                    display: "grid",
+                    gridTemplateColumns: "repeat(12, 1fr)",
+                    gap: 2,
+                    marginBottom: 8,
+                    "@media (min-width: 1024px)": {
+                        gridTemplateRows: "span 3 auto",
+                        gap: 4,
+                        px: 4,
+                        py: 6,
+                    },
+                }}
             >
-                <Grid size={{ xs: 12, md: 6 }}>
+                <Box
+                    sx={{
+                        gridColumn: "span 12",
+                        gridRow: "span 1",
+                        "@media (min-width: 1024px)": {
+                            gridColumn: "span 3",
+                            gridRow: "span 3",
+                            gridRowStart: 1,
+                        },
+                    }}
+                >
                     <Card>
                         <Typography
                             variant="h5"
@@ -37,8 +60,17 @@ function Finance() {
                             $30,000
                         </Typography>
                     </Card>
-                </Grid>
-                <Grid size={{ xs: 12, md: 6 }}>
+                </Box>
+                <Box
+                    sx={{
+                        gridColumn: "span 12",
+                        "@media (min-width: 1024px)": {
+                            gridColumn: "span 3",
+                            gridRow: "span 3",
+                            gridRowStart: 2,
+                        },
+                    }}
+                >
                     <Card>
                         <Typography
                             variant="h5"
@@ -50,8 +82,18 @@ function Finance() {
                         </Typography>
                         <AssetsBlock></AssetsBlock>
                     </Card>
-                </Grid>
-                <Grid size={{ xs: 12, md: 6 }}>
+                </Box>
+                <Box
+                    sx={{
+                        gridColumn: "span 12",
+                        "@media (min-width: 1024px)": {
+                            gridColumnStart: 4,
+                            gridColumn: "span 9",
+                            gridRowStart: 1,
+                            gridRow: "span 2",
+                        },
+                    }}
+                >
                     <Card>
                         <Typography
                             variant="h5"
@@ -63,8 +105,15 @@ function Finance() {
                         </Typography>
                         <ExpensesBlock></ExpensesBlock>
                     </Card>
-                </Grid>
-                <Grid size={{ xs: 12, md: 6 }}>
+                </Box>
+                <Box
+                    sx={{
+                        gridColumn: "span 12",
+                        "@media (min-width: 1024px)": {
+                            gridColumn: "span 5",
+                        },
+                    }}
+                >
                     <Card>
                         <Typography
                             variant="h5"
@@ -76,8 +125,16 @@ function Finance() {
                         </Typography>
                         <ProgressBlock></ProgressBlock>
                     </Card>
-                </Grid>
-                <Grid size={{ xs: 12, md: 6 }}>
+                </Box>
+                <Box
+                    sx={{
+                        gridColumn: "span 12",
+                        "@media (min-width: 1024px)": {
+                            gridColumn: "span 5",
+                            gridColumnStart: 6,
+                        },
+                    }}
+                >
                     <Card>
                         <Typography
                             variant="h5"
@@ -89,8 +146,15 @@ function Finance() {
                         </Typography>
                         <ExpensePieBlock></ExpensePieBlock>
                     </Card>
-                </Grid>
-                <Grid size={{ xs: 12, md: 6 }}>
+                </Box>
+                <Box
+                    sx={{
+                        gridColumn: "span 12",
+                        "@media (min-width: 1024px)": {
+                            gridColumn: "span 6",
+                        },
+                    }}
+                >
                     <Card>
                         <Typography
                             variant="h5"
@@ -102,11 +166,11 @@ function Finance() {
                         </Typography>
                         <RecurringExpenseBlock></RecurringExpenseBlock>
                     </Card>
-                </Grid>
-                <Grid size={{ xs: 12, md: 6 }}>
+                </Box>
+                <Box sx={{ gridColumn: "span 12" }}>
                     <ExpensesTableBlock></ExpensesTableBlock>
-                </Grid>
-            </Grid>
+                </Box>
+            </Box>
             <BottomNav></BottomNav>
         </>
     );

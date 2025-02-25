@@ -15,6 +15,7 @@ function Card({ children }: { children: React.ReactNode }) {
                 alignItems: "center",
                 justifyContent: "center",
                 flexDirection: "column",
+                height: "100%",
             }}
         >
             {children}

@@ -28,9 +28,11 @@ function ExpensesTableBlock() {
                     flexDirection: "column",
                     color: "text.primary",
                     gap: 3,
+                    width: "100%",
+                    "@media (min-width: 1024px)": { flexDirection: "row" },
                 }}
             >
-                <Box>
+                <Box sx={{ width: "100%" }}>
                     <Typography variant="body1" fontWeight={"bold"}>
                         Enter Expense Name
                     </Typography>
@@ -49,7 +51,7 @@ function ExpensesTableBlock() {
                         }}
                     />
                 </Box>
-                <Box>
+                <Box sx={{ width: "100%" }}>
                     <Typography variant="body1" fontWeight={"bold"}>
                         Enter Expense Cost
                     </Typography>
@@ -68,7 +70,16 @@ function ExpensesTableBlock() {
                         }}
                     />
                 </Box>
-                <Button variant="text" color="secondary">
+                <Button
+                    variant="text"
+                    color="secondary"
+                    sx={{
+                        width: "100%",
+                        maxWidth: "200px",
+                        height: "60px",
+                        marginTop: "auto",
+                    }}
+                >
                     Add Expense
                 </Button>
             </Box>
@@ -91,12 +102,15 @@ function ExpensesTableBlock() {
                     sx={{
                         border: 0,
                         backgroundColor: "secondary.main",
-                        "& .MuiDataGrid-columnHeaders .MuiDataGrid-columnHeader":
-                            {
-                                backgroundColor: "secondary.main",
-                                color: "secondary.contrastText",
-                                fill: "secondary.contrastText",
-                            },
+                        "& div": {
+                            backgroundColor: "secondary.main",
+                            color: "secondary.contrastText",
+                            fill: "secondary.contrastText",
+                        },
+
+                        "& button": {
+                            color: "secondary.contrastText",
+                        },
                     }}
                 />
             </Paper>
