@@ -8,6 +8,7 @@ import ProgressBlock from "../components/finance-components/ProgressBlock";
 import ExpensePieBlock from "../components/finance-components/ExpensePieBlock";
 import RecurringExpenseBlock from "../components/finance-components/RecurringExpenseBlock";
 import ExpensesTableBlock from "../components/finance-components/ExpensesTableBlock";
+import CapitalBlock from "../components/finance-components/CapitalBlock";
 function Finance() {
     return (
         <>
@@ -37,7 +38,7 @@ function Finance() {
                         gridColumn: "span 12",
                         gridRow: "span 1",
                         "@media (min-width: 1024px)": {
-                            gridColumn: "span 3",
+                            gridColumn: "span 4",
                             gridRow: "span 3",
                             gridRowStart: 1,
                         },
@@ -52,20 +53,14 @@ function Finance() {
                         >
                             My Capital
                         </Typography>
-                        <Typography
-                            variant="h3"
-                            color={"secondary.contrastText"}
-                            sx={{ fontWeight: "bold", textAlign: "center" }}
-                        >
-                            $30,000
-                        </Typography>
+                        <CapitalBlock></CapitalBlock>
                     </Card>
                 </Box>
                 <Box
                     sx={{
                         gridColumn: "span 12",
                         "@media (min-width: 1024px)": {
-                            gridColumn: "span 3",
+                            gridColumn: "span 4",
                             gridRow: "span 3",
                             gridRowStart: 2,
                         },
@@ -88,7 +83,7 @@ function Finance() {
                         gridColumn: "span 12",
                         "@media (min-width: 1024px)": {
                             gridColumnStart: 4,
-                            gridColumn: "span 9",
+                            gridColumn: "span 8",
                             gridRowStart: 1,
                             gridRow: "span 2",
                         },
