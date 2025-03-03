@@ -1,12 +1,12 @@
-import { Dialog, DialogActions, DialogContent } from "@mui/material";
-
+import { Dialog, DialogContent, IconButton } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 function EditModal({
     open,
-    setOpen,
+    setClose,
     children,
 }: {
     open: boolean;
-    setOpen: (isOpen: boolean) => void;
+    setClose: () => void;
     children: React.ReactNode;
 }) {
     return (
@@ -14,7 +14,7 @@ function EditModal({
             <Dialog
                 open={open}
                 fullWidth
-                onClose={() => setOpen(false)}
+                onClose={setClose}
                 sx={{
                     "& .MuiDialog-paper": {
                         backgroundColor: "secondary.main",
@@ -22,6 +22,21 @@ function EditModal({
                     },
                 }}
             >
+                <IconButton
+                    aria-label="close"
+                    onClick={() => {
+                        console.log("close clicked");
+                        setClose();
+                    }}
+                    sx={() => ({
+                        position: "absolute",
+                        right: 8,
+                        top: 8,
+                        color: "#FFF",
+                    })}
+                >
+                    <CloseIcon />
+                </IconButton>
                 <DialogContent
                     sx={{
                         padding: 4,
