@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography, ButtonGroup } from "@mui/material";
 import { PieChart } from "@mui/x-charts";
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
@@ -6,7 +6,7 @@ import { randomId } from "@mui/x-data-grid-generator";
 import EditModal from "../EditModal";
 
 interface AssetDataItem {
-    id: number;
+    id: string;
     value: number;
     name: string;
     color: string;
@@ -21,46 +21,43 @@ function AssetsBlock() {
     };
 
     const [assetData, setAssetData] = useState<AssetDataItem[]>([
-        { id: 0, value: 100, name: "Savings", color: "#fd2" },
-        { id: 1, value: 15, name: "Stocks", color: "#342" },
-        { id: 2, value: 20, name: "Cypto", color: "#FFF" },
+        { id: randomId(), value: 100, name: "Savings", color: "#fd2" },
+        { id: randomId(), value: 15, name: "Stocks", color: "#342" },
+        { id: randomId(), value: 20, name: "Cypto", color: "#FFF" },
     ]);
     useEffect(() => {
         console.log(assetData);
     }, [assetData]);
+
     return (
         <>
-            <Box onClick={handleOpen}>
-                <PieChart
-                    series={[
-                        {
-                            data: assetData,
-                            cx: 150,
-                            cy: 100,
-                            // valueFormatter: (params) => {
-                            //     const percent = params.value / 100;
-                            //     return `${(percent * 100).toFixed(1)}%`;
-                            // },
-                        },
-                    ]}
-                    width={300}
-                    height={200}
-                    slotProps={{
-                        legend: { hidden: true },
+            <Box onClick={handleOpen} sx={{ width: "100%", height: "100%" }}>
+                <Box
+                    sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
                     }}
-                    // slotProps={{
-                    //     legend: {
-                    //         direction: "row",
-                    //         position: {
-                    //             vertical: "bottom",
-                    //             horizontal: "middle",
-                    //         },
-                    //         padding: 0,
-                    //     },
-                    // }}
-
-                    margin={{ bottom: 40 }}
-                />
+                >
+                    <PieChart
+                        series={[
+                            {
+                                data: assetData,
+                                cx: "75%",
+                                cy: "60%",
+                            },
+                        ]}
+                        width={300}
+                        height={200}
+                        sx={{ scale: "1.4" }}
+                        slotProps={{
+                            legend: {
+                                hidden: true,
+                            },
+                        }}
+                        margin={{ bottom: 40 }}
+                    />
+                </Box>
                 <Box sx={{ width: "100%" }}>
                     <Stack spacing={2} display={"flex"}>
                         {assetData.map((asset) => (
@@ -108,6 +105,8 @@ function EditAssetBlock({
     assetData: AssetDataItem[];
     setAssetData: React.Dispatch<React.SetStateAction<AssetDataItem[]>>;
 }) {
+    const [selectedRows, setSelectedRows] = useState([]);
+
     const columns: GridColDef[] = [
         {
             field: "name",
@@ -116,8 +115,8 @@ function EditAssetBlock({
             editable: true,
         },
         {
-            field: "amount",
-            headerName: "Amount",
+            field: "value",
+            headerName: "Amount ($)",
             type: "number",
             width: 180,
             align: "left",
@@ -134,11 +133,23 @@ function EditAssetBlock({
 
     const rows: GridRowsProp = assetData.map((asset) => ({
         id: asset.id,
-        name: asset.name,
         value: asset.value,
+        name: asset.name,
         color: asset.color,
     }));
 
+    const handleAddRow = () => {
+        const id = randomId();
+        setAssetData((prevAsset) => [
+            { id: id, value: 0, name: "New Asset", color: "#FFF" },
+            ...prevAsset,
+        ]);
+    };
+    const handleDeleteRow = () => {
+        setAssetData((prevAsset) =>
+            prevAsset.filter((asset) => !selectedRows.includes(asset.id))
+        );
+    };
     return (
         <>
             <Typography
@@ -157,11 +168,17 @@ function EditAssetBlock({
                 rows={rows}
                 columns={columns}
                 editMode="row"
+                checkboxSelection
+                disableRowSelectionOnClick
                 sx={{
                     color: "text.primary",
                     backgroundColor: "secondary.main",
                     background: "secondary.main",
+                    mb: 2,
                     "& div": { backgroundColor: "secondary.main" },
+                    "& .MuiDataGrid-row--editing .MuiDataGrid-cell": {
+                        backgroundColor: "secondary.main",
+                    },
                 }}
                 // rowModesModel={rowModesModel}
                 // onRowModesModelChange={handleRowModesModelChange}
@@ -184,7 +201,41 @@ function EditAssetBlock({
                 onProcessRowUpdateError={(params) => {
                     console.error("processRowUpdateError", params);
                 }}
+                onRowSelectionModelChange={(ids) => {
+                    const selectedIDs = new Set(ids);
+
+                    const selectedIdArray = Array.from(selectedIDs);
+                    console.log("selectedRows", selectedIdArray);
+                    setSelectedRows(selectedIdArray);
+                }}
             />
+            <ButtonGroup
+                variant="text"
+                color="primary"
+                fullWidth
+                sx={{ gap: 2, ml: "auto" }}
+            >
+                <Button
+                    onClick={handleAddRow}
+                    variant="contained"
+                    color="primary"
+                    sx={{
+                        backgroundColor: "primary.main",
+                    }}
+                >
+                    Add Row
+                </Button>
+                <Button
+                    onClick={handleDeleteRow}
+                    variant="contained"
+                    color="primary"
+                    sx={{
+                        backgroundColor: "primary.main",
+                    }}
+                >
+                    Delete Row
+                </Button>
+            </ButtonGroup>
         </>
     );
 }
