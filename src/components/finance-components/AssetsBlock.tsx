@@ -31,7 +31,10 @@ function AssetsBlock() {
 
     return (
         <>
-            <Box onClick={handleOpen} sx={{ width: "100%", height: "100%" }}>
+            <Box
+                onClick={handleOpen}
+                sx={{ width: "100%", height: "100%", cursor: "pointer" }}
+            >
                 <Box
                     sx={{
                         display: "flex",
@@ -49,7 +52,7 @@ function AssetsBlock() {
                         ]}
                         width={300}
                         height={200}
-                        sx={{ scale: "1.4" }}
+                        sx={{ scale: "1.2" }}
                         slotProps={{
                             legend: {
                                 hidden: true,

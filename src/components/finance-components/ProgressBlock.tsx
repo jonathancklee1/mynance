@@ -1,48 +1,94 @@
-import { Box, Typography } from "@mui/material";
+import {
+    Box,
+    Button,
+    Typography,
+    FormControl,
+    Input,
+    InputAdornment,
+    InputLabel,
+} from "@mui/material";
 import LinearProgress from "@mui/material/LinearProgress";
+import EditModal from "../EditModal";
+import { useState } from "react";
+
+interface EditProgressBarProps {
+    budget: number;
+    setBudget: React.Dispatch<React.SetStateAction<number>>;
+}
+interface ProgressBarWithLabelProps {
+    budget: number;
+    expense: number;
+}
 
 function ProgressBlock() {
+    const [open, setOpen] = useState(false);
+    const [expense, setExpense] = useState(400);
+    const [budget, setBudget] = useState(1000);
+    const handleOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
     return (
-        <Box sx={{ width: "100%" }}>
-            <Typography
-                variant="body1"
-                sx={{
-                    fontWeight: "bold",
-                    textAlign: "center",
-                    marginBottom: 2,
-                }}
-            >
-                You have{" "}
+        <>
+            <Box sx={{ width: "100%", cursor: "pointer" }} onClick={handleOpen}>
                 <Typography
-                    variant="h6"
+                    variant="body1"
                     sx={{
                         fontWeight: "bold",
-                        display: "inline-block",
-                        color: "primary.main",
+                        textAlign: "center",
+                        marginBottom: 2,
                     }}
                 >
-                    $400
-                </Typography>{" "}
-                left out of your{" "}
-                <Typography
-                    variant="h6"
-                    sx={{
-                        fontWeight: "bold",
-                        display: "inline-block",
-                        color: "primary.main",
-                    }}
-                >
-                    $700
-                </Typography>{" "}
-                total expense budget
-            </Typography>
-            <ProgressBarWithLabel></ProgressBarWithLabel>
-            {/* <LinearProgress variant="determinate" value={80} /> */}
-        </Box>
+                    You have{" "}
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            fontWeight: "bold",
+                            display: "inline-block",
+                            color: "primary.main",
+                        }}
+                    >
+                        ${expense}
+                    </Typography>{" "}
+                    left out of your{" "}
+                    <Button
+                        variant="text"
+                        color="primary"
+                        sx={{ padding: 0, backgroundColor: "#bb2f", p: 0.5 }}
+                    >
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                fontWeight: "bold",
+                                display: "inline-block",
+                                color: "primary.main",
+                            }}
+                        >
+                            ${budget}
+                        </Typography>
+                    </Button>{" "}
+                    total expense budget
+                </Typography>
+                <ProgressBarWithLabel
+                    expense={expense}
+                    budget={budget}
+                ></ProgressBarWithLabel>
+                {/* <LinearProgress variant="determinate" value={80} /> */}
+            </Box>
+            <EditModal open={open} setClose={handleClose}>
+                <EditProgressBar
+                    budget={budget}
+                    setBudget={setBudget}
+                ></EditProgressBar>
+            </EditModal>
+        </>
     );
 }
 
-function ProgressBarWithLabel() {
+function ProgressBarWithLabel({ expense, budget }: ProgressBarWithLabelProps) {
+    const expensePercentage = Math.round((expense / budget) * 100);
     return (
         <Box
             sx={{
@@ -55,7 +101,7 @@ function ProgressBarWithLabel() {
         >
             <LinearProgress
                 variant="determinate"
-                value={80}
+                value={expensePercentage > 100 ? 100 : expensePercentage}
                 sx={{
                     flex: 1,
                     "&.MuiLinearProgress-root": {
@@ -69,8 +115,64 @@ function ProgressBarWithLabel() {
                 }}
                 color="primary"
             />
-            <Typography variant="body1">80%</Typography>
+            <Typography variant="body1">{expensePercentage}%</Typography>
         </Box>
+    );
+}
+
+function EditProgressBar({ budget, setBudget }: EditProgressBarProps) {
+    return (
+        <>
+            <Typography
+                variant="h5"
+                color={"secondary.contrastText"}
+                sx={{
+                    fontWeight: "bold",
+                    textAlign: "center",
+                    cursor: "pointer",
+                    marginBottom: 2,
+                }}
+            >
+                Enter your weekly budget
+            </Typography>
+            <FormControl fullWidth sx={{ m: 1 }} variant="standard">
+                <InputLabel
+                    htmlFor="standard-adornment-amount"
+                    sx={{
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: 18,
+                        "&.Mui-focused": { color: "white" },
+                    }}
+                >
+                    Amount
+                </InputLabel>
+                {/* <TextField
+                    sx={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        cursor: "pointer",
+                    }}
+                    fullWidth
+                    type="number"
+                    placeholder="Enter your capital"
+                    value={budget}
+                    onChange={(e) => setBudget(e.target.value)}
+                    startAdornment={
+                        <InputAdornment position="start">$</InputAdornment>
+                    }
+                ></TextField> */}
+                <Input
+                    id="standard-adornment-amount"
+                    startAdornment={
+                        <InputAdornment position="start">$</InputAdornment>
+                    }
+                    value={budget}
+                    onChange={(e) => setBudget(parseInt(e.target.value))}
+                    type="number"
+                />
+            </FormControl>
+        </>
     );
 }
 export default ProgressBlock;

@@ -29,13 +29,12 @@ function ExpensesBlock() {
                 series={[
                     { data: weeklyExpenseData.map((item) => item.amount) },
                 ]}
-                width={300}
-                height={250}
                 sx={{
                     ".MuiChartsAxis-label": {
                         transform: "translate(-10px, 0)",
                     },
                 }}
+                height={400}
             />
         </>
     );
