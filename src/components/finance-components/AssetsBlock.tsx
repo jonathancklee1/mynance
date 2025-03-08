@@ -161,7 +161,6 @@ function EditAssetBlock({
                 sx={{
                     fontWeight: "bold",
                     textAlign: "center",
-                    cursor: "pointer",
                     marginBottom: 2,
                 }}
             >
