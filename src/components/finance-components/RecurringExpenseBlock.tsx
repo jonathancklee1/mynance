@@ -6,6 +6,7 @@ import {
     ListItemText,
     Stack,
     Typography,
+    Button,
 } from "@mui/material";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import EditModal from "../EditModal";
@@ -82,6 +83,7 @@ function RecurringExpenseBlock() {
                     selectedExpense={selectedExpense}
                     setRecurringExpenses={setRecurringExpenses}
                     recurringExpenses={recurringExpenses}
+                    handleClose={handleClose}
                 ></EditRecurringExpenseBlock>
             </EditModal>
         </>
@@ -91,6 +93,7 @@ function EditRecurringExpenseBlock({
     setRecurringExpenses,
     selectedExpense,
     recurringExpenses,
+    handleClose,
 }: {
     selectedExpense: recurringExpenseItem;
     recurringExpenses: recurringExpenseItem[];
@@ -164,6 +167,30 @@ function EditRecurringExpenseBlock({
                         console.log("expense changes");
                     }}
                 ></Textbox>
+                <Button
+                    variant="text"
+                    onClick={handleClose}
+                    sx={{ backgroundColor: "primary.main" }}
+                >
+                    Save Expense
+                </Button>
+                <Button
+                    variant="text"
+                    color="error"
+                    sx={{ backgroundColor: "primary.main" }}
+                    onClick={() => {
+                        setRecurringExpenses(
+                            recurringExpenses.filter(
+                                (expense: recurringExpenseItem) => {
+                                    return expense.id !== selectedExpense.id;
+                                }
+                            )
+                        );
+                        handleClose();
+                    }}
+                >
+                    Delete Expense
+                </Button>
             </Stack>
         </>
     );
