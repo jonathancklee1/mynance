@@ -1,42 +1,95 @@
-import { Box, TextField, Typography, Button, Paper } from "@mui/material";
-import React from "react";
+import {
+    Box,
+    TextField,
+    Typography,
+    Button,
+    Paper,
+    Stack,
+} from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { useState } from "react";
+import Textbox from "../Textbox";
 
 function ExpensesTableBlock() {
-    const columns: GridColDef[] = [
+    const [columns, setColumns] = useState<GridColDef[]>([
         { field: "date", headerName: "Date", width: 130 },
         { field: "expense", headerName: "Expense", width: 130 },
         { field: "cost", headerName: "Cost ($)", width: 130 },
-    ];
+    ]);
 
-    const rows = [
-        { id: 1, date: 1, expense: "Snow", cost: 222 },
-        { id: 2, date: 2, expense: "Lannister", cost: 22 },
-        { id: 3, date: 3, expense: "Lannister", cost: 22 },
-        { id: 4, date: 4, expense: "Stark", cost: 22 },
-        { id: 5, date: 5, expense: "Targaryen", cost: 1 },
-        { id: 6, date: 6, expense: "Melisandre", cost: 1 },
-        { id: 7, date: 7, expense: "Clifford", cost: 22 },
-        { id: 8, date: 8, expense: "Frances", cost: 2 },
-        { id: 9, date: 9, expense: "Roxie", cost: 2 },
-    ];
+    const [rows, setRows] = useState([
+        { id: 1, date: new Date().toDateString(), expense: "Snow", cost: 222 },
+        {
+            id: 2,
+            date: new Date().toDateString(),
+            expense: "Lannister",
+            cost: 22,
+        },
+        {
+            id: 3,
+            date: new Date().toDateString(),
+            expense: "Lannister",
+            cost: 22,
+        },
+        { id: 4, date: new Date().toDateString(), expense: "Stark", cost: 22 },
+        {
+            id: 5,
+            date: new Date().toDateString(),
+            expense: "Targaryen",
+            cost: 1,
+        },
+        {
+            id: 6,
+            date: new Date().toDateString(),
+            expense: "Melisandre",
+            cost: 1,
+        },
+        {
+            id: 7,
+            date: new Date().toDateString(),
+            expense: "Clifford",
+            cost: 22,
+        },
+        { id: 8, date: new Date().toDateString(), expense: "Frances", cost: 2 },
+        { id: 9, date: new Date().toDateString(), expense: "Roxie", cost: 2 },
+    ]);
+
+    const [expenseName, setExpenseName] = useState<string>("");
+    const [expenseCost, setExpenseCost] = useState<number>(0);
+    function handleAddExpense() {
+        if (expenseName && expenseCost) {
+            setRows([
+                {
+                    id: rows.length + 1,
+                    date: new Date().toDateString(),
+                    expense: expenseName,
+                    cost: expenseCost,
+                },
+                ...rows,
+            ]);
+            setExpenseName("");
+            setExpenseCost(0);
+        }
+    }
     return (
         <Box>
-            <Box
+            <Stack
+                gap={2}
                 sx={{
-                    display: "flex",
-                    flexDirection: "column",
                     color: "text.primary",
-                    gap: 3,
                     width: "100%",
                     "@media (min-width: 1024px)": { flexDirection: "row" },
                 }}
             >
                 <Box sx={{ width: "100%" }}>
-                    <Typography variant="body1" fontWeight={"bold"}>
+                    <Typography
+                        variant="body1"
+                        fontWeight={"bold"}
+                        marginBottom={1}
+                    >
                         Enter Expense Name
                     </Typography>
-                    <TextField
+                    <Textbox
                         id="filled-basic"
                         label="Expense Name"
                         variant="filled"
@@ -47,18 +100,23 @@ function ExpensesTableBlock() {
                             input: { color: "text.primary", fontSize: 24 },
                             backgroundColor: "secondary.main",
                             maxWidth: "800px",
-                            marginTop: 1,
                         }}
+                        onChange={(e) => setExpenseName(e.target.value)}
                     />
                 </Box>
                 <Box sx={{ width: "100%" }}>
-                    <Typography variant="body1" fontWeight={"bold"}>
+                    <Typography
+                        variant="body1"
+                        fontWeight={"bold"}
+                        marginBottom={1}
+                    >
                         Enter Expense Cost
                     </Typography>
-                    <TextField
+                    <Textbox
                         id="filled-basic"
                         label="Expense Cost"
                         variant="filled"
+                        type="number"
                         fullWidth
                         color="secondary"
                         size="small"
@@ -66,8 +124,10 @@ function ExpensesTableBlock() {
                             input: { color: "text.primary", fontSize: 24 },
                             backgroundColor: "secondary.main",
                             maxWidth: "800px",
-                            marginTop: 1,
                         }}
+                        onChange={(e) =>
+                            setExpenseCost(parseInt(e.target.value))
+                        }
                     />
                 </Box>
                 <Button
@@ -79,10 +139,11 @@ function ExpensesTableBlock() {
                         height: "60px",
                         marginTop: "auto",
                     }}
+                    onClick={handleAddExpense}
                 >
                     Add Expense
                 </Button>
-            </Box>
+            </Stack>
 
             {/* Table */}
 
@@ -99,6 +160,16 @@ function ExpensesTableBlock() {
                     columns={columns}
                     pageSizeOptions={[5, 10]}
                     checkboxSelection
+                    initialState={{
+                        sorting: {
+                            sortModel: [
+                                {
+                                    field: "date",
+                                    sort: "desc",
+                                },
+                            ],
+                        },
+                    }}
                     sx={{
                         border: 0,
                         backgroundColor: "secondary.main",

@@ -164,7 +164,6 @@ function EditRecurringExpenseBlock({
                                 }
                             )
                         );
-                        console.log("expense changes");
                     }}
                 ></Textbox>
                 <Button
