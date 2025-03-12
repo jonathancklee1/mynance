@@ -1,24 +1,28 @@
-import {
-    Box,
-    TextField,
-    Typography,
-    Button,
-    Paper,
-    Stack,
-} from "@mui/material";
+import { Box, Typography, Button, Paper, Stack } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import Textbox from "../Textbox";
 
+interface rowData {
+    id: number;
+    date: string;
+    expense: string;
+    cost: number;
+}
 function ExpensesTableBlock() {
-    const [columns, setColumns] = useState<GridColDef[]>([
+    const [columns] = useState<GridColDef[]>([
         { field: "date", headerName: "Date", width: 130 },
         { field: "expense", headerName: "Expense", width: 130 },
         { field: "cost", headerName: "Cost ($)", width: 130 },
     ]);
 
     const [rows, setRows] = useState([
-        { id: 1, date: new Date().toDateString(), expense: "Snow", cost: 222 },
+        {
+            id: 100,
+            date: new Date().toDateString(),
+            expense: "Snow",
+            cost: 222,
+        },
         {
             id: 2,
             date: new Date().toDateString(),
@@ -56,6 +60,7 @@ function ExpensesTableBlock() {
 
     const [expenseName, setExpenseName] = useState<string>("");
     const [expenseCost, setExpenseCost] = useState<number>(0);
+    const [selectedRows, setSelectedRows] = useState<number[]>([]);
     function handleAddExpense() {
         if (expenseName && expenseCost) {
             setRows([
@@ -70,6 +75,27 @@ function ExpensesTableBlock() {
             setExpenseName("");
             setExpenseCost(0);
         }
+    }
+
+    function handleRowSelection(
+        selectedRows: number[],
+        rows: rowData[],
+        setRows: {
+            (
+                value: SetStateAction<
+                    {
+                        id: number;
+                        date: string;
+                        expense: string;
+                        cost: number;
+                    }[]
+                >
+            ): void;
+            (arg0: never[]): void;
+        }
+    ) {
+        const newRows = rows.filter((row) => !selectedRows.includes(row.id));
+        setRows(newRows);
     }
     return (
         <Box>
@@ -133,9 +159,9 @@ function ExpensesTableBlock() {
                 <Button
                     variant="text"
                     color="secondary"
+                    fullWidth
                     sx={{
                         width: "100%",
-                        maxWidth: "200px",
                         height: "60px",
                         marginTop: "auto",
                     }}
@@ -149,7 +175,7 @@ function ExpensesTableBlock() {
 
             <Paper
                 sx={{
-                    height: 400,
+                    // height: 400,
                     width: "100%",
                     marginTop: 4,
                     backgroundColor: "secondary.main",
@@ -160,6 +186,10 @@ function ExpensesTableBlock() {
                     columns={columns}
                     pageSizeOptions={[5, 10]}
                     checkboxSelection
+                    onRowSelectionModelChange={(e) => {
+                        const selectedRows = e.map(Number);
+                        setSelectedRows(selectedRows);
+                    }}
                     initialState={{
                         sorting: {
                             sortModel: [
@@ -185,6 +215,23 @@ function ExpensesTableBlock() {
                     }}
                 />
             </Paper>
+            {selectedRows.length > 0 && (
+                <Button
+                    variant="text"
+                    color="secondary"
+                    fullWidth
+                    sx={{
+                        width: "100%",
+                        height: "60px",
+                        marginTop: 2,
+                    }}
+                    onClick={() =>
+                        handleRowSelection(selectedRows, rows, setRows)
+                    }
+                >
+                    Delete Selected Expenses
+                </Button>
+            )}
         </Box>
     );
 }
