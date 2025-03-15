@@ -1,11 +1,11 @@
 export interface recurringExpenseItem {
-    id: number;
+    id: string;
     name: string;
     amount: number;
 }
 
 export interface expenseItem {
-    id: number;
+    id: string;
     date: string;
     expense: string;
     cost: string;

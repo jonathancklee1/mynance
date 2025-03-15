@@ -3,16 +3,50 @@ import {
     recurringExpenseItem,
     expenseItem,
 } from "../components/types/interfaces";
-const useStore = create((set) => ({
-    expenses: [] as expenseItem[],
+const useExpenseStore = create((set) => ({
+    expenses: [
+        {
+            id: crypto.randomUUID(),
+            date: new Date().toDateString(),
+            expense: "Snow",
+            cost: "222",
+        },
+        {
+            id: crypto.randomUUID(),
+            date: new Date().toDateString(),
+            expense: "Lannister",
+            cost: "22",
+        },
+        {
+            id: crypto.randomUUID(),
+            date: new Date().toDateString(),
+            expense: "Lannister",
+            cost: "22",
+        },
+        {
+            id: crypto.randomUUID(),
+            date: new Date().toDateString(),
+            expense: "Stark",
+            cost: "22",
+        },
+        {
+            id: crypto.randomUUID(),
+            date: new Date().toDateString(),
+            expense: "Targaryen",
+            cost: "1",
+        },
+    ] as expenseItem[],
     recurringExpenses: [] as recurringExpenseItem[],
     setExpenses: (expenses: expenseItem[]) => set({ expenses }),
     addExpenses: (expense: expenseItem[]) =>
-        set((state) => ({ expenses: [...state.expenses, [...expense]] })),
-    deleteExpenses: (expenseArray: expenseItem[]) =>
+        set((state) => {
+            // console.log([...state.expenses, [...expense]]);
+            return { expenses: [...expense, ...state.expenses] };
+        }),
+    deleteExpenses: (expenseArray: string[]) =>
         set((state) => ({
             expenses: state.expenses.filter((expense) => {
-                return !expenseArray.includes(expense);
+                return !expenseArray.includes(expense.id);
             }),
         })),
 
@@ -30,4 +64,4 @@ const useStore = create((set) => ({
         })),
 }));
 
-export default useStore;
+export default useExpenseStore;
