@@ -3,7 +3,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { SetStateAction, useState } from "react";
 import Textbox from "../Textbox";
 
-interface rowData {
+interface expenseItem {
     id: number;
     date: string;
     expense: string;
@@ -69,7 +69,7 @@ function ExpensesTableBlock() {
     ]);
 
     const [expenseName, setExpenseName] = useState<string>("");
-    const [expenseCost, setExpenseCost] = useState<number>(0);
+    const [expenseCost, setExpenseCost] = useState<string>("0");
     const [selectedRows, setSelectedRows] = useState<number[]>([]);
     function handleAddExpense() {
         if (expenseName && expenseCost) {
@@ -83,13 +83,13 @@ function ExpensesTableBlock() {
                 ...rows,
             ]);
             setExpenseName("");
-            setExpenseCost(0);
+            setExpenseCost("0");
         }
     }
 
     function handleRowSelection(
         selectedRows: number[],
-        rows: rowData[],
+        rows: expenseItem[],
         setRows: {
             (
                 value: SetStateAction<
@@ -163,9 +163,7 @@ function ExpensesTableBlock() {
                             backgroundColor: "secondary.main",
                             maxWidth: "800px",
                         }}
-                        onChange={(e) =>
-                            setExpenseCost(parseInt(e.target.value))
-                        }
+                        onChange={(e) => setExpenseCost(e.target.value)}
                     />
                 </Box>
                 <Button

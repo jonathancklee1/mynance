@@ -12,12 +12,8 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import EditModal from "../EditModal";
 import { useState } from "react";
 import Textbox from "../Textbox";
+import { recurringExpenseItem } from "../types/interfaces";
 
-interface recurringExpenseItem {
-    id: number;
-    name: string;
-    amount: number;
-}
 function RecurringExpenseBlock() {
     const [recurringExpenses, setRecurringExpenses] = useState([
         { id: 0, name: "Groceries", amount: 50 },
