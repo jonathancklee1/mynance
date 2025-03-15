@@ -1,6 +1,7 @@
 import { Box, TextField, Typography } from "@mui/material";
 import EditModal from "../EditModal";
 import { useState } from "react";
+import Textbox from "../Textbox";
 
 function CapitalBlock() {
     const [open, setOpen] = useState(false);
@@ -62,18 +63,13 @@ function EditCapitalBlock({
             >
                 Edit your capital
             </Typography>
-            <TextField
-                sx={{
-                    fontWeight: "bold",
-                    textAlign: "center",
-                    cursor: "pointer",
-                }}
-                fullWidth
+            <Textbox
+                colourVariant="primary"
                 type="number"
                 placeholder="Enter your capital"
                 value={capital}
                 onChange={(e) => setCapital(e.target.value)}
-            ></TextField>
+            ></Textbox>
         </>
     );
 }

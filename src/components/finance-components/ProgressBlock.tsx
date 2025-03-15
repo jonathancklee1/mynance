@@ -10,6 +10,7 @@ import {
 import LinearProgress from "@mui/material/LinearProgress";
 import EditModal from "../EditModal";
 import { useState } from "react";
+import Textbox from "../Textbox";
 
 interface EditProgressBarProps {
     budget: number;
@@ -22,7 +23,7 @@ interface ProgressBarWithLabelProps {
 
 function ProgressBlock() {
     const [open, setOpen] = useState(false);
-    const [expense, setExpense] = useState(400);
+    const [expense] = useState(400);
     const [budget, setBudget] = useState(1000);
     const handleOpen = () => {
         setOpen(true);
@@ -147,26 +148,18 @@ function EditProgressBar({ budget, setBudget }: EditProgressBarProps) {
                 >
                     Amount
                 </InputLabel>
-                {/* <TextField
-                    sx={{
-                        fontWeight: "bold",
-                        textAlign: "center",
-                        cursor: "pointer",
-                    }}
-                    fullWidth
-                    type="number"
-                    placeholder="Enter your capital"
-                    value={budget}
-                    onChange={(e) => setBudget(e.target.value)}
-                    startAdornment={
-                        <InputAdornment position="start">$</InputAdornment>
-                    }
-                ></TextField> */}
-                <Input
+                <Textbox
                     id="standard-adornment-amount"
-                    startAdornment={
-                        <InputAdornment position="start">$</InputAdornment>
-                    }
+                    slotProps={{
+                        input: {
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    $
+                                </InputAdornment>
+                            ),
+                        },
+                    }}
+                    colourVariant="primary"
                     value={budget}
                     onChange={(e) => setBudget(parseInt(e.target.value))}
                     type="number"

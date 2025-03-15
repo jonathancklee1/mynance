@@ -7,12 +7,12 @@ interface rowData {
     id: number;
     date: string;
     expense: string;
-    cost: number;
+    cost: string;
 }
 function ExpensesTableBlock() {
     const [columns] = useState<GridColDef[]>([
-        { field: "date", headerName: "Date", width: 130 },
-        { field: "expense", headerName: "Expense", width: 130 },
+        { field: "date", headerName: "Date", width: 160 },
+        { field: "expense", headerName: "Expense", width: 160 },
         { field: "cost", headerName: "Cost ($)", width: 130 },
     ]);
 
@@ -21,41 +21,51 @@ function ExpensesTableBlock() {
             id: 100,
             date: new Date().toDateString(),
             expense: "Snow",
-            cost: 222,
+            cost: "222",
         },
         {
             id: 2,
             date: new Date().toDateString(),
             expense: "Lannister",
-            cost: 22,
+            cost: "22",
         },
         {
             id: 3,
             date: new Date().toDateString(),
             expense: "Lannister",
-            cost: 22,
+            cost: "22",
         },
-        { id: 4, date: new Date().toDateString(), expense: "Stark", cost: 22 },
+        {
+            id: 4,
+            date: new Date().toDateString(),
+            expense: "Stark",
+            cost: "22",
+        },
         {
             id: 5,
             date: new Date().toDateString(),
             expense: "Targaryen",
-            cost: 1,
+            cost: "1",
         },
         {
             id: 6,
             date: new Date().toDateString(),
             expense: "Melisandre",
-            cost: 1,
+            cost: "1",
         },
         {
             id: 7,
             date: new Date().toDateString(),
             expense: "Clifford",
-            cost: 22,
+            cost: "22",
         },
-        { id: 8, date: new Date().toDateString(), expense: "Frances", cost: 2 },
-        { id: 9, date: new Date().toDateString(), expense: "Roxie", cost: 2 },
+        {
+            id: 8,
+            date: new Date().toDateString(),
+            expense: "Frances",
+            cost: "2",
+        },
+        { id: 9, date: new Date().toDateString(), expense: "Roxie", cost: "2" },
     ]);
 
     const [expenseName, setExpenseName] = useState<string>("");
@@ -87,7 +97,7 @@ function ExpensesTableBlock() {
                         id: number;
                         date: string;
                         expense: string;
-                        cost: number;
+                        cost: string;
                     }[]
                 >
             ): void;
@@ -122,6 +132,7 @@ function ExpensesTableBlock() {
                         color="secondary"
                         fullWidth
                         size="small"
+                        colourVariant="secondary"
                         sx={{
                             input: { color: "text.primary", fontSize: 24 },
                             backgroundColor: "secondary.main",
@@ -146,6 +157,7 @@ function ExpensesTableBlock() {
                         fullWidth
                         color="secondary"
                         size="small"
+                        colourVariant="secondary"
                         sx={{
                             input: { color: "text.primary", fontSize: 24 },
                             backgroundColor: "secondary.main",

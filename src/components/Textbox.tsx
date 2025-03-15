@@ -10,6 +10,7 @@ function Textbox(
     props: JSX.IntrinsicAttributes & {
         variant?: TextFieldVariants | undefined;
         label?: string;
+        colourVariant: "secondary" | "primary";
     } & Omit<
             | FilledTextFieldProps
             | OutlinedTextFieldProps
@@ -17,22 +18,35 @@ function Textbox(
             "variant"
         >
 ) {
-    return (
-        <TextField
-            {...props}
-            id="filled-basic"
-            variant="filled"
-            label={props.label}
-            color="secondary"
-            fullWidth
-            size="small"
-            sx={{
-                input: { color: "text.primary", fontSize: 24 },
-                backgroundColor: "secondary.main",
-                maxWidth: "800px",
-            }}
-        />
-    );
+    {
+        return props.colourVariant === "secondary" ? (
+            <TextField
+                {...props}
+                id="filled-basic"
+                variant="filled"
+                label={props.label}
+                color="secondary"
+                fullWidth
+                size="small"
+                sx={{
+                    input: { color: "text.primary", fontSize: 24 },
+                    backgroundColor: "secondary.main",
+                    maxWidth: "800px",
+                }}
+            />
+        ) : (
+            <TextField
+                {...props}
+                label={props.label}
+                fullWidth
+                sx={{
+                    fontWeight: "bold",
+                    textAlign: "center",
+                    cursor: "pointer",
+                }}
+            />
+        );
+    }
 }
 
 export default Textbox;
