@@ -13,17 +13,20 @@ import EditModal from "../EditModal";
 import { useState } from "react";
 import Textbox from "../Textbox";
 import { recurringExpenseItem } from "../types/interfaces";
+import useExpenseStore from "../../stores/ExpenseStore";
 
 function RecurringExpenseBlock() {
-    const [recurringExpenses, setRecurringExpenses] = useState([
-        { id: 0, name: "Groceries", amount: 50 },
-        { id: 1, name: "Utilities", amount: 100 },
-        { id: 2, name: "Entertainment", amount: 75 },
-    ]);
+    const {
+        recurringExpenses,
+        setRecurringExpenses,
+        addRecurringExpense,
+        deleteRecurringExpense,
+    } = useExpenseStore();
     const [open, setOpen] = useState(false);
+    const [addOpen, setAddOpen] = useState(false);
     const [selectedExpense, setSelectedExpense] =
         useState<recurringExpenseItem>({
-            id: 0,
+            id: crypto.randomUUID(),
             name: "",
             amount: 0,
         });
@@ -32,6 +35,12 @@ function RecurringExpenseBlock() {
     };
     const handleClose = () => {
         setOpen(false);
+    };
+    const handleAddOpen = () => {
+        setAddOpen(true);
+    };
+    const handleAddClose = () => {
+        setAddOpen(false);
     };
     return (
         <>
@@ -74,13 +83,30 @@ function RecurringExpenseBlock() {
                     </ListItem>
                 ))}
             </List>
+            <Button
+                variant="text"
+                fullWidth
+                sx={{ backgroundColor: "primary.main" }}
+                onClick={() => {
+                    handleAddOpen();
+                }}
+            >
+                Add Recurring Expense
+            </Button>
             <EditModal open={open} setClose={handleClose}>
                 <EditRecurringExpenseBlock
                     selectedExpense={selectedExpense}
                     setRecurringExpenses={setRecurringExpenses}
                     recurringExpenses={recurringExpenses}
                     handleClose={handleClose}
+                    deleteRecurringExpense={deleteRecurringExpense}
                 ></EditRecurringExpenseBlock>
+            </EditModal>
+            <EditModal open={addOpen} setClose={handleAddClose}>
+                <AddRecurringExpenseBlock
+                    handleClose={handleAddClose}
+                    addRecurringExpense={addRecurringExpense}
+                ></AddRecurringExpenseBlock>
             </EditModal>
         </>
     );
@@ -90,12 +116,15 @@ function EditRecurringExpenseBlock({
     selectedExpense,
     recurringExpenses,
     handleClose,
+    deleteRecurringExpense,
 }: {
     selectedExpense: recurringExpenseItem;
     recurringExpenses: recurringExpenseItem[];
     setRecurringExpenses: React.Dispatch<
         React.SetStateAction<recurringExpenseItem[]>
     >;
+    handleClose: () => void;
+    deleteRecurringExpense: (expenseItem: recurringExpenseItem) => void;
 }) {
     return (
         <>
@@ -114,6 +143,7 @@ function EditRecurringExpenseBlock({
                 <Textbox
                     label={"Name"}
                     variant={"outlined"}
+                    colourVariant={"primary"}
                     value={
                         recurringExpenses.find(
                             (expense: recurringExpenseItem) =>
@@ -140,6 +170,7 @@ function EditRecurringExpenseBlock({
                 <Textbox
                     label={"Amount ($)"}
                     variant={"outlined"}
+                    colourVariant={"primary"}
                     value={
                         recurringExpenses.find(
                             (expense: recurringExpenseItem) =>
@@ -181,10 +212,82 @@ function EditRecurringExpenseBlock({
                                 }
                             )
                         );
+                        deleteRecurringExpense(selectedExpense);
                         handleClose();
                     }}
                 >
                     Delete Expense
+                </Button>
+            </Stack>
+        </>
+    );
+}
+function AddRecurringExpenseBlock({
+    handleClose,
+    addRecurringExpense,
+}: {
+    handleClose: () => void;
+    addRecurringExpense: (expenseItem: recurringExpenseItem) => void;
+}) {
+    const [newRecurringExpense, setNewRecurringExpense] = useState({
+        id: crypto.randomUUID(),
+        name: "",
+        amount: 0,
+    });
+    return (
+        <>
+            <Typography
+                variant="h5"
+                color={"secondary.contrastText"}
+                sx={{
+                    fontWeight: "bold",
+                    textAlign: "center",
+                    marginBottom: 2,
+                }}
+            >
+                Add your recurring expenses
+            </Typography>
+            <Stack spacing={2}>
+                <Textbox
+                    label={"Name"}
+                    variant={"outlined"}
+                    colourVariant={"primary"}
+                    value={newRecurringExpense.name}
+                    onChange={(e) => {
+                        setNewRecurringExpense((prev) => {
+                            return {
+                                ...prev,
+                                name: e.target.value,
+                            };
+                        });
+                        console.log("expense changes");
+                    }}
+                ></Textbox>
+                <Textbox
+                    label={"Amount ($)"}
+                    variant={"outlined"}
+                    colourVariant={"primary"}
+                    type="number"
+                    value={newRecurringExpense.amount}
+                    onChange={(e) => {
+                        setNewRecurringExpense((prev) => {
+                            return {
+                                ...prev,
+                                amount: parseInt(e.target.value),
+                            };
+                        });
+                        console.log("expense changes");
+                    }}
+                ></Textbox>
+                <Button
+                    variant="text"
+                    onClick={() => {
+                        addRecurringExpense(newRecurringExpense);
+                        handleClose();
+                    }}
+                    sx={{ backgroundColor: "primary.main" }}
+                >
+                    Add Expense
                 </Button>
             </Stack>
         </>

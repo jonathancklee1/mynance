@@ -36,7 +36,11 @@ const useExpenseStore = create((set) => ({
             cost: "1",
         },
     ] as expenseItem[],
-    recurringExpenses: [] as recurringExpenseItem[],
+    recurringExpenses: [
+        { id: crypto.randomUUID(), name: "Groceries", amount: 50 },
+        { id: crypto.randomUUID(), name: "Utilities", amount: 100 },
+        { id: crypto.randomUUID(), name: "Entertainment", amount: 75 },
+    ] as recurringExpenseItem[],
     setExpenses: (expenses: expenseItem[]) => set({ expenses }),
     addExpenses: (expense: expenseItem[]) =>
         set((state) => {
@@ -56,10 +60,10 @@ const useExpenseStore = create((set) => ({
         set((state) => ({
             recurringExpenses: [...state.recurringExpenses, expense],
         })),
-    deleteRecurringExpenses: (expenseArray: expenseItem[]) =>
+    deleteRecurringExpense: (expenseItem: expenseItem) =>
         set((state) => ({
             recurringExpenses: state.recurringExpenses.filter((expense) => {
-                return !expenseArray.includes(expense);
+                return expense !== expenseItem;
             }),
         })),
 }));
