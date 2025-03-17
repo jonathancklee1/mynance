@@ -6,7 +6,6 @@ import useExpenseStore from "../../stores/ExpenseStore";
 
 function ExpensesTableBlock() {
     const { expenses, addExpenses, deleteExpenses } = useExpenseStore();
-    // const expenses = useExpenseStore((state) => state.expenses);
     const [columns] = useState<GridColDef[]>([
         { field: "date", headerName: "Date", width: 160 },
         { field: "expense", headerName: "Expense", width: 160 },

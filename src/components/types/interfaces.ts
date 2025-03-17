@@ -1,7 +1,7 @@
 export interface recurringExpenseItem {
     id: string;
     name: string;
-    amount: number;
+    cost: number;
 }
 
 export interface expenseItem {

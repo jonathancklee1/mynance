@@ -28,7 +28,7 @@ function RecurringExpenseBlock() {
         useState<recurringExpenseItem>({
             id: crypto.randomUUID(),
             name: "",
-            amount: 0,
+            cost: 0,
         });
     const handleOpen = () => {
         setOpen(true);
@@ -77,7 +77,7 @@ function RecurringExpenseBlock() {
                                 variant="h6"
                                 sx={{ fontWeight: "bold" }}
                             >
-                                ${expense.amount}
+                                ${expense.cost}
                             </Typography>
                         </ListItemButton>
                     </ListItem>
@@ -175,7 +175,7 @@ function EditRecurringExpenseBlock({
                         recurringExpenses.find(
                             (expense: recurringExpenseItem) =>
                                 expense.id === selectedExpense.id
-                        )?.amount
+                        )?.cost
                     }
                     onChange={(e) => {
                         setRecurringExpenses(
@@ -232,7 +232,7 @@ function AddRecurringExpenseBlock({
     const [newRecurringExpense, setNewRecurringExpense] = useState({
         id: crypto.randomUUID(),
         name: "",
-        amount: 0,
+        cost: 0,
     });
     return (
         <>
