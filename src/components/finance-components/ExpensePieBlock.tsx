@@ -1,7 +1,11 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { PieChart } from "@mui/x-charts";
 import useExpenseStore from "../../stores/ExpenseStore";
-import { expenseItem, recurringExpenseItem } from "../types/interfaces";
+import {
+    expenseItem,
+    recurringExpenseItem,
+    PieChartData,
+} from "../types/interfaces";
 
 function ExpensePieBlock() {
     const randColour = () => {
@@ -42,7 +46,7 @@ function ExpensePieBlock() {
                         cy: 100,
                         valueFormatter: (params) => {
                             const percent = params.value / 100;
-                            return `${(percent * 100).toFixed(1)}%`;
+                            return `${(percent * 100).toFixed(0)}%`;
                         },
                     },
                 ]}
@@ -50,6 +54,14 @@ function ExpensePieBlock() {
                 height={200}
                 slotProps={{
                     legend: { hidden: true },
+                    popper: {
+                        sx: {
+                            "& .MuiChartsTooltip-paper": {
+                                backgroundColor: "primary.main",
+                                fontFamily: "Helvetica, Arial, sans-serif",
+                            },
+                        },
+                    },
                 }}
                 margin={{ bottom: 40 }}
             />
@@ -57,9 +69,24 @@ function ExpensePieBlock() {
                 <Stack
                     spacing={2}
                     display={"flex"}
-                    sx={{ maxHeight: 200, overflow: "auto" }}
+                    sx={{
+                        maxHeight: 200,
+                        overflow: "auto",
+                        paddingRight: 1,
+                        "&::-webkit-scrollbar": {
+                            backgroundColor: "primary.light",
+                        },
+                        "&::-webkit-scrollbar-track": {
+                            backgroundColor: "primary.light",
+                        },
+                        "&::-webkit-scrollbar-thumb": {
+                            borderRadius: "6px",
+                            boxShadow: "inset 0 0 6px rgba(0,0,0,.3)",
+                            backgroundColor: "primary.main",
+                        },
+                    }}
                 >
-                    {expensePieData.map((asset) => (
+                    {expensePieData.map((asset: PieChartData) => (
                         <Box
                             display={"flex"}
                             alignItems={"center"}
@@ -81,7 +108,7 @@ function ExpensePieBlock() {
                                 {asset.label}
                             </Typography>
                             <Typography variant="body1">
-                                {asset.value}
+                                ${asset.value}
                             </Typography>
                         </Box>
                     ))}

@@ -10,3 +10,10 @@ export interface expenseItem {
     expense: string;
     cost: string;
 }
+
+export interface PieChartData {
+    id: string;
+    label: string;
+    value: number;
+    color: string;
+}
