@@ -1,4 +1,4 @@
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, InputAdornment, TextField, Typography } from "@mui/material";
 import EditModal from "../EditModal";
 import { useState } from "react";
 import Textbox from "../Textbox";
@@ -69,6 +69,13 @@ function EditCapitalBlock({
                 placeholder="Enter your capital"
                 value={capital}
                 onChange={(e) => setCapital(e.target.value)}
+                slotProps={{
+                    input: {
+                        startAdornment: (
+                            <InputAdornment position="start">$</InputAdornment>
+                        ),
+                    },
+                }}
             ></Textbox>
         </>
     );

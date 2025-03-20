@@ -74,7 +74,6 @@ function ExpensesTableBlock() {
                         sx={{
                             input: { color: "text.primary", fontSize: 24 },
                             backgroundColor: "secondary.main",
-                            maxWidth: "800px",
                         }}
                         onChange={(e) => setExpenseName(e.target.value)}
                     />
@@ -99,7 +98,6 @@ function ExpensesTableBlock() {
                         sx={{
                             input: { color: "text.primary", fontSize: 24 },
                             backgroundColor: "secondary.main",
-                            maxWidth: "800px",
                         }}
                         onChange={(e) => setExpenseCost(e.target.value)}
                     />

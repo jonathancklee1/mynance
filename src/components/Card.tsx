@@ -1,7 +1,13 @@
 import { Paper } from "@mui/material";
 import React from "react";
-
-function Card({ children }: { children: React.ReactNode }) {
+import BuildIcon from "@mui/icons-material/Build";
+function Card({
+    children,
+    isEditable,
+}: {
+    children: React.ReactNode;
+    isEditable?: boolean;
+}) {
     return (
         <Paper
             sx={{
@@ -19,6 +25,17 @@ function Card({ children }: { children: React.ReactNode }) {
             }}
         >
             {children}
+            {isEditable && (
+                <BuildIcon
+                    sx={{
+                        fontSize: 20,
+                        color: "secondary.contrastText",
+                        position: "absolute",
+                        top: 20,
+                        right: 20,
+                    }}
+                />
+            )}
         </Paper>
     );
 }

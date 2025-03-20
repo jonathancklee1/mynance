@@ -44,7 +44,7 @@ function Finance() {
                         },
                     }}
                 >
-                    <Card>
+                    <Card isEditable>
                         <Typography
                             variant="h5"
                             color={"primary.contrastText"}
@@ -66,7 +66,7 @@ function Finance() {
                         },
                     }}
                 >
-                    <Card>
+                    <Card isEditable>
                         <Typography
                             variant="h5"
                             color={"primary.contrastText"}
@@ -109,7 +109,7 @@ function Finance() {
                         },
                     }}
                 >
-                    <Card>
+                    <Card isEditable>
                         <Typography
                             variant="h5"
                             color={"primary.contrastText"}
@@ -150,7 +150,7 @@ function Finance() {
                         },
                     }}
                 >
-                    <Card>
+                    <Card isEditable>
                         <Typography
                             variant="h5"
                             color={"primary.contrastText"}

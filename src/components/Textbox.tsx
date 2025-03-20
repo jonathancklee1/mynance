@@ -31,7 +31,6 @@ function Textbox(
                 sx={{
                     input: { color: "text.primary", fontSize: 24 },
                     backgroundColor: "secondary.main",
-                    maxWidth: "800px",
                 }}
             />
         ) : (
