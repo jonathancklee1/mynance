@@ -22,6 +22,11 @@ function Card({
                 justifyContent: "center",
                 flexDirection: "column",
                 height: "100%",
+                "&:hover": {
+                    "& >svg": {
+                        scale: 1.25,
+                    },
+                },
             }}
         >
             {children}
@@ -33,6 +38,7 @@ function Card({
                         position: "absolute",
                         top: 20,
                         right: 20,
+                        transition: "all 100ms ease-in-out",
                     }}
                 />
             )}

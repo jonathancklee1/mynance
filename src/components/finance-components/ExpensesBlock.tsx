@@ -1,15 +1,35 @@
 import { BarChart } from "@mui/x-charts/BarChart/BarChart";
+import useExpenseStore from "../../stores/ExpenseStore";
+import { expenseItem } from "../types/interfaces";
 
+interface ExpenseBlockData {
+    day: string;
+    amount: number;
+}
 function ExpensesBlock() {
-    const weeklyExpenseData = [
-        { day: "Sun", amount: 10 },
-        { day: "Mon", amount: 15 },
-        { day: "Tue", amount: 20 },
-        { day: "Wed", amount: 25 },
-        { day: "Thu", amount: 30 },
-        { day: "Fri", amount: 35 },
-        { day: "Sat", amount: 40 },
+    const { expenses } = useExpenseStore();
+    const initialExpenseData = [
+        { day: "Sun", amount: 0 },
+        { day: "Mon", amount: 0 },
+        { day: "Tue", amount: 0 },
+        { day: "Wed", amount: 0 },
+        { day: "Thu", amount: 0 },
+        { day: "Fri", amount: 0 },
+        { day: "Sat", amount: 0 },
     ];
+    const weeklyExpenseData = expenses.reduce(
+        (acc: ExpenseBlockData[], expense: expenseItem) => {
+            const expenseDay = expense.date.split(" ")[0].toString();
+            acc.forEach((_, i) => {
+                if (acc[i].day === expenseDay) {
+                    acc[i].amount += parseInt(expense.cost);
+                }
+            });
+            return acc;
+        },
+        initialExpenseData
+    );
+
     return (
         <>
             <BarChart
@@ -23,11 +43,17 @@ function ExpensesBlock() {
                         label: "Day of week",
                         scaleType: "band",
 
-                        data: weeklyExpenseData.map((item) => item.day),
+                        data: weeklyExpenseData.map(
+                            (item: ExpenseBlockData) => item.day
+                        ),
                     },
                 ]}
                 series={[
-                    { data: weeklyExpenseData.map((item) => item.amount) },
+                    {
+                        data: weeklyExpenseData.map(
+                            (item: ExpenseBlockData) => item.amount
+                        ),
+                    },
                 ]}
                 sx={{
                     ".MuiChartsAxis-label": {

@@ -7,7 +7,7 @@ const useExpenseStore = create((set) => ({
     expenses: [
         {
             id: crypto.randomUUID(),
-            date: new Date().toDateString(),
+            date: "Fri Mar 22 2025",
             expense: "Transport",
             cost: "222",
         },
