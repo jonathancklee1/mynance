@@ -10,6 +10,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import EditModal from "../EditModal";
 import { useState } from "react";
 import Textbox from "../Textbox";
+import useExpenseStore from "../../stores/ExpenseStore";
 
 interface EditProgressBarProps {
     budget: number;
@@ -21,8 +22,8 @@ interface ProgressBarWithLabelProps {
 }
 
 function ProgressBlock() {
+    const { getTotalExpenses } = useExpenseStore();
     const [open, setOpen] = useState(false);
-    const [expense] = useState(400);
     const [budget, setBudget] = useState(1000);
     const handleOpen = () => {
         setOpen(true);
@@ -50,7 +51,7 @@ function ProgressBlock() {
                             color: "primary.main",
                         }}
                     >
-                        ${expense}
+                        ${budget - getTotalExpenses()}
                     </Typography>{" "}
                     left out of your{" "}
                     <Button
@@ -72,7 +73,7 @@ function ProgressBlock() {
                     total expense budget
                 </Typography>
                 <ProgressBarWithLabel
-                    expense={expense}
+                    expense={getTotalExpenses()}
                     budget={budget}
                 ></ProgressBarWithLabel>
                 {/* <LinearProgress variant="determinate" value={80} /> */}

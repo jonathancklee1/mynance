@@ -6,7 +6,7 @@ import {
 import { persist, createJSONStorage } from "zustand/middleware";
 const useExpenseStore = create(
     persist(
-        (set) => ({
+        (set, get) => ({
             expenses: [] as expenseItem[],
             recurringExpenses: [] as recurringExpenseItem[],
             addExpenses: (expense: expenseItem[]) =>
@@ -21,6 +21,8 @@ const useExpenseStore = create(
                         return !expenseArray.includes(expense.id);
                     }),
                 })),
+            setRecurringExpenses: (recurringExpenses: recurringExpenseItem[]) =>
+                set({ recurringExpenses }),
             addRecurringExpense: (expense: expenseItem) =>
                 set((state) => ({
                     recurringExpenses: [...state.recurringExpenses, expense],
@@ -33,6 +35,16 @@ const useExpenseStore = create(
                         }
                     ),
                 })),
+            getTotalExpenses: () => {
+                let totalExpenses = 0;
+                get().expenses.forEach((expense) => {
+                    totalExpenses += parseInt(expense.cost);
+                });
+                get().recurringExpenses.forEach((expense) => {
+                    totalExpenses += parseInt(expense.cost);
+                });
+                return totalExpenses;
+            },
         }),
         {
             name: "expense-storage",

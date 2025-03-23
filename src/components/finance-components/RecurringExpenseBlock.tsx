@@ -268,15 +268,14 @@ function AddRecurringExpenseBlock({
                     variant={"outlined"}
                     colourVariant={"primary"}
                     type="number"
-                    value={newRecurringExpense.amount}
+                    value={newRecurringExpense.cost}
                     onChange={(e) => {
                         setNewRecurringExpense((prev) => {
                             return {
                                 ...prev,
-                                amount: parseInt(e.target.value),
+                                cost: parseInt(e.target.value),
                             };
                         });
-                        console.log("expense changes");
                     }}
                 ></Textbox>
                 <Button
