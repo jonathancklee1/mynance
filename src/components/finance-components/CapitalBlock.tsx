@@ -1,11 +1,14 @@
-import { Box, InputAdornment, TextField, Typography } from "@mui/material";
+import { Box, InputAdornment, Typography } from "@mui/material";
 import EditModal from "../EditModal";
 import { useState } from "react";
 import Textbox from "../Textbox";
+import useConvertToDollar from "../../hooks/useConvertToDollar";
 
 function CapitalBlock() {
     const [open, setOpen] = useState(false);
-    const [capital, setCapital] = useState("30000");
+    const [capital, setCapital] = useState(
+        parseInt(localStorage.getItem("capital") ?? "0") ?? 0
+    );
     const handleOpen = () => {
         setOpen(true);
     };
@@ -25,12 +28,7 @@ function CapitalBlock() {
                         cursor: "pointer",
                     }}
                 >
-                    {"$" +
-                        (!Number.isNaN(parseInt(capital))
-                            ? parseInt(capital)
-                                  .toFixed(2)
-                                  .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
-                            : "0.00")}
+                    {"$" + useConvertToDollar(capital)}
                 </Typography>
             </Box>
             <EditModal open={open} setClose={handleClose}>
@@ -46,9 +44,15 @@ function EditCapitalBlock({
     capital,
     setCapital,
 }: {
-    capital: string;
-    setCapital: (newCapital: string) => void;
+    capital: number;
+    setCapital: (newCapital: number) => void;
 }) {
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const capitalValue = e.target.value;
+        if (!e.target.value || isNaN(parseInt(capitalValue))) setCapital(0);
+        setCapital(parseInt(capitalValue));
+        localStorage.setItem("capital", capitalValue);
+    }
     return (
         <>
             <Typography
@@ -68,7 +72,7 @@ function EditCapitalBlock({
                 type="number"
                 placeholder="Enter your capital"
                 value={capital}
-                onChange={(e) => setCapital(e.target.value)}
+                onChange={handleChange}
                 slotProps={{
                     input: {
                         startAdornment: (
