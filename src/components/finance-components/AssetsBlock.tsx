@@ -1,9 +1,15 @@
 import { Box, Button, Stack, Typography, ButtonGroup } from "@mui/material";
 import { PieChart } from "@mui/x-charts";
-import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid";
+import {
+    DataGrid,
+    GridColDef,
+    GridRowId,
+    GridRowsProp,
+} from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { randomId } from "@mui/x-data-grid-generator";
 import EditModal from "../EditModal";
+import { useRandomColour } from "../../hooks/useRandomColour";
 
 interface AssetDataItem {
     id: string;
@@ -20,11 +26,11 @@ function AssetsBlock() {
         setOpen(false);
     };
 
-    const [assetData, setAssetData] = useState<AssetDataItem[]>([
-        { id: randomId(), value: 100, name: "Savings", color: "#fd2" },
-        { id: randomId(), value: 15, name: "Stocks", color: "#342" },
-        { id: randomId(), value: 20, name: "Cypto", color: "#FFF" },
-    ]);
+    const [assetData, setAssetData] = useState<AssetDataItem[]>(
+        localStorage.getItem("assets")
+            ? JSON.parse(localStorage.getItem("assets") ?? "")
+            : []
+    );
     useEffect(() => {
         console.log(assetData);
     }, [assetData]);
@@ -108,20 +114,22 @@ function EditAssetBlock({
     assetData: AssetDataItem[];
     setAssetData: React.Dispatch<React.SetStateAction<AssetDataItem[]>>;
 }) {
-    const [selectedRows, setSelectedRows] = useState([]);
-
+    const [selectedRows, setSelectedRows] = useState<GridRowId[]>([]);
+    useEffect(() => {
+        localStorage.setItem("assets", JSON.stringify(assetData));
+    }, [assetData]);
     const columns: GridColDef[] = [
         {
             field: "name",
             headerName: "Name",
-            width: 180,
+            width: 150,
             editable: true,
         },
         {
             field: "value",
             headerName: "Amount ($)",
             type: "number",
-            width: 180,
+            width: 130,
             align: "left",
             headerAlign: "left",
             editable: true,
@@ -129,7 +137,7 @@ function EditAssetBlock({
         {
             field: "color",
             headerName: "Color",
-            width: 180,
+            width: 150,
             editable: true,
         },
     ];
@@ -141,10 +149,11 @@ function EditAssetBlock({
         color: asset.color,
     }));
 
+    const colour = useRandomColour();
     const handleAddRow = () => {
         const id = randomId();
         setAssetData((prevAsset) => [
-            { id: id, value: 0, name: "New Asset", color: "#FFF" },
+            { id: id, value: 0, name: "New Asset", color: colour },
             ...prevAsset,
         ]);
     };
@@ -181,12 +190,11 @@ function EditAssetBlock({
                     "& .MuiDataGrid-row--editing .MuiDataGrid-cell": {
                         backgroundColor: "secondary.main",
                     },
+                    "& .Mui-focused": {
+                        backgroundColor: "secondary.light",
+                    },
                 }}
-                // rowModesModel={rowModesModel}
-                // onRowModesModelChange={handleRowModesModelChange}
-
-                processRowUpdate={(newRow, oldRow, params) => {
-                    console.log("processRowUpdate", newRow, oldRow, params);
+                processRowUpdate={(newRow, _, params) => {
                     setAssetData((prevAsset) => {
                         const newArray = prevAsset.map((asset) => {
                             if (asset.id === params.rowId) {
@@ -195,7 +203,6 @@ function EditAssetBlock({
                                 return asset;
                             }
                         });
-                        console.log("new array", newArray);
                         return newArray;
                     });
                     return newRow;
@@ -205,9 +212,8 @@ function EditAssetBlock({
                 }}
                 onRowSelectionModelChange={(ids) => {
                     const selectedIDs = new Set(ids);
-
                     const selectedIdArray = Array.from(selectedIDs);
-                    console.log("selectedRows", selectedIdArray);
+                    console.log(selectedIdArray);
                     setSelectedRows(selectedIdArray);
                 }}
             />
