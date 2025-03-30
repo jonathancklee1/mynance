@@ -9,7 +9,10 @@ import ExpensePieBlock from "../components/finance-components/ExpensePieBlock";
 import RecurringExpenseBlock from "../components/finance-components/RecurringExpenseBlock";
 import ExpensesTableBlock from "../components/finance-components/ExpensesTableBlock";
 import CapitalBlock from "../components/finance-components/CapitalBlock";
+import useExpenseStore from "../stores/ExpenseStore";
 function Finance() {
+    const { getWeekExpenses } = useExpenseStore();
+    const { firstDayString, lastDayString } = getWeekExpenses();
     return (
         <>
             <NavBar></NavBar>
@@ -97,6 +100,9 @@ function Finance() {
                             marginBottom={2}
                         >
                             My Weekly Expenses
+                        </Typography>
+                        <Typography>
+                            {firstDayString} - {lastDayString}
                         </Typography>
                         <ExpensesBlock></ExpensesBlock>
                     </Card>

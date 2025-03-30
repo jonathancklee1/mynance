@@ -45,6 +45,31 @@ const useExpenseStore = create(
                 });
                 return totalExpenses;
             },
+
+            getWeekExpenses: () => {
+                const weekExpenses = [] as expenseItem[];
+                const today = new Date();
+                const firstDayOfWeek = new Date(
+                    today.setDate(today.getDate() - today.getDay())
+                ).setHours(0, 0, 0, 0);
+                const lastDayOfWeek = new Date(
+                    today.setDate(today.getDate() + 6)
+                ).setHours(0, 0, 0, 0);
+                function isDateInCurrentWeek(date) {
+                    return date >= firstDayOfWeek && date <= lastDayOfWeek;
+                }
+
+                get().expenses.forEach((expense: expenseItem) => {
+                    const expenseDay = new Date(expense.date);
+                    if (isDateInCurrentWeek(expenseDay)) {
+                        weekExpenses.push(expense);
+                    }
+                });
+
+                const firstDayString = new Date(firstDayOfWeek).toDateString();
+                const lastDayString = new Date(lastDayOfWeek).toDateString();
+                return { weekExpenses, firstDayString, lastDayString };
+            },
         }),
         {
             name: "expense-storage",

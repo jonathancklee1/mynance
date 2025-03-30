@@ -7,7 +7,8 @@ interface ExpenseBlockData {
     amount: number;
 }
 function ExpensesBlock() {
-    const { expenses } = useExpenseStore();
+    const { getWeekExpenses } = useExpenseStore();
+    const { weekExpenses, firstDayOfWeek, lastDayOfWeek } = getWeekExpenses();
     const initialExpenseData = [
         { day: "Sun", amount: 0 },
         { day: "Mon", amount: 0 },
@@ -17,7 +18,7 @@ function ExpensesBlock() {
         { day: "Fri", amount: 0 },
         { day: "Sat", amount: 0 },
     ];
-    const weeklyExpenseData = expenses.reduce(
+    const weeklyExpenseData = weekExpenses.reduce(
         (acc: ExpenseBlockData[], expense: expenseItem) => {
             const expenseDay = expense.date.split(" ")[0].toString();
             acc.forEach((_, i) => {
