@@ -17,3 +17,11 @@ export interface PieChartData {
     value: number;
     color: string;
 }
+
+export interface investmentItem {
+    id: string;
+    name: string;
+    cost: number;
+    amount: number;
+    ticker?: string;
+}
