@@ -66,6 +66,23 @@ const theme = createTheme({
                 },
             },
         },
+        MuiAutocomplete: {
+            styleOverrides: {
+                root: {
+                    color: "#fff",
+                    backgroundColor: "#0C0637",
+                    borderRadius: 26,
+                    border: "none",
+                    ".css-nye94i-MuiFormLabel-root-MuiInputLabel-root.Mui-focused":
+                        {
+                            color: "#fff",
+                        },
+                    "& .css-1f8988k-MuiPaper-root-MuiAutocomplete-paper": {
+                        backgroundColor: "#0C0637 !important",
+                    },
+                },
+            },
+        },
     },
     breakpoints: {
         values: {

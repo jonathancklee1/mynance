@@ -13,6 +13,13 @@ const useInvestmentStore = create(
                     amount: 3,
                     ticker: "NVDA",
                 },
+                {
+                    id: crypto.randomUUID(),
+                    name: "AMD",
+                    cost: 50,
+                    amount: 3,
+                    ticker: "AMD",
+                },
             ] as investmentItem[],
             addInvestments: (investment: investmentItem[]) =>
                 set((state) => ({

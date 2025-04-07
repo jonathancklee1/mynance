@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 import Card from "../components/Card";
 import SummaryBlock from "../components/investment-components/SummaryBlock";
 import PortfolioPieBlock from "../components/investment-components/PortfolioPieBlock";
+import StocksBlock from "../components/investment-components/StocksBlock";
 
 function Investments() {
     return (
@@ -72,6 +73,29 @@ function Investments() {
                             My Portfolio
                         </Typography>
                         <PortfolioPieBlock></PortfolioPieBlock>
+                    </Card>
+                </Box>
+                <Box
+                    sx={{
+                        gridColumn: "span 12",
+                        gridRow: "span 1",
+                        "@media (min-width: 1024px)": {
+                            gridColumn: "span 4",
+                            gridRow: "span 3",
+                            gridRowStart: 1,
+                        },
+                    }}
+                >
+                    <Card isEditable>
+                        <Typography
+                            variant="h5"
+                            color={"primary.contrastText"}
+                            sx={{ fontWeight: "bold", textAlign: "center" }}
+                            marginBottom={2}
+                        >
+                            My Holdings
+                        </Typography>
+                        <StocksBlock></StocksBlock>
                     </Card>
                 </Box>
             </Box>
