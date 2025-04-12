@@ -19,6 +19,7 @@ function EditModal({
                     "& .MuiDialog-paper": {
                         backgroundColor: "secondary.main",
                         borderRadius: 2,
+                        overflowY: "visible",
                     },
                 }}
             >

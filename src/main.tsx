@@ -15,7 +15,13 @@ const theme = createTheme({
         },
         secondary: {
             main: "#3A5491",
+            light: "#3A5491",
+            dark: "#3A5491",
             contrastText: "#fff",
+        },
+        background: {
+            default: "#0C0637",
+            paper: "#0C0637",
         },
         text: {
             primary: "#fff",
@@ -69,16 +75,10 @@ const theme = createTheme({
         MuiAutocomplete: {
             styleOverrides: {
                 root: {
-                    color: "#fff",
-                    backgroundColor: "#0C0637",
                     borderRadius: 26,
                     border: "none",
-                    ".css-nye94i-MuiFormLabel-root-MuiInputLabel-root.Mui-focused":
-                        {
-                            color: "#fff",
-                        },
-                    "& .css-1f8988k-MuiPaper-root-MuiAutocomplete-paper": {
-                        backgroundColor: "#0C0637 !important",
+                    "& .MuiPaper-root": {
+                        overflowY: "visible",
                     },
                 },
             },
