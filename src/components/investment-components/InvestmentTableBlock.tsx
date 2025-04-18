@@ -1,43 +1,49 @@
-import { Box, Typography, Button, Paper, Stack } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { SetStateAction, useState } from "react";
+import { Box, Stack, Typography, Button, Paper } from "@mui/material";
+import { GridColDef, DataGrid } from "@mui/x-data-grid";
+import { useState, SetStateAction } from "react";
 import Textbox from "../Textbox";
-import useExpenseStore from "../../stores/ExpenseStore";
+import useInvestmentStore from "../../stores/InvestmentStore";
 
-function ExpensesTableBlock() {
-    const { expenses, addExpenses, deleteExpenses } = useExpenseStore();
+function InvestmentTableBlock() {
+    const { investments, addInvestments, deleteInvestments } =
+        useInvestmentStore();
     const [columns] = useState<GridColDef[]>([
         { field: "date", headerName: "Date", width: 160 },
-        { field: "expense", headerName: "Expense", width: 160 },
+        { field: "name", headerName: "Investment", width: 160 },
+        { field: "amount", headerName: "Number of Shares", width: 130 },
         { field: "cost", headerName: "Cost ($)", width: 130 },
     ]);
 
-    const [expenseName, setExpenseName] = useState<string>("");
-    const [expenseCost, setExpenseCost] = useState<string>("0");
+    const [investmentName, setInvestmentName] = useState<string>("");
+    const [investmentCost, setInvestmentCost] = useState<string>("0");
+    const [investmentAmount, setInvestmentAmount] = useState<string>("0");
     const [selectedRows, setSelectedRows] = useState<string[]>([]);
-    function handleAddExpense() {
-        if (expenseName && expenseCost) {
-            addExpenses([
+    function handleAddInvestment() {
+        if (investmentName && investmentCost) {
+            addInvestments([
                 {
                     id: crypto.randomUUID(),
                     date: new Date().toDateString(),
-                    expense: expenseName,
-                    cost: expenseCost,
+                    name: investmentName,
+                    cost: investmentCost,
+                    amount: investmentAmount,
+                    ticker: "NVDA",
                 },
             ]);
-            setExpenseName("");
-            setExpenseCost("0");
+            setInvestmentName("");
+            setInvestmentCost("0");
+            setInvestmentAmount("0");
         }
     }
 
     function handleRowSelection(
         selectedRows: string[],
-        deleteExpenses: {
+        deleteInvestments: {
             (value: SetStateAction<string[]>): void;
             (arg0: never[]): void;
         }
     ) {
-        deleteExpenses(selectedRows);
+        deleteInvestments(selectedRows);
     }
     return (
         <Box>
@@ -55,11 +61,11 @@ function ExpensesTableBlock() {
                         fontWeight={"bold"}
                         marginBottom={1}
                     >
-                        Enter Expense Name
+                        Enter Investment Name
                     </Typography>
                     <Textbox
                         id="filled-basic"
-                        label="Expense Name"
+                        label="Investment Name"
                         variant="filled"
                         color="secondary"
                         fullWidth
@@ -69,7 +75,7 @@ function ExpensesTableBlock() {
                             input: { color: "text.primary", fontSize: 24 },
                             backgroundColor: "secondary.main",
                         }}
-                        onChange={(e) => setExpenseName(e.target.value)}
+                        onChange={(e) => setInvestmentName(e.target.value)}
                     />
                 </Box>
                 <Box sx={{ width: "100%" }}>
@@ -78,11 +84,11 @@ function ExpensesTableBlock() {
                         fontWeight={"bold"}
                         marginBottom={1}
                     >
-                        Enter Expense Cost
+                        Enter Investment Cost
                     </Typography>
                     <Textbox
                         id="filled-basic"
-                        label="Expense Cost"
+                        label="Investment Cost"
                         variant="filled"
                         type="number"
                         fullWidth
@@ -93,7 +99,31 @@ function ExpensesTableBlock() {
                             input: { color: "text.primary", fontSize: 24 },
                             backgroundColor: "secondary.main",
                         }}
-                        onChange={(e) => setExpenseCost(e.target.value)}
+                        onChange={(e) => setInvestmentCost(e.target.value)}
+                    />
+                </Box>
+                <Box sx={{ width: "100%" }}>
+                    <Typography
+                        variant="body1"
+                        fontWeight={"bold"}
+                        marginBottom={1}
+                    >
+                        Enter Investment Amount
+                    </Typography>
+                    <Textbox
+                        id="filled-basic"
+                        label="Investment Amount"
+                        variant="filled"
+                        type="number"
+                        fullWidth
+                        color="secondary"
+                        size="small"
+                        colourVariant="secondary"
+                        sx={{
+                            input: { color: "text.primary", fontSize: 24 },
+                            backgroundColor: "secondary.main",
+                        }}
+                        onChange={(e) => setInvestmentAmount(e.target.value)}
                     />
                 </Box>
                 <Button
@@ -105,24 +135,22 @@ function ExpensesTableBlock() {
                         height: "60px",
                         marginTop: "auto",
                     }}
-                    onClick={handleAddExpense}
+                    onClick={handleAddInvestment}
                 >
-                    Add Expense
+                    Add Investment
                 </Button>
             </Stack>
 
             {/* Table */}
-
             <Paper
                 sx={{
-                    // height: 400,
                     width: "100%",
                     marginTop: 4,
                     backgroundColor: "secondary.main",
                 }}
             >
                 <DataGrid
-                    rows={expenses}
+                    rows={investments}
                     columns={columns}
                     pageSizeOptions={[5, 10]}
                     checkboxSelection
@@ -166,14 +194,14 @@ function ExpensesTableBlock() {
                         marginTop: 2,
                     }}
                     onClick={() =>
-                        handleRowSelection(selectedRows, deleteExpenses)
+                        handleRowSelection(selectedRows, deleteInvestments)
                     }
                 >
-                    Delete Selected Expenses
+                    Delete Selected Investments
                 </Button>
             )}
         </Box>
     );
 }
 
-export default ExpensesTableBlock;
+export default InvestmentTableBlock;

@@ -47,15 +47,7 @@ function Finance() {
                         },
                     }}
                 >
-                    <Card isEditable>
-                        <Typography
-                            variant="h5"
-                            color={"primary.contrastText"}
-                            sx={{ fontWeight: "bold", textAlign: "center" }}
-                            marginBottom={2}
-                        >
-                            My Capital
-                        </Typography>
+                    <Card isEditable cardHeader="My Capital">
                         <CapitalBlock></CapitalBlock>
                     </Card>
                 </Box>
@@ -69,15 +61,7 @@ function Finance() {
                         },
                     }}
                 >
-                    <Card isEditable>
-                        <Typography
-                            variant="h5"
-                            color={"primary.contrastText"}
-                            sx={{ fontWeight: "bold", textAlign: "center" }}
-                            marginBottom={2}
-                        >
-                            My Assets
-                        </Typography>
+                    <Card isEditable cardHeader="My Assets">
                         <AssetsBlock></AssetsBlock>
                     </Card>
                 </Box>
@@ -92,15 +76,7 @@ function Finance() {
                         },
                     }}
                 >
-                    <Card>
-                        <Typography
-                            variant="h5"
-                            color={"primary.contrastText"}
-                            sx={{ fontWeight: "bold", textAlign: "center" }}
-                            marginBottom={2}
-                        >
-                            My Weekly Expenses
-                        </Typography>
+                    <Card cardHeader="My Expenses">
                         <Typography>
                             {firstDayString} - {lastDayString}
                         </Typography>
@@ -115,15 +91,7 @@ function Finance() {
                         },
                     }}
                 >
-                    <Card isEditable>
-                        <Typography
-                            variant="h5"
-                            color={"primary.contrastText"}
-                            sx={{ fontWeight: "bold", textAlign: "center" }}
-                            marginBottom={2}
-                        >
-                            My Expense Progress
-                        </Typography>
+                    <Card isEditable cardHeader="My Expense Progress">
                         <ProgressBlock></ProgressBlock>
                     </Card>
                 </Box>
@@ -136,15 +104,7 @@ function Finance() {
                         },
                     }}
                 >
-                    <Card>
-                        <Typography
-                            variant="h5"
-                            color={"primary.contrastText"}
-                            sx={{ fontWeight: "bold", textAlign: "center" }}
-                            marginBottom={2}
-                        >
-                            Expense Diversity
-                        </Typography>
+                    <Card cardHeader="Expense Breakdown">
                         <ExpensePieBlock></ExpensePieBlock>
                     </Card>
                 </Box>
@@ -156,15 +116,7 @@ function Finance() {
                         },
                     }}
                 >
-                    <Card isEditable>
-                        <Typography
-                            variant="h5"
-                            color={"primary.contrastText"}
-                            sx={{ fontWeight: "bold", textAlign: "center" }}
-                            marginBottom={2}
-                        >
-                            Recurring Expenses
-                        </Typography>
+                    <Card isEditable cardHeader="Recurring Expenses">
                         <RecurringExpenseBlock></RecurringExpenseBlock>
                     </Card>
                 </Box>

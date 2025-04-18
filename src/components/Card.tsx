@@ -1,12 +1,14 @@
-import { Paper } from "@mui/material";
+import { Paper, Typography } from "@mui/material";
 import React from "react";
 import BuildIcon from "@mui/icons-material/Build";
 function Card({
     children,
     isEditable,
+    cardHeader,
 }: {
     children: React.ReactNode;
     isEditable?: boolean;
+    cardHeader: string;
 }) {
     return (
         <Paper
@@ -29,6 +31,14 @@ function Card({
                 },
             }}
         >
+            <Typography
+                variant="h5"
+                color={"primary.contrastText"}
+                sx={{ fontWeight: "bold", textAlign: "center" }}
+                marginBottom={2}
+            >
+                {cardHeader}
+            </Typography>
             {children}
             {isEditable && (
                 <BuildIcon

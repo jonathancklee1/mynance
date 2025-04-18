@@ -1,13 +1,23 @@
 import BottomNav from "../components/BottomNav";
 import NavBar from "../components/NavBar";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import Card from "../components/Card";
 import SummaryBlock from "../components/investment-components/SummaryBlock";
 import PortfolioPieBlock from "../components/investment-components/PortfolioPieBlock";
 import StocksBlock from "../components/investment-components/StocksBlock";
 import MoversBlock from "../components/investment-components/MoversBlock";
+import InvestmentTableBlock from "../components/investment-components/InvestmentTableBlock";
 
 function Investments() {
+    const gridItemClasses = {
+        gridColumn: "span 12",
+        gridRow: "span 1",
+        "@media (min-width: 1024px)": {
+            gridColumn: "span 4",
+            gridRow: "span 3",
+            gridRowStart: 1,
+        },
+    };
     return (
         <>
             <NavBar></NavBar>
@@ -32,95 +42,42 @@ function Investments() {
             >
                 <Box
                     sx={{
-                        gridColumn: "span 12",
-                        gridRow: "span 1",
-                        "@media (min-width: 1024px)": {
-                            gridColumn: "span 4",
-                            gridRow: "span 3",
-                            gridRowStart: 1,
-                        },
+                        ...gridItemClasses,
                     }}
                 >
-                    <Card isEditable>
-                        <Typography
-                            variant="h5"
-                            color={"primary.contrastText"}
-                            sx={{ fontWeight: "bold", textAlign: "center" }}
-                            marginBottom={2}
-                        >
-                            My Investment Summary
-                        </Typography>
+                    <Card isEditable cardHeader="My Investment Summary">
                         <SummaryBlock></SummaryBlock>
                     </Card>
                 </Box>
                 <Box
                     sx={{
-                        gridColumn: "span 12",
-                        gridRow: "span 1",
-                        "@media (min-width: 1024px)": {
-                            gridColumn: "span 4",
-                            gridRow: "span 3",
-                            gridRowStart: 1,
-                        },
+                        ...gridItemClasses,
                     }}
                 >
-                    <Card isEditable>
-                        <Typography
-                            variant="h5"
-                            color={"primary.contrastText"}
-                            sx={{ fontWeight: "bold", textAlign: "center" }}
-                            marginBottom={2}
-                        >
-                            My Portfolio
-                        </Typography>
+                    <Card isEditable cardHeader="My Portfolio">
                         <PortfolioPieBlock></PortfolioPieBlock>
                     </Card>
                 </Box>
                 <Box
                     sx={{
-                        gridColumn: "span 12",
-                        gridRow: "span 1",
-                        "@media (min-width: 1024px)": {
-                            gridColumn: "span 4",
-                            gridRow: "span 3",
-                            gridRowStart: 1,
-                        },
+                        ...gridItemClasses,
                     }}
                 >
-                    <Card isEditable>
-                        <Typography
-                            variant="h5"
-                            color={"primary.contrastText"}
-                            sx={{ fontWeight: "bold", textAlign: "center" }}
-                            marginBottom={2}
-                        >
-                            My Holdings
-                        </Typography>
+                    <Card isEditable cardHeader="My Holdings">
                         <StocksBlock></StocksBlock>
                     </Card>
                 </Box>
                 <Box
                     sx={{
-                        gridColumn: "span 12",
-                        gridRow: "span 1",
-                        "@media (min-width: 1024px)": {
-                            gridColumn: "span 4",
-                            gridRow: "span 3",
-                            gridRowStart: 1,
-                        },
+                        ...gridItemClasses,
                     }}
                 >
-                    <Card isEditable>
-                        <Typography
-                            variant="h5"
-                            color={"primary.contrastText"}
-                            sx={{ fontWeight: "bold", textAlign: "center" }}
-                            marginBottom={2}
-                        >
-                            My Daily Movers
-                        </Typography>
+                    <Card isEditable cardHeader="My Daily Movers">
                         <MoversBlock></MoversBlock>
                     </Card>
+                </Box>
+                <Box sx={{ gridColumn: "span 12" }}>
+                    <InvestmentTableBlock></InvestmentTableBlock>
                 </Box>
             </Box>
             <BottomNav></BottomNav>

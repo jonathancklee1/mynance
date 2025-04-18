@@ -1,9 +1,10 @@
 import {
-    Autocomplete,
     Box,
     Chip,
+    IconButton,
+    InputBase,
+    Paper,
     Stack,
-    TextField,
     Typography,
 } from "@mui/material";
 import useApi from "../../hooks/useApi";
@@ -11,6 +12,9 @@ import useConvertToDollar from "../../hooks/useConvertToDollar";
 import useGetPercentMove from "../../hooks/useGetPercentMove";
 import { useState } from "react";
 import EditModal from "../EditModal";
+import { AddCircleOutline } from "@mui/icons-material";
+import useGetPercentColour from "../../hooks/useGetPercentColour";
+
 function MoversBlock() {
     const [moverTickers, setMoverTickers] = useState<string[]>([
         "AAPL",
@@ -59,7 +63,7 @@ function MoversBlock() {
 
 function MoversItem({ ticker }: { ticker: string }) {
     const endpoint = `https://api.polygon.io/v1/open-close/${ticker}/2024-01-09?`;
-    const { data, isError, error } = useApi(endpoint, ticker);
+    const { data } = useApi(endpoint, ticker);
     let symbol: string = "No Stock Selected";
     let closePrice: number = 0;
     let openPrice: number = 0;
@@ -68,7 +72,8 @@ function MoversItem({ ticker }: { ticker: string }) {
         closePrice = data.close;
         openPrice = data.open;
     }
-    console.error(isError, error);
+    const percent = useGetPercentMove(openPrice, closePrice);
+    const percentColour = useGetPercentColour(Number(percent));
     return (
         <Box sx={{ p: 4, backgroundColor: "primary.main", borderRadius: 4 }}>
             <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
@@ -90,8 +95,14 @@ function MoversItem({ ticker }: { ticker: string }) {
                         Closed @ ${useConvertToDollar(closePrice)}
                     </Typography>
                 </Box>
-                <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
-                    {useGetPercentMove(openPrice, closePrice)}
+                <Typography
+                    sx={{
+                        fontWeight: "bold",
+                        fontSize: 20,
+                        color: { percentColour },
+                    }}
+                >
+                    {percent}
                 </Typography>
             </Box>
         </Box>
@@ -104,14 +115,25 @@ function EditMoversBlock({
     moverTickers: string[];
     setMoverTickers: React.Dispatch<React.SetStateAction<string[]>>;
 }) {
+    const [isError, setIsError] = useState(false);
     const handleDelete = (ticker: string) => {
         setMoverTickers((prev: string[]) => {
             return prev.filter((item) => item !== ticker);
         });
     };
-    const endpoint = `https://api.polygon.io/v3/reference/tickers?market=stocks&active=true&order=asc&limit=1000&sort=ticker&`;
-    const { data, isError, error } = useApi(endpoint, "allTickers");
-    console.log(data);
+
+    function handleAddTicker(ticker: string) {
+        if (moverTickers.length >= 3) {
+            setIsError(true);
+            return;
+        } else {
+            setIsError(false);
+            setMoverTickers((prev: string[]) => [
+                ...prev,
+                ticker.toUpperCase(),
+            ]);
+        }
+    }
     return (
         <Box
             sx={{
@@ -128,24 +150,43 @@ function EditMoversBlock({
                     p: 2,
                 }}
             >
-                Select your Daily Movers
+                Select your 3 Daily Movers
             </Typography>
-            <Autocomplete
-                disablePortal
-                options={data?.results?.map((item) => item.ticker) ?? []}
+
+            <Paper
+                component="form"
                 sx={{
+                    p: "2px 4px",
+                    display: "flex",
+                    alignItems: "center",
                     width: "100%",
+                    borderRadius: 4,
                 }}
-                renderInput={(params) => (
-                    <TextField
-                        {...params}
-                        label="Movie"
-                        sx={{
-                            backgroundColor: "primary.main",
-                        }}
-                    />
-                )}
-            />
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    handleAddTicker(e.target[0].value);
+                }}
+            >
+                <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Add Tickers" />
+                <IconButton
+                    type="button"
+                    sx={{ p: "10px" }}
+                    aria-label="search"
+                >
+                    <AddCircleOutline color="secondary" />
+                </IconButton>
+            </Paper>
+            {isError && (
+                <Typography
+                    sx={{
+                        fontWeight: "bold",
+                        fontSize: 16,
+                        color: "error.main",
+                    }}
+                >
+                    You can only select 3 tickers
+                </Typography>
+            )}
             <Stack
                 direction="column"
                 spacing={2}

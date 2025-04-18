@@ -24,4 +24,5 @@ export interface investmentItem {
     cost: number;
     amount: number;
     ticker?: string;
+    date: string;
 }

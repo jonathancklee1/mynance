@@ -1,22 +1,22 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { PieChart } from "@mui/x-charts";
-import React from "react";
 import { investmentItem, PieChartData } from "../types/interfaces";
 import useInvestmentStore from "../../stores/InvestmentStore";
 
 function PortfolioPieBlock() {
-    const { investments } = useInvestmentStore();
+    const { investments, getHoldings } = useInvestmentStore();
     const randColour = () => {
         return (
             "#" +
             ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0")
         );
     };
-    const investmentPieData = investments.map((item: investmentItem) => {
+    console.log(getHoldings());
+    const investmentPieData = getHoldings().map((item) => {
         return {
             id: crypto.randomUUID(),
-            label: `(${item.ticker ?? ""}) ${item.name} `,
-            value: item.cost * item.amount,
+            label: item.ticker,
+            value: item.value,
             color: randColour(),
         };
     });
