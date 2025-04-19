@@ -1,21 +1,44 @@
 import { Box, Typography } from "@mui/material";
 import React, { useState } from "react";
+import useInvestmentStore from "../../stores/InvestmentStore";
 
 function SummaryBlock() {
     const [isPositive, setIsPositive] = useState(true);
+    const { getTotalCost } = useInvestmentStore();
+    const investedValueObj = JSON.parse(
+        localStorage.getItem("stocksCurrentValueObj") ?? "{}"
+    );
+    const totalInvestedValue: number = Object.values(investedValueObj).reduce(
+        (acc, value) => Number(acc) + Number(value),
+        0
+    );
     return (
         <Box
             sx={{
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
-                gap: 2,
                 alignItems: "center",
             }}
         >
             <Typography variant="h5" sx={{ fontWeight: "bold", fontSize: 34 }}>
-                $50,000
+                ${totalInvestedValue}
             </Typography>
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    gap: 1,
+                    alignItems: "center",
+                    mb: 2,
+                    fontSize: 16,
+                }}
+            >
+                <Typography>Invested</Typography>
+                <Typography sx={{ fontWeight: 600 }}>
+                    ${getTotalCost()}
+                </Typography>
+            </Box>
             <Box
                 sx={{
                     display: "flex",
@@ -30,33 +53,21 @@ function SummaryBlock() {
                 <Typography
                     sx={{
                         fontWeight: "bold",
-                        fontSize: 24,
+                        fontSize: 22,
                         color: isPositive ? "success.main" : "error.main",
                     }}
                 >
-                    +$25,000 (+10%)
+                    {isPositive ? "+" : "-"}$
+                    {(totalInvestedValue - getTotalCost()).toFixed(2)}({" "}
+                    {isPositive ? "+" : "-"}
+                    {(
+                        ((totalInvestedValue - getTotalCost()) /
+                            getTotalCost()) *
+                        100
+                    ).toFixed(2)}
+                    %)
                 </Typography>
             </Box>
-            {/* <Box
-                sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    gap: 2,
-                    alignItems: "center",
-                }}
-            >
-                <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
-                    Invested
-                </Typography>
-                <Typography
-                    sx={{
-                        fontWeight: "bold",
-                        fontSize: 24,
-                    }}
-                >
-                    $30,000
-                </Typography>
-            </Box> */}
         </Box>
     );
 }

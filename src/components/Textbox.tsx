@@ -21,23 +21,22 @@ function Textbox(
     {
         return props.colourVariant === "secondary" ? (
             <TextField
-                {...props}
                 id="filled-basic"
                 variant="filled"
                 label={props.label}
                 color="secondary"
-                fullWidth
                 size="small"
+                {...props}
                 sx={{
                     input: { color: "text.primary", fontSize: 24 },
                     backgroundColor: "secondary.main",
+                    ...props.sx,
                 }}
             />
         ) : (
             <TextField
                 {...props}
                 label={props.label}
-                fullWidth
                 sx={{
                     fontWeight: "bold",
                     textAlign: "center",

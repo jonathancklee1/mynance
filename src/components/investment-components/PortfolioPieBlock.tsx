@@ -1,10 +1,10 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { PieChart } from "@mui/x-charts";
-import { investmentItem, PieChartData } from "../types/interfaces";
+import { PieChartData } from "../types/interfaces";
 import useInvestmentStore from "../../stores/InvestmentStore";
 
 function PortfolioPieBlock() {
-    const { investments, getHoldings } = useInvestmentStore();
+    const { getHoldings } = useInvestmentStore();
     const randColour = () => {
         return (
             "#" +

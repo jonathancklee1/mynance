@@ -9,17 +9,24 @@ import {
 } from "@mui/material";
 import useInvestmentStore from "../../stores/InvestmentStore";
 import { useState } from "react";
-import { investmentItem } from "../types/interfaces";
+import { investmentItem, HoldingsItem } from "../types/interfaces";
+import useConvertToDollar from "../../hooks/useConvertToDollar";
+import useApi from "../../hooks/useApi";
 
 function StocksBlock() {
-    const { investments } = useInvestmentStore();
+    const { investments, getHoldings } = useInvestmentStore();
     const [filterValue, setFilterValue] = useState<string>("");
-    const filteredInvestments = investments.filter(
+    const filteredInvestments = getHoldings().filter(
         (investment: investmentItem) => {
             if (!filterValue) return true;
-            return investment.name.toLowerCase() === filterValue.toLowerCase();
+            return (
+                investment.ticker?.toLowerCase() === filterValue.toLowerCase()
+            );
         }
     );
+    const stocksCurrentValueObj =
+        JSON.parse(localStorage.getItem("stocksCurrentValueObj")) ?? {};
+
     return (
         <>
             <Autocomplete
@@ -54,69 +61,122 @@ function StocksBlock() {
                     width: "100%",
                 }}
             >
-                {filteredInvestments.map(
-                    (investment: investmentItem, index: number) => {
-                        return (
-                            <ListItem
-                                key={index}
-                                sx={{
-                                    display: "flex",
-                                    flexDirection: "column",
-
-                                    width: "100%",
-                                    py: 2,
-                                    borderBottom: "2px solid #fff",
-                                }}
-                            >
-                                <Typography
-                                    sx={{
-                                        fontWeight: "bold",
-                                        fontSize: 18,
-                                        mb: 2,
-                                    }}
-                                >
-                                    {" "}
-                                    ({investment.ticker}) {investment.name}
-                                </Typography>{" "}
-                                <Stack gap={2} sx={{ width: "100%" }}>
-                                    <Box
-                                        sx={{
-                                            display: "flex",
-                                            gap: 1,
-                                        }}
-                                    >
-                                        <Typography>
-                                            {investment.amount} shares
-                                        </Typography>
-                                        <Typography>
-                                            @ ${investment.cost} avg
-                                        </Typography>
-                                        <Typography>
-                                            $
-                                            {investment.amount *
-                                                investment.cost}
-                                        </Typography>
-                                    </Box>
-                                    <Box sx={{ display: "flex", gap: 1 }}>
-                                        <Typography>Profit/Loss</Typography>
-                                        <Typography>+ $2222</Typography>
-                                    </Box>
-                                    <Box sx={{ display: "flex", gap: 1 }}>
-                                        <Typography>Cost</Typography>
-                                        <Typography>$2222</Typography>
-                                        <Typography>Value</Typography>
-                                        <Typography>$2342</Typography>
-                                    </Box>
-                                </Stack>
-                                {/* Daily Movement Gains/Loss */}
-                                <Stack></Stack>
-                            </ListItem>
-                        );
-                    }
-                )}
+                {filteredInvestments.map((investment, index: number) => {
+                    return (
+                        <HoldingItem
+                            investment={investment}
+                            index={index}
+                            stocksCurrentValueObj={stocksCurrentValueObj}
+                        />
+                    );
+                })}
             </List>
         </>
     );
 }
 
+function HoldingItem({
+    investment,
+    index,
+    stocksCurrentValueObj,
+}: {
+    investment: HoldingsItem;
+    stocksCurrentValueObj: { [key: string]: number };
+    index: number;
+}) {
+    const endpoint = `https://finnhub.io/api/v1/quote?symbol=${investment.ticker}`;
+    const { data } = useApi(endpoint, investment.ticker);
+    const currentPrice = data?.c;
+    const currentValue = useConvertToDollar(investment.amount * currentPrice);
+    stocksCurrentValueObj[investment.ticker] = currentValue;
+    localStorage.setItem(
+        "stocksCurrentValueObj",
+        JSON.stringify(stocksCurrentValueObj)
+    );
+    console.log(stocksCurrentValueObj);
+    function getPercentChange(oldValue: number, currentValue: number) {
+        return (currentValue / oldValue) * 100;
+    }
+    return (
+        <ListItem
+            key={index}
+            sx={{
+                display: "flex",
+                flexDirection: "column",
+
+                width: "100%",
+                py: 2,
+                borderBottom: "2px solid #fff",
+            }}
+        >
+            <Typography
+                sx={{
+                    fontWeight: "bold",
+                    fontSize: 22,
+                    mb: 2,
+                }}
+            >
+                {investment.ticker}
+            </Typography>{" "}
+            <Box
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    width: "100%",
+                }}
+            >
+                <Stack gap={2} sx={{ width: "100%" }}>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            gap: 1,
+                        }}
+                    >
+                        <Typography>
+                            <em> {investment.amount} </em>shares
+                        </Typography>
+                        <Typography>
+                            @ ${useConvertToDollar(investment.avgCost)} avg
+                        </Typography>
+                    </Box>
+                    <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+                        <Typography>Profit/Loss</Typography>
+                        <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
+                            {Number(currentValue) - investment.value > 0
+                                ? "+"
+                                : ""}
+                            $
+                            {useConvertToDollar(
+                                Number(currentValue) - investment.value
+                            )}
+                        </Typography>
+                    </Box>
+                    <Box sx={{ display: "flex", gap: 1 }}>
+                        <Typography>Cost</Typography>
+                        <Typography>${investment.value}</Typography>
+                    </Box>
+                </Stack>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+                    <Typography>Value</Typography>
+                    <Typography sx={{ fontWeight: "bold", fontSize: 22 }}>
+                        ${currentValue}
+                    </Typography>
+                    <Typography sx={{ fontWeight: "bold", fontSize: 22 }}>
+                        {getPercentChange(
+                            investment.value,
+                            Number(currentValue)
+                        ) > 0
+                            ? "+"
+                            : "-"}
+                        {getPercentChange(
+                            investment.value,
+                            Number(currentValue)
+                        ).toFixed(2)}
+                        %
+                    </Typography>
+                </Box>
+            </Box>
+        </ListItem>
+    );
+}
 export default StocksBlock;

@@ -29,13 +29,22 @@ const useInvestmentStore = create(
                         console.log(investment);
                         console.log(acc[investment.ticker]);
                         if (acc[investment.ticker]) {
-                            acc[investment.ticker] +=
+                            acc[investment.ticker].value +=
                                 investment.cost * investment.amount;
+                            acc[investment.ticker].amount += investment.amount;
+                            acc[investment.ticker].avgCost =
+                                acc[investment.ticker].value /
+                                acc[investment.ticker].amount;
+                            acc[investment.ticker].name = investment.name;
                             console.log("exist");
                         } else {
                             console.log("not exist", investment.ticker);
-                            acc[investment.ticker] =
-                                investment.cost * investment.amount;
+                            acc[investment.ticker] = {
+                                value: investment.cost * investment.amount,
+                                amount: investment.amount,
+                                avgCost: investment.cost,
+                                name: investment.name,
+                            };
                         }
                         return acc;
                     },
@@ -43,8 +52,15 @@ const useInvestmentStore = create(
                 );
                 return Object.keys(holdingsObj).map((ticker) => ({
                     ticker,
-                    value: holdingsObj[ticker],
+                    value: holdingsObj[ticker].value,
+                    amount: holdingsObj[ticker].amount,
+                    avgCost: holdingsObj[ticker].avgCost,
                 }));
+            },
+            getTotalCost: () => {
+                return get().investments.reduce((acc, investment) => {
+                    return acc + investment.cost * investment.amount;
+                }, 0);
             },
             addInvestments: (investment: investmentItem[]) =>
                 set((state) => ({

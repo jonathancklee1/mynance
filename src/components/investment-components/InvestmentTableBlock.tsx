@@ -9,14 +9,15 @@ function InvestmentTableBlock() {
         useInvestmentStore();
     const [columns] = useState<GridColDef[]>([
         { field: "date", headerName: "Date", width: 160 },
-        { field: "name", headerName: "Investment", width: 160 },
+        { field: "ticker", headerName: "Investment", width: 160 },
         { field: "amount", headerName: "Number of Shares", width: 130 },
         { field: "cost", headerName: "Cost ($)", width: 130 },
     ]);
 
     const [investmentName, setInvestmentName] = useState<string>("");
-    const [investmentCost, setInvestmentCost] = useState<string>("0");
-    const [investmentAmount, setInvestmentAmount] = useState<string>("0");
+    const [investmentTicker, setInvestmentTicker] = useState<string>("");
+    const [investmentCost, setInvestmentCost] = useState<number>(0);
+    const [investmentAmount, setInvestmentAmount] = useState<number>(0);
     const [selectedRows, setSelectedRows] = useState<string[]>([]);
     function handleAddInvestment() {
         if (investmentName && investmentCost) {
@@ -27,10 +28,11 @@ function InvestmentTableBlock() {
                     name: investmentName,
                     cost: investmentCost,
                     amount: investmentAmount,
-                    ticker: "NVDA",
+                    ticker: investmentTicker,
                 },
             ]);
             setInvestmentName("");
+            setInvestmentTicker("");
             setInvestmentCost("0");
             setInvestmentAmount("0");
         }
@@ -63,20 +65,33 @@ function InvestmentTableBlock() {
                     >
                         Enter Investment Name
                     </Typography>
-                    <Textbox
-                        id="filled-basic"
-                        label="Investment Name"
-                        variant="filled"
-                        color="secondary"
-                        fullWidth
-                        size="small"
-                        colourVariant="secondary"
-                        sx={{
-                            input: { color: "text.primary", fontSize: 24 },
-                            backgroundColor: "secondary.main",
-                        }}
-                        onChange={(e) => setInvestmentName(e.target.value)}
-                    />
+                    <Box sx={{ display: "flex", gap: 2 }}>
+                        <Textbox
+                            id="filled-basic"
+                            label="Ticker"
+                            variant="filled"
+                            size="small"
+                            colourVariant="secondary"
+                            sx={{
+                                flexBasis: "25% !important",
+                            }}
+                            onChange={(e) =>
+                                setInvestmentTicker(
+                                    e.target.value.toUpperCase()
+                                )
+                            }
+                        />
+                        <Textbox
+                            id="filled-basic"
+                            label="Investment Name"
+                            variant="filled"
+                            color="secondary"
+                            size="small"
+                            fullWidth
+                            colourVariant="secondary"
+                            onChange={(e) => setInvestmentName(e.target.value)}
+                        />
+                    </Box>
                 </Box>
                 <Box sx={{ width: "100%" }}>
                     <Typography
@@ -99,7 +114,9 @@ function InvestmentTableBlock() {
                             input: { color: "text.primary", fontSize: 24 },
                             backgroundColor: "secondary.main",
                         }}
-                        onChange={(e) => setInvestmentCost(e.target.value)}
+                        onChange={(e) =>
+                            setInvestmentCost(Number(e.target.value))
+                        }
                     />
                 </Box>
                 <Box sx={{ width: "100%" }}>
@@ -123,7 +140,9 @@ function InvestmentTableBlock() {
                             input: { color: "text.primary", fontSize: 24 },
                             backgroundColor: "secondary.main",
                         }}
-                        onChange={(e) => setInvestmentAmount(e.target.value)}
+                        onChange={(e) =>
+                            setInvestmentAmount(Number(e.target.value))
+                        }
                     />
                 </Box>
                 <Button

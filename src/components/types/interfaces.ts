@@ -26,3 +26,10 @@ export interface investmentItem {
     ticker?: string;
     date: string;
 }
+
+export interface HoldingsItem {
+    ticker: string;
+    value: number;
+    amount: number;
+    avgCost: number;
+}

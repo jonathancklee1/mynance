@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 function useApi(endpoint: string, key: string) {
-    const url = `${endpoint}apiKey=${import.meta.env.VITE_STOCKS_API_KEY}`;
+    const url = `${endpoint}&token=${import.meta.env.VITE_STOCKS_API_KEY}`;
     async function fetchApi() {
         const response = await fetch(url);
         const data = await response.json();

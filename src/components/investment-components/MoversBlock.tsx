@@ -62,15 +62,15 @@ function MoversBlock() {
 }
 
 function MoversItem({ ticker }: { ticker: string }) {
-    const endpoint = `https://api.polygon.io/v1/open-close/${ticker}/2024-01-09?`;
+    const endpoint = `https://finnhub.io/api/v1/quote?symbol=${ticker}`;
     const { data } = useApi(endpoint, ticker);
     let symbol: string = "No Stock Selected";
     let closePrice: number = 0;
     let openPrice: number = 0;
     if (data) {
-        symbol = data.symbol;
-        closePrice = data.close;
-        openPrice = data.open;
+        symbol = ticker;
+        closePrice = data.c;
+        openPrice = data.o;
     }
     const percent = useGetPercentMove(openPrice, closePrice);
     const percentColour = useGetPercentColour(Number(percent));
