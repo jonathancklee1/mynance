@@ -1,4 +1,4 @@
-import { Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import React from "react";
 import BuildIcon from "@mui/icons-material/Build";
 function Card({
@@ -29,17 +29,35 @@ function Card({
                         scale: 1.25,
                     },
                 },
+                cursor: isEditable ? "pointer" : "default",
             }}
         >
             <Typography
                 variant="h5"
                 color={"primary.contrastText"}
-                sx={{ fontWeight: "bold", textAlign: "center" }}
+                sx={{
+                    fontWeight: "bold",
+                    textAlign: "center",
+                    "@media (min-width: 1024px)": {
+                        fontSize: 28,
+                    },
+                }}
                 marginBottom={2}
             >
                 {cardHeader}
             </Typography>
-            {children}
+            <Box
+                sx={{
+                    flexGrow: 1,
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    width: "100%",
+                }}
+            >
+                {children}
+            </Box>
             {isEditable && (
                 <BuildIcon
                     sx={{

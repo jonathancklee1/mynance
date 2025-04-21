@@ -32,7 +32,7 @@ function Finance() {
                         gridTemplateRows: "span 3 auto",
                         gap: 4,
                         px: 4,
-                        py: 6,
+                        py: 4,
                     },
                 }}
             >

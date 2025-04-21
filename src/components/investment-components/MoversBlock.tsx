@@ -32,8 +32,10 @@ function MoversBlock() {
     return (
         <>
             <Stack
-                sx={{ width: "100%", height: "100%" }}
-                spacing={2}
+                sx={{
+                    width: "100%",
+                    height: "100%",
+                }}
                 onClick={handleOpen}
             >
                 <Box
@@ -73,9 +75,16 @@ function MoversItem({ ticker }: { ticker: string }) {
         openPrice = data.o;
     }
     const percent = useGetPercentMove(openPrice, closePrice);
-    const percentColour = useGetPercentColour(Number(percent));
+    console.log(percent);
     return (
-        <Box sx={{ p: 4, backgroundColor: "primary.main", borderRadius: 4 }}>
+        <Box
+            sx={{
+                p: 4,
+                backgroundColor: "primary.main",
+                borderRadius: 4,
+                width: "100%",
+            }}
+        >
             <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
                 {symbol}
             </Typography>
@@ -99,7 +108,9 @@ function MoversItem({ ticker }: { ticker: string }) {
                     sx={{
                         fontWeight: "bold",
                         fontSize: 20,
-                        color: { percentColour },
+                        color: useGetPercentColour(
+                            Number(percent.split("%")[0])
+                        ),
                     }}
                 >
                     {percent}
@@ -148,6 +159,7 @@ function EditMoversBlock({
                     fontWeight: "bold",
                     fontSize: 20,
                     p: 2,
+                    textAlign: "center",
                 }}
             >
                 Select your 3 Daily Movers
@@ -187,23 +199,39 @@ function EditMoversBlock({
                     You can only select 3 tickers
                 </Typography>
             )}
-            <Stack
-                direction="column"
-                spacing={2}
-                sx={{ width: "100%", justifyContent: "center" }}
+            <Box
+                sx={{
+                    width: "100%",
+                    justifyContent: "center",
+                    gap: 2,
+                    display: "flex",
+                    flexDirection: "column",
+                    "@media (min-width: 1024px)": {
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 3,
+                        marginTop: 2,
+                    },
+                }}
             >
                 {moverTickers.map((ticker) => {
                     return (
                         <Chip
                             key={ticker}
-                            sx={{ fontWeight: "bold", fontSize: 20, p: 2 }}
+                            sx={{
+                                fontWeight: "bold",
+                                fontSize: 20,
+                                p: 2,
+                                width: "100%",
+                                cursor: "pointer",
+                            }}
                             label={ticker}
                             variant="outlined"
                             onDelete={() => handleDelete(ticker)}
                         ></Chip>
                     );
                 })}
-            </Stack>
+            </Box>
         </Box>
     );
 }

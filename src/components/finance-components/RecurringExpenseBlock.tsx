@@ -284,7 +284,7 @@ function AddRecurringExpenseBlock({
                         addRecurringExpense(newRecurringExpense);
                         handleClose();
                     }}
-                    sx={{ backgroundColor: "primary.main" }}
+                    sx={{ backgroundColor: "primary.main", fontWeight: "bold" }}
                 >
                     Add Expense
                 </Button>

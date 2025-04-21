@@ -1,9 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import React, { useState } from "react";
 import useInvestmentStore from "../../stores/InvestmentStore";
+import useGetPercentColour from "../../hooks/useGetPercentColour";
 
 function SummaryBlock() {
-    const [isPositive, setIsPositive] = useState(true);
     const { getTotalCost } = useInvestmentStore();
     const investedValueObj = JSON.parse(
         localStorage.getItem("stocksCurrentValueObj") ?? "{}"
@@ -12,6 +12,7 @@ function SummaryBlock() {
         (acc, value) => Number(acc) + Number(value),
         0
     );
+    const netValue = totalInvestedValue - getTotalCost();
     return (
         <Box
             sx={{
@@ -54,17 +55,12 @@ function SummaryBlock() {
                     sx={{
                         fontWeight: "bold",
                         fontSize: 22,
-                        color: isPositive ? "success.main" : "error.main",
+                        color: useGetPercentColour(netValue),
                     }}
                 >
-                    {isPositive ? "+" : "-"}$
-                    {(totalInvestedValue - getTotalCost()).toFixed(2)}({" "}
-                    {isPositive ? "+" : "-"}
-                    {(
-                        ((totalInvestedValue - getTotalCost()) /
-                            getTotalCost()) *
-                        100
-                    ).toFixed(2)}
+                    {netValue > 0 ? "+" : "-"}${netValue.toFixed(2)}({" "}
+                    {netValue > 0 ? "+" : "-"}
+                    {((netValue / getTotalCost()) * 100).toFixed(2)}
                     %)
                 </Typography>
             </Box>

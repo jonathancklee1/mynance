@@ -12,6 +12,7 @@ import { useState } from "react";
 import { investmentItem, HoldingsItem } from "../types/interfaces";
 import useConvertToDollar from "../../hooks/useConvertToDollar";
 import useApi from "../../hooks/useApi";
+import useGetPercentColour from "../../hooks/useGetPercentColour";
 
 function StocksBlock() {
     const { investments, getHoldings } = useInvestmentStore();
@@ -59,6 +60,8 @@ function StocksBlock() {
             <List
                 sx={{
                     width: "100%",
+                    maxHeight: 420,
+                    overflowY: "auto",
                 }}
             >
                 {filteredInvestments.map((investment, index: number) => {
@@ -94,6 +97,7 @@ function HoldingItem({
         JSON.stringify(stocksCurrentValueObj)
     );
     console.log(stocksCurrentValueObj);
+    const netValue = Number(currentValue) - investment.value;
     function getPercentChange(oldValue: number, currentValue: number) {
         return (currentValue / oldValue) * 100;
     }
@@ -141,14 +145,18 @@ function HoldingItem({
                     </Box>
                     <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
                         <Typography>Profit/Loss</Typography>
-                        <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
-                            {Number(currentValue) - investment.value > 0
-                                ? "+"
-                                : ""}
-                            $
-                            {useConvertToDollar(
-                                Number(currentValue) - investment.value
-                            )}
+                        <Typography
+                            sx={{
+                                fontWeight: "bold",
+                                fontSize: 20,
+                                color:
+                                    netValue > 0
+                                        ? "success.main"
+                                        : "error.main",
+                            }}
+                        >
+                            {netValue > 0 ? "+" : ""}$
+                            {useConvertToDollar(netValue)}
                         </Typography>
                     </Box>
                     <Box sx={{ display: "flex", gap: 1 }}>
@@ -161,7 +169,13 @@ function HoldingItem({
                     <Typography sx={{ fontWeight: "bold", fontSize: 22 }}>
                         ${currentValue}
                     </Typography>
-                    <Typography sx={{ fontWeight: "bold", fontSize: 22 }}>
+                    <Typography
+                        sx={{
+                            fontWeight: "bold",
+                            fontSize: 22,
+                            color: useGetPercentColour(netValue),
+                        }}
+                    >
                         {getPercentChange(
                             investment.value,
                             Number(currentValue)

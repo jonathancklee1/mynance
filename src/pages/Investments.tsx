@@ -35,41 +35,53 @@ function Investments() {
                     "@media (min-width: 1024px)": {
                         gridTemplateRows: "span 3 auto",
                         gap: 4,
-                        px: 4,
-                        py: 6,
+                        px: 8,
+                        py: 4,
                     },
                 }}
             >
                 <Box
                     sx={{
                         ...gridItemClasses,
+                        "@media (min-width: 1024px)": {
+                            gridColumn: "span 12",
+                        },
                     }}
                 >
-                    <Card isEditable cardHeader="My Investment Summary">
+                    <Card cardHeader="My Investment Summary">
                         <SummaryBlock></SummaryBlock>
                     </Card>
                 </Box>
                 <Box
                     sx={{
                         ...gridItemClasses,
+                        "@media (min-width: 1024px)": {
+                            gridColumn: "span 4",
+                        },
                     }}
                 >
-                    <Card isEditable cardHeader="My Portfolio">
+                    <Card cardHeader="My Portfolio">
                         <PortfolioPieBlock></PortfolioPieBlock>
                     </Card>
                 </Box>
                 <Box
                     sx={{
                         ...gridItemClasses,
+                        "@media (min-width: 1024px)": {
+                            gridColumn: "span 4",
+                        },
                     }}
                 >
-                    <Card isEditable cardHeader="My Holdings">
+                    <Card cardHeader="My Holdings">
                         <StocksBlock></StocksBlock>
                     </Card>
                 </Box>
                 <Box
                     sx={{
                         ...gridItemClasses,
+                        "@media (min-width: 1024px)": {
+                            gridColumn: "span 4",
+                        },
                     }}
                 >
                     <Card isEditable cardHeader="My Daily Movers">

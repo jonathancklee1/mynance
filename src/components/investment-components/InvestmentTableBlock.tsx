@@ -153,6 +153,7 @@ function InvestmentTableBlock() {
                         width: "100%",
                         height: "60px",
                         marginTop: "auto",
+                        fontWeight: "bold",
                     }}
                     onClick={handleAddInvestment}
                 >
