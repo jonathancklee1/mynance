@@ -48,6 +48,7 @@ function StocksBlock() {
                 )}
                 onChange={(_, value) => setFilterValue(value as string)}
                 sx={{
+                    mb: 2,
                     "& .MuiAutocomplete-root": {
                         backgroundColor: "#0C0637 !important",
                         scale: 1.5 + " !important",
@@ -57,6 +58,16 @@ function StocksBlock() {
                     },
                 }}
             />
+            {filteredInvestments.length === 0 && (
+                <Typography
+                    sx={{
+                        color: "#fff",
+                        height: "100%",
+                    }}
+                >
+                    No holdings found
+                </Typography>
+            )}
             <List
                 sx={{
                     width: "100%",

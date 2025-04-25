@@ -16,11 +16,9 @@ import { AddCircleOutline } from "@mui/icons-material";
 import useGetPercentColour from "../../hooks/useGetPercentColour";
 
 function MoversBlock() {
-    const [moverTickers, setMoverTickers] = useState<string[]>([
-        "AAPL",
-        "MSFT",
-        "GOOG",
-    ]);
+    const [moverTickers, setMoverTickers] = useState<string[]>(
+        JSON.parse(localStorage.getItem("daily-movers")) ?? []
+    );
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -48,9 +46,15 @@ function MoversBlock() {
                         justifyContent: "space-between",
                     }}
                 >
-                    {moverTickers.map((ticker, index) => {
-                        return <MoversItem key={index} ticker={ticker} />;
-                    })}
+                    {moverTickers.length < 1 && (
+                        <Typography sx={{ textAlign: "center" }}>
+                            No Movers Selected
+                        </Typography>
+                    )}
+                    {moverTickers.length > 0 &&
+                        moverTickers.map((ticker, index) => {
+                            return <MoversItem key={index} ticker={ticker} />;
+                        })}
                 </Box>
             </Stack>
             <EditModal open={open} setClose={handleClose}>
@@ -83,6 +87,7 @@ function MoversItem({ ticker }: { ticker: string }) {
                 backgroundColor: "primary.main",
                 borderRadius: 4,
                 width: "100%",
+                height: "100%",
             }}
         >
             <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
@@ -131,6 +136,7 @@ function EditMoversBlock({
         setMoverTickers((prev: string[]) => {
             return prev.filter((item) => item !== ticker);
         });
+        localStorage.setItem("daily-movers", JSON.stringify(moverTickers));
     };
 
     function handleAddTicker(ticker: string) {
@@ -143,6 +149,7 @@ function EditMoversBlock({
                 ...prev,
                 ticker.toUpperCase(),
             ]);
+            localStorage.setItem("daily-movers", JSON.stringify(moverTickers));
         }
     }
     return (

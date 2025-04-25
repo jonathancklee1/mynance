@@ -8,7 +8,14 @@ function InvestmentTableBlock() {
     const { investments, addInvestments, deleteInvestments } =
         useInvestmentStore();
     const [columns] = useState<GridColDef[]>([
-        { field: "date", headerName: "Date", width: 160 },
+        {
+            field: "date",
+            headerName: "Date",
+            width: 160,
+            sortable: true,
+            // valueGetter: (params) => params?.toDateString().toString(),
+            renderCell: (params) => new Date(params.value).toDateString(),
+        },
         { field: "ticker", headerName: "Investment", width: 160 },
         { field: "amount", headerName: "Number of Shares", width: 130 },
         { field: "cost", headerName: "Cost ($)", width: 130 },
@@ -24,17 +31,17 @@ function InvestmentTableBlock() {
             addInvestments([
                 {
                     id: crypto.randomUUID(),
-                    date: new Date().toDateString(),
+                    date: new Date().getTime(),
                     name: investmentName,
                     cost: investmentCost,
                     amount: investmentAmount,
                     ticker: investmentTicker,
                 },
             ]);
-            setInvestmentName("");
-            setInvestmentTicker("");
-            setInvestmentCost("0");
-            setInvestmentAmount("0");
+            // setInvestmentName("");
+            // setInvestmentTicker("");
+            // setInvestmentCost(0);
+            // setInvestmentAmount(0);
         }
     }
 

@@ -1,17 +1,22 @@
 import { Box, Typography } from "@mui/material";
-import React, { useState } from "react";
 import useInvestmentStore from "../../stores/InvestmentStore";
 import useGetPercentColour from "../../hooks/useGetPercentColour";
+import useConvertToDollar from "../../hooks/useConvertToDollar";
 
 function SummaryBlock() {
-    const { getTotalCost } = useInvestmentStore();
+    const { getTotalCost, getHoldings } = useInvestmentStore();
     const investedValueObj = JSON.parse(
         localStorage.getItem("stocksCurrentValueObj") ?? "{}"
     );
-    const totalInvestedValue: number = Object.values(investedValueObj).reduce(
-        (acc, value) => Number(acc) + Number(value),
-        0
-    );
+    const holdings = getHoldings();
+    const totalInvestedValue: number = holdings.reduce((acc, value) => {
+        Object.keys(investedValueObj).forEach((key) => {
+            if (key === value.ticker) {
+                acc += Number(investedValueObj[key] * value.amount);
+            }
+        });
+        return acc;
+    }, 0);
     const netValue = totalInvestedValue - getTotalCost();
     return (
         <Box
@@ -23,7 +28,7 @@ function SummaryBlock() {
             }}
         >
             <Typography variant="h5" sx={{ fontWeight: "bold", fontSize: 34 }}>
-                ${totalInvestedValue}
+                ${useConvertToDollar(totalInvestedValue)}
             </Typography>
             <Box
                 sx={{
@@ -58,9 +63,11 @@ function SummaryBlock() {
                         color: useGetPercentColour(netValue),
                     }}
                 >
-                    {netValue > 0 ? "+" : "-"}${netValue.toFixed(2)}({" "}
-                    {netValue > 0 ? "+" : "-"}
-                    {((netValue / getTotalCost()) * 100).toFixed(2)}
+                    {netValue >= 0 ? "+" : "-"}${netValue.toFixed(2)}({" "}
+                    {netValue >= 0 ? "+" : "-"}
+                    {netValue == 0
+                        ? 0
+                        : ((netValue / getTotalCost()) * 100).toFixed(2)}
                     %)
                 </Typography>
             </Box>
