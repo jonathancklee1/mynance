@@ -9,6 +9,7 @@ function SummaryBlock() {
         localStorage.getItem("stocksCurrentValueObj") ?? "{}"
     );
     const holdings = getHoldings();
+    console.log("holdings", holdings, investedValueObj);
     const totalInvestedValue: number = holdings.reduce((acc, value) => {
         Object.keys(investedValueObj).forEach((key) => {
             if (key === value.ticker) {
@@ -63,8 +64,8 @@ function SummaryBlock() {
                         color: useGetPercentColour(netValue),
                     }}
                 >
-                    {netValue >= 0 ? "+" : "-"}${netValue.toFixed(2)}({" "}
-                    {netValue >= 0 ? "+" : "-"}
+                    {netValue >= 0 && "+"}${netValue.toFixed(2)} ({" "}
+                    {netValue >= 0 && "+"}
                     {netValue == 0
                         ? 0
                         : ((netValue / getTotalCost()) * 100).toFixed(2)}

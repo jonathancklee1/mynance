@@ -5,18 +5,22 @@ import useInvestmentStore from "../../stores/InvestmentStore";
 
 function PortfolioPieBlock() {
     const { getHoldings } = useInvestmentStore();
+    const investedValueObj = JSON.parse(
+        localStorage.getItem("stocksCurrentValueObj") ?? "{}"
+    );
+
     const randColour = () => {
         return (
             "#" +
             ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0")
         );
     };
-    console.log(getHoldings());
     const investmentPieData = getHoldings().map((item) => {
+        const stockValue = investedValueObj[item.ticker] * item.amount;
         return {
             id: crypto.randomUUID(),
             label: item.ticker,
-            value: item.value,
+            value: stockValue,
             color: randColour(),
         };
     });

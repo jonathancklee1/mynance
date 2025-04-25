@@ -219,6 +219,7 @@ function InvestmentTableBlock() {
                         width: "100%",
                         height: "60px",
                         marginTop: 2,
+                        fontWeight: "bold",
                     }}
                     onClick={() =>
                         handleRowSelection(selectedRows, deleteInvestments)

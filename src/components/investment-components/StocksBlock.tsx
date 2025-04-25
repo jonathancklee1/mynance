@@ -81,6 +81,7 @@ function StocksBlock() {
                             investment={investment}
                             index={index}
                             stocksCurrentValueObj={stocksCurrentValueObj}
+                            key={index}
                         />
                     );
                 })}
@@ -110,7 +111,7 @@ function HoldingItem({
     console.log(stocksCurrentValueObj);
     const netValue = Number(currentValue) - investment.value;
     function getPercentChange(oldValue: number, currentValue: number) {
-        return (currentValue / oldValue) * 100;
+        return ((currentValue - oldValue) / oldValue) * 100;
     }
     return (
         <ListItem
@@ -190,9 +191,7 @@ function HoldingItem({
                         {getPercentChange(
                             investment.value,
                             Number(currentValue)
-                        ) > 0
-                            ? "+"
-                            : "-"}
+                        ) > 0 && "+"}
                         {getPercentChange(
                             investment.value,
                             Number(currentValue)
