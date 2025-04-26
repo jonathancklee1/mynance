@@ -44,11 +44,15 @@ function ProgressBlock() {
                 >
                     You have{" "}
                     <Typography
-                        variant="h6"
+                        variant="body1"
                         sx={{
                             fontWeight: "bold",
                             display: "inline-block",
-                            color: "primary.main",
+                            color:
+                                budget - getTotalExpenses() > 0
+                                    ? "success.main"
+                                    : "error.main",
+                            fontSize: 20,
                         }}
                     >
                         ${budget - getTotalExpenses()}
@@ -134,7 +138,7 @@ function EditProgressBar({ budget, setBudget }: EditProgressBarProps) {
                     marginBottom: 2,
                 }}
             >
-                Enter your weekly budget
+                Set Your Weekly Budget
             </Typography>
             <FormControl fullWidth sx={{ m: 1 }} variant="standard">
                 <InputLabel

@@ -73,6 +73,7 @@ function EditCapitalBlock({
                 placeholder="Enter your capital"
                 value={capital}
                 onChange={handleChange}
+                fullWidth
                 slotProps={{
                     input: {
                         startAdornment: (

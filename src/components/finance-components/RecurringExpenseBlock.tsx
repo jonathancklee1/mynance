@@ -86,7 +86,7 @@ function RecurringExpenseBlock() {
             <Button
                 variant="text"
                 fullWidth
-                sx={{ backgroundColor: "primary.main" }}
+                sx={{ backgroundColor: "primary.main", fontWeight: "bold" }}
                 onClick={() => {
                     handleAddOpen();
                 }}
@@ -196,14 +196,14 @@ function EditRecurringExpenseBlock({
                 <Button
                     variant="text"
                     onClick={handleClose}
-                    sx={{ backgroundColor: "primary.main" }}
+                    sx={{ backgroundColor: "primary.main", fontWeight: "bold" }}
                 >
                     Save Expense
                 </Button>
                 <Button
                     variant="text"
                     color="error"
-                    sx={{ backgroundColor: "primary.main" }}
+                    sx={{ backgroundColor: "primary.main", fontWeight: "bold" }}
                     onClick={() => {
                         setRecurringExpenses(
                             recurringExpenses.filter(

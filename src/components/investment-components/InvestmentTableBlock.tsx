@@ -13,7 +13,6 @@ function InvestmentTableBlock() {
             headerName: "Date",
             width: 160,
             sortable: true,
-            // valueGetter: (params) => params?.toDateString().toString(),
             renderCell: (params) => new Date(params.value).toDateString(),
         },
         { field: "ticker", headerName: "Investment", width: 160 },
@@ -38,10 +37,6 @@ function InvestmentTableBlock() {
                     ticker: investmentTicker,
                 },
             ]);
-            // setInvestmentName("");
-            // setInvestmentTicker("");
-            // setInvestmentCost(0);
-            // setInvestmentAmount(0);
         }
     }
 

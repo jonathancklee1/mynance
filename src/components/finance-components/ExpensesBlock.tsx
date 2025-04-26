@@ -20,7 +20,10 @@ function ExpensesBlock() {
     ];
     const weeklyExpenseData = weekExpenses.reduce(
         (acc: ExpenseBlockData[], expense: expenseItem) => {
-            const expenseDay = expense.date.split(" ")[0].toString();
+            const expenseDay = new Date(expense.date)
+                .toDateString()
+                .split(" ")[0]
+                .toString();
             acc.forEach((_, i) => {
                 if (acc[i].day === expenseDay) {
                     acc[i].amount += parseInt(expense.cost);

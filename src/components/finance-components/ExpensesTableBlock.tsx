@@ -7,9 +7,15 @@ import useExpenseStore from "../../stores/ExpenseStore";
 function ExpensesTableBlock() {
     const { expenses, addExpenses, deleteExpenses } = useExpenseStore();
     const [columns] = useState<GridColDef[]>([
-        { field: "date", headerName: "Date", width: 160 },
-        { field: "expense", headerName: "Expense", width: 160 },
-        { field: "cost", headerName: "Cost ($)", width: 130 },
+        {
+            field: "date",
+            headerName: "Date",
+            width: 160,
+            renderCell: (params) => new Date(params.value).toDateString(),
+            sortable: true,
+        },
+        { field: "expense", headerName: "Expense", width: 160, editable: true },
+        { field: "cost", headerName: "Cost ($)", width: 130, editable: true },
     ]);
 
     const [expenseName, setExpenseName] = useState<string>("");
@@ -20,7 +26,7 @@ function ExpensesTableBlock() {
             addExpenses([
                 {
                     id: crypto.randomUUID(),
-                    date: new Date().toDateString(),
+                    date: new Date().getTime(),
                     expense: expenseName,
                     cost: expenseCost,
                 },
@@ -113,10 +119,8 @@ function ExpensesTableBlock() {
             </Stack>
 
             {/* Table */}
-
             <Paper
                 sx={{
-                    // height: 400,
                     width: "100%",
                     marginTop: 4,
                     backgroundColor: "secondary.main",
@@ -165,6 +169,7 @@ function ExpensesTableBlock() {
                         width: "100%",
                         height: "60px",
                         marginTop: 2,
+                        fontWeight: "bold",
                     }}
                     onClick={() =>
                         handleRowSelection(selectedRows, deleteExpenses)

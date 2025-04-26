@@ -11,7 +11,6 @@ const useExpenseStore = create(
             recurringExpenses: [] as recurringExpenseItem[],
             addExpenses: (expense: expenseItem[]) =>
                 set((state) => {
-                    // console.log([...state.expenses, [...expense]]);
                     return { expenses: [...expense, ...state.expenses] };
                 }),
 
@@ -60,7 +59,9 @@ const useExpenseStore = create(
                 }
 
                 get().expenses.forEach((expense: expenseItem) => {
-                    const expenseDay = new Date(expense.date);
+                    const expenseDay = new Date(
+                        new Date(expense.date).toDateString()
+                    );
                     if (isDateInCurrentWeek(expenseDay)) {
                         weekExpenses.push(expense);
                     }

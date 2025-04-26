@@ -58,7 +58,12 @@ function AssetsBlock() {
                         ]}
                         width={300}
                         height={200}
-                        sx={{ scale: "1.2" }}
+                        sx={{
+                            scale: "1.2",
+                            "& text": {
+                                textAnchor: "unset",
+                            },
+                        }}
                         slotProps={{
                             legend: {
                                 hidden: true,

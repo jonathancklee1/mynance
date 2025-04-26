@@ -5,24 +5,7 @@ import { investmentItem } from "../components/types/interfaces";
 const useInvestmentStore = create(
     persist(
         (set, get) => ({
-            investments: [
-                {
-                    id: crypto.randomUUID(),
-                    name: "Nvidia",
-                    cost: 50,
-                    amount: 3,
-                    ticker: "NVDA",
-                    date: new Date().toDateString(),
-                },
-                {
-                    id: crypto.randomUUID(),
-                    name: "AMD",
-                    cost: 50,
-                    amount: 3,
-                    ticker: "AMD",
-                    date: new Date().toDateString(),
-                },
-            ] as investmentItem[],
+            investments: [] as investmentItem[],
             /**
              * Calculates the holdings from the list of investments.
              *
@@ -39,8 +22,6 @@ const useInvestmentStore = create(
             getHoldings: () => {
                 const holdingsObj = get().investments.reduce(
                     (acc, investment) => {
-                        console.log(investment);
-                        console.log(acc[investment.ticker]);
                         if (acc[investment.ticker]) {
                             acc[investment.ticker].value +=
                                 investment.cost * investment.amount;

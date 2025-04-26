@@ -40,7 +40,8 @@ function EditModal({
                 </IconButton>
                 <DialogContent
                     sx={{
-                        padding: 4,
+                        px: 4,
+                        py: 5,
                     }}
                 >
                     {children}
