@@ -15,7 +15,7 @@ import Textbox from "../Textbox";
 import { recurringExpenseItem } from "../types/interfaces";
 import useExpenseStore from "../../stores/ExpenseStore";
 
-function RecurringExpenseBlock() {
+function RecurringExpenseBlock({ isEditable }: { isEditable?: boolean }) {
     const {
         recurringExpenses,
         setRecurringExpenses,
@@ -93,21 +93,25 @@ function RecurringExpenseBlock() {
             >
                 Add Recurring Expense
             </Button>
-            <EditModal open={open} setClose={handleClose}>
-                <EditRecurringExpenseBlock
-                    selectedExpense={selectedExpense}
-                    setRecurringExpenses={setRecurringExpenses}
-                    recurringExpenses={recurringExpenses}
-                    handleClose={handleClose}
-                    deleteRecurringExpense={deleteRecurringExpense}
-                ></EditRecurringExpenseBlock>
-            </EditModal>
-            <EditModal open={addOpen} setClose={handleAddClose}>
-                <AddRecurringExpenseBlock
-                    handleClose={handleAddClose}
-                    addRecurringExpense={addRecurringExpense}
-                ></AddRecurringExpenseBlock>
-            </EditModal>
+            {isEditable && (
+                <>
+                    <EditModal open={open} setClose={handleClose}>
+                        <EditRecurringExpenseBlock
+                            selectedExpense={selectedExpense}
+                            setRecurringExpenses={setRecurringExpenses}
+                            recurringExpenses={recurringExpenses}
+                            handleClose={handleClose}
+                            deleteRecurringExpense={deleteRecurringExpense}
+                        ></EditRecurringExpenseBlock>
+                    </EditModal>
+                    <EditModal open={addOpen} setClose={handleAddClose}>
+                        <AddRecurringExpenseBlock
+                            handleClose={handleAddClose}
+                            addRecurringExpense={addRecurringExpense}
+                        ></AddRecurringExpenseBlock>
+                    </EditModal>
+                </>
+            )}
         </>
     );
 }

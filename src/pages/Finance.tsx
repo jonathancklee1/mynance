@@ -31,7 +31,7 @@ function Finance() {
                     "@media (min-width: 1024px)": {
                         gridTemplateRows: "span 3 auto",
                         gap: 4,
-                        px: 4,
+                        px: 8,
                         py: 4,
                     },
                 }}

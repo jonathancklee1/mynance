@@ -15,7 +15,7 @@ import EditModal from "../EditModal";
 import { AddCircleOutline } from "@mui/icons-material";
 import useGetPercentColour from "../../hooks/useGetPercentColour";
 
-function MoversBlock() {
+function MoversBlock({ isEditable }: { isEditable?: boolean }) {
     const [moverTickers, setMoverTickers] = useState<string[]>(
         JSON.parse(localStorage.getItem("daily-movers")) ?? []
     );
@@ -57,12 +57,14 @@ function MoversBlock() {
                         })}
                 </Box>
             </Stack>
-            <EditModal open={open} setClose={handleClose}>
-                <EditMoversBlock
-                    moverTickers={moverTickers}
-                    setMoverTickers={setMoverTickers}
-                ></EditMoversBlock>
-            </EditModal>
+            {isEditable && (
+                <EditModal open={open} setClose={handleClose}>
+                    <EditMoversBlock
+                        moverTickers={moverTickers}
+                        setMoverTickers={setMoverTickers}
+                    ></EditMoversBlock>
+                </EditModal>
+            )}
         </>
     );
 }

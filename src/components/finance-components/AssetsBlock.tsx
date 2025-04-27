@@ -17,7 +17,7 @@ interface AssetDataItem {
     name: string;
     color: string;
 }
-function AssetsBlock() {
+function AssetsBlock({ isEditable }: { isEditable?: boolean }) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -31,9 +31,6 @@ function AssetsBlock() {
             ? JSON.parse(localStorage.getItem("assets") ?? "")
             : []
     );
-    useEffect(() => {
-        console.log(assetData);
-    }, [assetData]);
 
     return (
         <>
@@ -103,12 +100,14 @@ function AssetsBlock() {
                     </Stack>
                 </Box>
             </Box>
-            <EditModal open={open} setClose={handleClose}>
-                <EditAssetBlock
-                    assetData={assetData}
-                    setAssetData={setAssetData}
-                ></EditAssetBlock>
-            </EditModal>
+            {isEditable && (
+                <EditModal open={open} setClose={handleClose}>
+                    <EditAssetBlock
+                        assetData={assetData}
+                        setAssetData={setAssetData}
+                    ></EditAssetBlock>
+                </EditModal>
+            )}
         </>
     );
 }

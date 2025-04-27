@@ -1,7 +1,7 @@
 import { Box, Toolbar, Typography } from "@mui/material";
 import { forwardRef } from "react";
 
-const NavBar = forwardRef<HTMLDivElement>((props, ref) => {
+const NavBar = forwardRef<HTMLDivElement>((_, ref) => {
     return (
         <Toolbar
             ref={ref}
@@ -14,9 +14,8 @@ const NavBar = forwardRef<HTMLDivElement>((props, ref) => {
                     paddingBlock: 3,
                 },
                 "@media (min-width: 769px)": {
-                    paddingRight: 6,
-                    paddingLeft: 6,
-                    paddingBlock: 4,
+                    px: 8,
+                    py: 4,
                 },
                 color: "primary.contrastText",
                 display: "flex",

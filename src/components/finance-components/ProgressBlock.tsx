@@ -21,7 +21,7 @@ interface ProgressBarWithLabelProps {
     expense: number;
 }
 
-function ProgressBlock() {
+function ProgressBlock({ isEditable }: { isEditable?: boolean }) {
     const { getTotalExpenses } = useExpenseStore();
     const [open, setOpen] = useState(false);
     const [budget, setBudget] = useState(1000);
@@ -82,12 +82,14 @@ function ProgressBlock() {
                 ></ProgressBarWithLabel>
                 {/* <LinearProgress variant="determinate" value={80} /> */}
             </Box>
-            <EditModal open={open} setClose={handleClose}>
-                <EditProgressBar
-                    budget={budget}
-                    setBudget={setBudget}
-                ></EditProgressBar>
-            </EditModal>
+            {isEditable && (
+                <EditModal open={open} setClose={handleClose}>
+                    <EditProgressBar
+                        budget={budget}
+                        setBudget={setBudget}
+                    ></EditProgressBar>
+                </EditModal>
+            )}
         </>
     );
 }

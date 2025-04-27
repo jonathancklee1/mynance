@@ -4,7 +4,7 @@ import { useState } from "react";
 import Textbox from "../Textbox";
 import useConvertToDollar from "../../hooks/useConvertToDollar";
 
-function CapitalBlock() {
+function CapitalBlock({ isEditable }: { isEditable?: boolean }) {
     const [open, setOpen] = useState(false);
     const [capital, setCapital] = useState(
         parseInt(localStorage.getItem("capital") ?? "0") ?? 0
@@ -31,12 +31,14 @@ function CapitalBlock() {
                     {"$" + useConvertToDollar(capital)}
                 </Typography>
             </Box>
-            <EditModal open={open} setClose={handleClose}>
-                <EditCapitalBlock
-                    capital={capital}
-                    setCapital={setCapital}
-                ></EditCapitalBlock>
-            </EditModal>
+            {isEditable && (
+                <EditModal open={open} setClose={handleClose}>
+                    <EditCapitalBlock
+                        capital={capital}
+                        setCapital={setCapital}
+                    ></EditCapitalBlock>
+                </EditModal>
+            )}
         </>
     );
 }

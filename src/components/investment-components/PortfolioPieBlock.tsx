@@ -39,7 +39,7 @@ function PortfolioPieBlock() {
                     },
                 ]}
                 sx={{
-                    "@media (min-width: 1024px)": { scale: "1.7" },
+                    "@media (min-width: 1024px)": { scale: "1.3" },
                     "& text": { textAnchor: "start" },
                 }}
                 width={300}
