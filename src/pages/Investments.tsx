@@ -85,7 +85,7 @@ function Investments() {
                     }}
                 >
                     <Card isEditable cardHeader="My Daily Movers">
-                        <MoversBlock></MoversBlock>
+                        <MoversBlock isEditable></MoversBlock>
                     </Card>
                 </Box>
                 <Box sx={{ gridColumn: "span 12" }}>

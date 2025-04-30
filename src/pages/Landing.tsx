@@ -3,26 +3,26 @@ import NavBar from "../components/NavBar";
 import Typography from "@mui/material/Typography";
 import Textbox from "../components/Textbox";
 import { SetStateAction, useEffect, useRef, useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { ChevronRight } from "@mui/icons-material";
 
 function Landing() {
     const [name, setName] = useState("");
+    const [isError, setIsError] = useState(false);
     const [themeSelected, setThemeSelected] = useState("");
     const [height, setHeight] = useState(0);
-
-    console.log(themeSelected);
+    const themes = ["dark", "light", "custom"];
+    const navigate = useNavigate();
     const ThemeButton = styled(Button)(() => {
         return {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            background: "transparent",
         };
     });
     const componentRef = useRef(null);
     useEffect(() => {
-        const height = componentRef.current.offsetHeight;
-        console.log(height);
+        const height = componentRef.current?.offsetHeight;
         setHeight(height);
     }, []);
 
@@ -43,7 +43,7 @@ function Landing() {
                     flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
-                    paddingBlock: 10,
+                    paddingBlock: 4,
                     backgroundColor: "primary.main",
                 }}
             >
@@ -52,19 +52,33 @@ function Landing() {
                     component={"h1"}
                     fontWeight={"bold"}
                     textAlign={"center"}
-                    marginBottom={10}
+                    marginBottom={3}
                 >
                     Welcome to MYNANCE!
                 </Typography>
+                <Typography
+                    textAlign={"center"}
+                    marginBottom={3}
+                    variant="h6"
+                    component={"h3"}
+                >
+                    Take control of your financial future with Mynance—the
+                    smart, intuitive web app designed to help you manage your
+                    money and grow your investments with confidence. Whether
+                    you're budgeting, tracking expenses, or exploring new
+                    investment opportunities, Mynance simplifies the process,
+                    offering powerful tools and insights tailored to your
+                    financial goals. Your path to financial success starts here.
+                </Typography>
                 <Box
                     width={"100%"}
-                    marginBottom={12}
+                    marginBottom={8}
                     display={"flex"}
                     flexDirection={"column"}
                     alignItems={"center"}
                 >
                     <Typography
-                        variant="h4"
+                        variant="h5"
                         component={"h2"}
                         fontWeight={"bold"}
                         textAlign={"center"}
@@ -73,18 +87,22 @@ function Landing() {
                         Enter your name
                     </Typography>
                     <Textbox
+                        error={isError}
                         onChange={(e: {
                             target: { value: SetStateAction<string> };
                         }) => {
                             setName(e.target.value);
-                            console.log(e.target.value);
                         }}
                         value={name}
+                        label={"Name"}
+                        colourVariant={"secondary"}
+                        type={"text"}
+                        sx={{ width: "40%" }}
                     />
                 </Box>
-                <Box width={"100%"} marginBottom={12}>
+                <Box width={"100%"} marginBottom={8}>
                     <Typography
-                        variant="h4"
+                        variant="h5"
                         component={"h2"}
                         fontWeight={"bold"}
                         textAlign={"center"}
@@ -100,49 +118,80 @@ function Landing() {
                             alignItems: "center",
                         }}
                     >
-                        <ThemeButton onClick={() => setThemeSelected("theme1")}>
-                            <Box
-                                width={32}
-                                height={32}
-                                bgcolor={"white"}
-                                borderRadius={"100%"}
-                                marginBottom={2}
-                            ></Box>
-                            <Typography variant="body1" fontWeight={"bold"}>
-                                Theme 1
-                            </Typography>
-                        </ThemeButton>
-                        <ThemeButton onClick={() => setThemeSelected("theme2")}>
-                            <Box
-                                width={32}
-                                height={32}
-                                bgcolor={"white"}
-                                borderRadius={"100%"}
-                                marginBottom={2}
-                            ></Box>
-                            <Typography variant="body1" fontWeight={"bold"}>
-                                Theme 2
-                            </Typography>
-                        </ThemeButton>
-                        <ThemeButton onClick={() => setThemeSelected("theme3")}>
-                            <Box
-                                width={32}
-                                height={32}
-                                bgcolor={"white"}
-                                borderRadius={"100%"}
-                                marginBottom={2}
-                            ></Box>
-                            <Typography variant="body1" fontWeight={"bold"}>
-                                Theme 3
-                            </Typography>
-                        </ThemeButton>
+                        {themes.map((theme) => {
+                            return (
+                                <ThemeButton
+                                    onClick={() => setThemeSelected(theme)}
+                                    sx={{
+                                        width: "100px",
+                                        py: 2,
+                                        background:
+                                            theme === themeSelected
+                                                ? "secondary.main"
+                                                : "transparent",
+                                    }}
+                                >
+                                    <Box
+                                        width={50}
+                                        height={50}
+                                        bgcolor={"white"}
+                                        borderRadius={"100%"}
+                                        marginBottom={2}
+                                    ></Box>
+                                    <Typography
+                                        variant="body1"
+                                        fontWeight={"bold"}
+                                    >
+                                        {theme}
+                                    </Typography>
+                                </ThemeButton>
+                            );
+                        })}
                     </Stack>
                 </Box>
-                <Link to={"/dashboard"}>
-                    <Button variant="contained" color="secondary">
-                        Go to Dashboard
-                    </Button>
-                </Link>
+                <Button
+                    color="secondary"
+                    onClick={() => {
+                        if (
+                            !name ||
+                            name === "" ||
+                            !themeSelected ||
+                            themeSelected === ""
+                        ) {
+                            setIsError(true);
+                            return;
+                        } else {
+                            setIsError(false);
+                            localStorage.setItem("name", JSON.stringify(name));
+                            localStorage.setItem(
+                                "theme",
+                                JSON.stringify(themeSelected)
+                            );
+
+                            navigate("/dashboard");
+                        }
+                    }}
+                    variant="outlined"
+                    sx={{
+                        width: "60%",
+                        fontWeight: "bold",
+                        px: 4,
+                        py: 2,
+                        fontSize: "1.1rem",
+                        borderRadius: 4,
+                        "&:hover": {
+                            backgroundColor: "primary.main",
+                        },
+                    }}
+                >
+                    Go to Dashboard
+                    <ChevronRight sx={{ ml: 1 }} />
+                </Button>
+                {isError && (
+                    <Typography sx={{ mt: 2, fontWeight: "bold" }}>
+                        Please enter your name and select a theme!{" "}
+                    </Typography>
+                )}
             </Container>
         </Container>
     );

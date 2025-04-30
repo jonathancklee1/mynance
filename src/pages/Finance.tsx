@@ -48,7 +48,7 @@ function Finance() {
                     }}
                 >
                     <Card isEditable cardHeader="My Capital">
-                        <CapitalBlock></CapitalBlock>
+                        <CapitalBlock isEditable></CapitalBlock>
                     </Card>
                 </Box>
                 <Box
@@ -62,7 +62,7 @@ function Finance() {
                     }}
                 >
                     <Card isEditable cardHeader="My Assets">
-                        <AssetsBlock></AssetsBlock>
+                        <AssetsBlock isEditable></AssetsBlock>
                     </Card>
                 </Box>
                 <Box
@@ -92,7 +92,7 @@ function Finance() {
                     }}
                 >
                     <Card isEditable cardHeader="My Expense Progress">
-                        <ProgressBlock></ProgressBlock>
+                        <ProgressBlock isEditable></ProgressBlock>
                     </Card>
                 </Box>
                 <Box
@@ -117,7 +117,9 @@ function Finance() {
                     }}
                 >
                     <Card isEditable cardHeader="Recurring Expenses">
-                        <RecurringExpenseBlock></RecurringExpenseBlock>
+                        <RecurringExpenseBlock
+                            isEditable
+                        ></RecurringExpenseBlock>
                     </Card>
                 </Box>
                 <Box sx={{ gridColumn: "span 12" }}>

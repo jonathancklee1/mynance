@@ -1,6 +1,6 @@
 import NavBar from "../components/NavBar";
 import BottomNav from "../components/BottomNav";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import CapitalBlock from "../components/finance-components/CapitalBlock";
 import Card from "../components/Card";
 import SummaryBlock from "../components/investment-components/SummaryBlock";
@@ -10,9 +10,11 @@ import PortfolioPieBlock from "../components/investment-components/PortfolioPieB
 import ExpensePieBlock from "../components/finance-components/ExpensePieBlock";
 
 function Dashboard() {
+    const name = JSON.parse(localStorage.getItem("name") ?? "Unknown User");
     return (
         <>
-            <NavBar></NavBar>
+            <NavBar />
+
             <Box
                 sx={{
                     px: 2,
@@ -32,6 +34,19 @@ function Dashboard() {
                     },
                 }}
             >
+                <Typography
+                    sx={{
+                        fontWeight: "bold",
+                        fontSize: 30,
+                        color: "primary.contrastText",
+                        gridColumn: "span 12",
+                        "@media (min-width: 1024px)": {
+                            fontSize: 40,
+                        },
+                    }}
+                >
+                    Welcome {name}!
+                </Typography>
                 <Box
                     sx={{
                         gridColumn: "span 12",
