@@ -5,9 +5,28 @@ import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { Link } from "react-router";
 import { useLocation } from "react-router";
+import { useTheme } from "@mui/material/styles";
 
 const BottomNav = () => {
     const location = useLocation();
+    const theme = useTheme();
+    function getNavButtonSx(path: string) {
+        const navButtonSx = {
+            "&>svg >path": {
+                fill:
+                    location.pathname === `/${path}`
+                        ? theme.palette.primary.light
+                        : "primary.contrastText",
+            },
+            "& span": {
+                color:
+                    location.pathname === `/${path}`
+                        ? theme.palette.primary.light + " !important"
+                        : "primary.contrastText",
+            },
+        };
+        return navButtonSx;
+    }
 
     return (
         <BottomNavigation
@@ -19,7 +38,6 @@ const BottomNav = () => {
                 left: 0,
                 right: 0,
                 zIndex: 100,
-                backgroundColor: "primary.main",
                 width: "100vw",
             }}
         >
@@ -29,6 +47,9 @@ const BottomNav = () => {
                 icon={<AppsIcon />}
                 component={Link}
                 to="/dashboard"
+                sx={{
+                    ...getNavButtonSx("dashboard"),
+                }}
             />
             <BottomNavigationAction
                 label="Personal Finance"
@@ -36,6 +57,9 @@ const BottomNav = () => {
                 icon={<AccountBalanceIcon />}
                 component={Link}
                 to="/personal-finance"
+                sx={{
+                    ...getNavButtonSx("personal-finance"),
+                }}
             />
             <BottomNavigationAction
                 label="Investments"
@@ -43,6 +67,9 @@ const BottomNav = () => {
                 icon={<AttachMoneyIcon />}
                 component={Link}
                 to="/investments"
+                sx={{
+                    ...getNavButtonSx("investments"),
+                }}
             />
         </BottomNavigation>
     );
