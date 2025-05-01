@@ -11,6 +11,7 @@ import EditModal from "../EditModal";
 import { useState } from "react";
 import Textbox from "../Textbox";
 import useExpenseStore from "../../stores/ExpenseStore";
+import useGetPercentColour from "../../hooks/useGetPercentColour";
 
 interface EditProgressBarProps {
     budget: number;
@@ -48,10 +49,10 @@ function ProgressBlock({ isEditable }: { isEditable?: boolean }) {
                         sx={{
                             fontWeight: "bold",
                             display: "inline-block",
-                            color:
-                                budget - getTotalExpenses() > 0
-                                    ? "success.main"
-                                    : "error.main",
+                            color: useGetPercentColour(
+                                budget - getTotalExpenses()
+                            ),
+
                             fontSize: 20,
                         }}
                     >
@@ -61,7 +62,11 @@ function ProgressBlock({ isEditable }: { isEditable?: boolean }) {
                     <Button
                         variant="text"
                         color="primary"
-                        sx={{ padding: 0, backgroundColor: "#bb2f", p: 0.5 }}
+                        sx={{
+                            padding: 0,
+                            backgroundColor: "primary.light",
+                            p: 0.5,
+                        }}
                     >
                         <Typography
                             variant="h6"
@@ -118,9 +123,9 @@ function ProgressBarWithLabel({ expense, budget }: ProgressBarWithLabelProps) {
                     },
                     "& .MuiLinearProgress-bar": {
                         borderRadius: 5,
+                        backgroundColor: "primary.light",
                     },
                 }}
-                color="primary"
             />
             <Typography variant="body1">{expensePercentage}%</Typography>
         </Box>

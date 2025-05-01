@@ -156,6 +156,7 @@ function InvestmentTableBlock() {
                         height: "60px",
                         marginTop: "auto",
                         fontWeight: "bold",
+                        backgroundColor: "primary.light",
                     }}
                     onClick={handleAddInvestment}
                 >
@@ -192,9 +193,9 @@ function InvestmentTableBlock() {
                     }}
                     sx={{
                         border: 0,
-                        backgroundColor: "secondary.main",
+
                         "& div": {
-                            backgroundColor: "secondary.main",
+                            backgroundColor: "secondary.light",
                             color: "secondary.contrastText",
                             fill: "secondary.contrastText",
                         },

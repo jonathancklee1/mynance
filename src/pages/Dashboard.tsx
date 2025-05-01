@@ -45,7 +45,22 @@ function Dashboard() {
                         },
                     }}
                 >
-                    Welcome {name}!
+                    Welcome{" "}
+                    <Typography
+                        component={"span"}
+                        sx={{
+                            fontWeight: "bold",
+                            fontSize: 30,
+                            color: "primary.light",
+                            gridColumn: "span 12",
+                            "@media (min-width: 1024px)": {
+                                fontSize: 40,
+                            },
+                        }}
+                    >
+                        {name}
+                    </Typography>
+                    !
                 </Typography>
                 <Box
                     sx={{

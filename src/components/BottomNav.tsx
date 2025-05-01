@@ -12,17 +12,17 @@ const BottomNav = () => {
     const theme = useTheme();
     function getNavButtonSx(path: string) {
         const navButtonSx = {
-            "&>svg >path": {
+            "&>svg ": {
                 fill:
                     location.pathname === `/${path}`
-                        ? theme.palette.primary.light
-                        : "primary.contrastText",
+                        ? theme.palette.primary.light + " !important"
+                        : theme.palette.text.primary + " !important",
             },
             "& span": {
                 color:
                     location.pathname === `/${path}`
                         ? theme.palette.primary.light + " !important"
-                        : "primary.contrastText",
+                        : theme.palette.text.primary + " !important",
             },
         };
         return navButtonSx;

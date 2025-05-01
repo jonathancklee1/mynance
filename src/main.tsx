@@ -8,24 +8,24 @@ import { createTheme } from "@mui/material";
 const theme = createTheme({
     palette: {
         primary: {
-            main: "#0C0637",
+            main: "#14213d",
             light: "#FFA500",
-            dark: "#1B2F7A",
-            contrastText: "#fff",
+            dark: "#48e5c2",
+            contrastText: "#48e5c2",
         },
         secondary: {
-            main: "#3A5491",
-            light: "#3A5491",
-            dark: "#3A5491",
-            contrastText: "#fff",
+            main: "#48e5c2",
+            light: "#022b3a",
+            dark: "#48e5c2",
+            contrastText: "#ffffff",
         },
         background: {
-            default: "#0C0637",
-            paper: "#0C0637",
+            default: "#14213d",
+            paper: "#14213d",
         },
         text: {
-            primary: "#fff",
-            secondary: "#fff",
+            primary: "#48e5c2",
+            secondary: "#022b3a",
         },
     },
     components: {
@@ -52,7 +52,7 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     color: "#fff",
-                    backgroundColor: "#3A5491",
+                    backgroundColor: "primary.light",
                     borderRadius: 5,
                 },
             },
@@ -60,13 +60,6 @@ const theme = createTheme({
         MuiBottomNavigation: {
             styleOverrides: {
                 root: {
-                    "& .css-1kcvi62-MuiBottomNavigationAction-label.Mui-selected":
-                        {
-                            color: "#fff",
-                        },
-                    "& .css-1umw9bq-MuiSvgIcon-root": {
-                        fill: "#fff",
-                    },
                     textAlign: "center",
                     height: "100px",
                 },

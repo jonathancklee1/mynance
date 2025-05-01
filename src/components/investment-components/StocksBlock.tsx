@@ -42,7 +42,7 @@ function StocksBlock() {
                         label="Stocks"
                         sx={{
                             borderRadius: 7,
-                            backgroundColor: "#0C0637 ",
+                            backgroundColor: "secondary.main",
                         }}
                     />
                 )}
@@ -50,18 +50,17 @@ function StocksBlock() {
                 sx={{
                     mb: 2,
                     "& .MuiAutocomplete-root": {
-                        backgroundColor: "#0C0637 !important",
+                        backgroundColor: "secondary.main !important",
                         scale: 1.5 + " !important",
                     },
                     "& label": {
-                        color: "#fff !important",
+                        color: "text.secondary",
                     },
                 }}
             />
             {filteredInvestments.length === 0 && (
                 <Typography
                     sx={{
-                        color: "#fff",
                         height: "100%",
                     }}
                 >

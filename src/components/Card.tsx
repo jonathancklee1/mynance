@@ -1,4 +1,4 @@
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography, useTheme } from "@mui/material";
 import React from "react";
 import BuildIcon from "@mui/icons-material/Build";
 function Card({
@@ -10,15 +10,15 @@ function Card({
     isEditable?: boolean;
     cardHeader: string;
 }) {
+    const theme = useTheme();
     return (
         <Paper
             sx={{
-                paddingInline: 3,
-                paddingBlock: 2,
-                backgroundColor: "secondary.main",
-                color: "secondary.contrastText",
-                borderRadius: 4,
-                backdropFilter: "blur(5px)",
+                backgroundColor: `${theme.palette.secondary.light}CC`, // 80% opacity// 80% opacity
+                p: 3,
+                backdropFilter: "blur(10px)",
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
+                borderRadius: 5,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -62,7 +62,7 @@ function Card({
                 <BuildIcon
                     sx={{
                         fontSize: 20,
-                        color: "secondary.contrastText",
+                        color: "primary.light",
                         position: "absolute",
                         top: 20,
                         right: 20,

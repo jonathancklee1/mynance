@@ -86,7 +86,7 @@ function RecurringExpenseBlock({ isEditable }: { isEditable?: boolean }) {
             <Button
                 variant="text"
                 fullWidth
-                sx={{ backgroundColor: "primary.main", fontWeight: "bold" }}
+                sx={{ backgroundColor: "primary.light", fontWeight: "bold" }}
                 onClick={() => {
                     handleAddOpen();
                 }}
@@ -288,7 +288,10 @@ function AddRecurringExpenseBlock({
                         addRecurringExpense(newRecurringExpense);
                         handleClose();
                     }}
-                    sx={{ backgroundColor: "primary.main", fontWeight: "bold" }}
+                    sx={{
+                        backgroundColor: "primary.light",
+                        fontWeight: "bold",
+                    }}
                 >
                     Add Expense
                 </Button>

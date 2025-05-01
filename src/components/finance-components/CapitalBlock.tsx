@@ -21,7 +21,7 @@ function CapitalBlock({ isEditable }: { isEditable?: boolean }) {
             <Box onClick={handleOpen}>
                 <Typography
                     variant="h3"
-                    color={"secondary.contrastText"}
+                    color={"primary.light"}
                     sx={{
                         fontWeight: "bold",
                         textAlign: "center",
