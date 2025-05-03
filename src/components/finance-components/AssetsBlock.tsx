@@ -170,7 +170,6 @@ function EditAssetBlock({
         <>
             <Typography
                 variant="h5"
-                color={"secondary.contrastText"}
                 sx={{
                     fontWeight: "bold",
                     textAlign: "center",
@@ -186,16 +185,23 @@ function EditAssetBlock({
                 checkboxSelection
                 disableRowSelectionOnClick
                 sx={{
-                    color: "text.primary",
+                    color: "text.secondary",
                     backgroundColor: "secondary.main",
                     background: "secondary.main",
                     mb: 2,
-                    "& div": { backgroundColor: "secondary.main" },
+                    "& div": {
+                        backgroundColor: "secondary.light",
+                        color: "text.primary",
+                    },
                     "& .MuiDataGrid-row--editing .MuiDataGrid-cell": {
                         backgroundColor: "secondary.main",
                     },
+                    "& span": {
+                        color: "text.primary",
+                    },
                     "& .Mui-focused": {
-                        backgroundColor: "secondary.light",
+                        backgroundColor: "secondary.main",
+                        color: "text.secondary",
                     },
                 }}
                 processRowUpdate={(newRow, _, params) => {
@@ -217,22 +223,16 @@ function EditAssetBlock({
                 onRowSelectionModelChange={(ids) => {
                     const selectedIDs = new Set(ids);
                     const selectedIdArray = Array.from(selectedIDs);
-                    console.log(selectedIdArray);
                     setSelectedRows(selectedIdArray);
                 }}
             />
-            <ButtonGroup
-                variant="text"
-                color="primary"
-                fullWidth
-                sx={{ gap: 2, ml: "auto" }}
-            >
+            <ButtonGroup variant="text" fullWidth sx={{ gap: 2, ml: "auto" }}>
                 <Button
                     onClick={handleAddRow}
                     variant="contained"
-                    color="primary"
                     sx={{
-                        backgroundColor: "primary.main",
+                        backgroundColor: "primary.light",
+                        color: "text.secondary",
                     }}
                 >
                     Add Row
@@ -240,9 +240,9 @@ function EditAssetBlock({
                 <Button
                     onClick={handleDeleteRow}
                     variant="contained"
-                    color="primary"
                     sx={{
-                        backgroundColor: "primary.main",
+                        backgroundColor: "primary.light",
+                        color: "text.secondary",
                     }}
                 >
                     Delete Row

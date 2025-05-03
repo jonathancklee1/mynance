@@ -137,7 +137,6 @@ function EditProgressBar({ budget, setBudget }: EditProgressBarProps) {
         <>
             <Typography
                 variant="h5"
-                color={"secondary.contrastText"}
                 sx={{
                     fontWeight: "bold",
                     textAlign: "center",
@@ -170,7 +169,7 @@ function EditProgressBar({ budget, setBudget }: EditProgressBarProps) {
                             ),
                         },
                     }}
-                    colourVariant="primary"
+                    colourVariant="secondary"
                     value={budget}
                     onChange={(e) => setBudget(parseInt(e.target.value))}
                     type="number"

@@ -17,7 +17,7 @@ function EditModal({
                 onClose={setClose}
                 sx={{
                     "& .MuiDialog-paper": {
-                        backgroundColor: "secondary.main",
+                        backgroundColor: "background.default",
                         borderRadius: 2,
                         overflowY: "visible",
                     },
@@ -26,14 +26,13 @@ function EditModal({
                 <IconButton
                     aria-label="close"
                     onClick={() => {
-                        console.log("close clicked");
                         setClose();
                     }}
                     sx={() => ({
                         position: "absolute",
                         right: 8,
                         top: 8,
-                        color: "#FFF",
+                        color: "primary.light",
                     })}
                 >
                     <CloseIcon />

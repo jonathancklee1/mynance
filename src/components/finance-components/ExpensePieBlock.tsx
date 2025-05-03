@@ -45,8 +45,12 @@ function ExpensePieBlock() {
                         cx: 150,
                         cy: 100,
                         valueFormatter: (params) => {
-                            const percent = params.value / 100;
-                            return `${(percent * 100).toFixed(0)}%`;
+                            const total = expensePieData.reduce(
+                                (acc, item) => acc + Number(item.value),
+                                0
+                            );
+                            const percent = (params.value * 100) / total;
+                            return `${percent.toFixed(0)}%`;
                         },
                     },
                 ]}
@@ -100,11 +104,7 @@ function ExpensePieBlock() {
                                 height={20}
                                 bgcolor={asset.color}
                             ></Box>
-                            <Typography
-                                variant="body2"
-                                color={"secondary.contrastText"}
-                                flexGrow={1}
-                            >
+                            <Typography variant="body2" flexGrow={1}>
                                 {asset.label}
                             </Typography>
                             <Typography variant="body1">

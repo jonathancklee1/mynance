@@ -19,6 +19,18 @@ const theme = createTheme({
             dark: "#48e5c2",
             contrastText: "#ffffff",
         },
+        error: {
+            main: "#FF0000",
+            light: "#FF0000",
+            dark: "#FF0000",
+            contrastText: "#ffffff",
+        },
+        success: {
+            main: "#00FF00",
+            light: "#00FF00",
+            dark: "#00FF00",
+            contrastText: "#ffffff",
+        },
         background: {
             default: "#14213d",
             paper: "#14213d",
@@ -26,6 +38,7 @@ const theme = createTheme({
         text: {
             primary: "#48e5c2",
             secondary: "#022b3a",
+            disabled: "#48e5c2",
         },
     },
     components: {
@@ -51,9 +64,10 @@ const theme = createTheme({
         MuiButton: {
             styleOverrides: {
                 root: {
-                    color: "#fff",
                     backgroundColor: "primary.light",
+                    color: "secondary.contrastText",
                     borderRadius: 5,
+                    fontWeight: "bold",
                 },
             },
         },

@@ -10,15 +10,18 @@ import {
 import useApi from "../../hooks/useApi";
 import useConvertToDollar from "../../hooks/useConvertToDollar";
 import useGetPercentMove from "../../hooks/useGetPercentMove";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EditModal from "../EditModal";
 import { AddCircleOutline } from "@mui/icons-material";
 import useGetPercentColour from "../../hooks/useGetPercentColour";
 
 function MoversBlock({ isEditable }: { isEditable?: boolean }) {
     const [moverTickers, setMoverTickers] = useState<string[]>(
-        JSON.parse(localStorage.getItem("daily-movers")) ?? []
+        localStorage.getItem("daily-movers")
+            ? JSON.parse(localStorage.getItem("daily-movers") ?? "")
+            : []
     );
+    console.log(moverTickers, "tickers");
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -142,18 +145,22 @@ function EditMoversBlock({
     };
 
     function handleAddTicker(ticker: string) {
+        if (moverTickers.includes(ticker.toUpperCase())) return;
         if (moverTickers.length >= 3) {
             setIsError(true);
             return;
         } else {
             setIsError(false);
+            console.log(ticker);
             setMoverTickers((prev: string[]) => [
                 ...prev,
                 ticker.toUpperCase(),
             ]);
-            localStorage.setItem("daily-movers", JSON.stringify(moverTickers));
         }
     }
+    useEffect(() => {
+        localStorage.setItem("daily-movers", JSON.stringify(moverTickers));
+    }, [moverTickers]);
     return (
         <Box
             sx={{
@@ -182,19 +189,29 @@ function EditMoversBlock({
                     alignItems: "center",
                     width: "100%",
                     borderRadius: 4,
+                    backgroundColor: "secondary.main",
+                    color: "primary.light",
                 }}
                 onSubmit={(e) => {
                     e.preventDefault();
                     handleAddTicker(e.target[0].value);
                 }}
             >
-                <InputBase sx={{ ml: 1, flex: 1 }} placeholder="Add Tickers" />
+                <InputBase
+                    sx={{
+                        ml: 1,
+                        flex: 1,
+                        backgroundColor: "secondary.main",
+                        color: "text.secondary",
+                    }}
+                    placeholder="Add Tickers"
+                />
                 <IconButton
-                    type="button"
+                    type="submit"
                     sx={{ p: "10px" }}
                     aria-label="search"
                 >
-                    <AddCircleOutline color="secondary" />
+                    <AddCircleOutline sx={{ color: "primary.light" }} />
                 </IconButton>
             </Paper>
             {isError && (

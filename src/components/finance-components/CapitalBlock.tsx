@@ -59,7 +59,6 @@ function EditCapitalBlock({
         <>
             <Typography
                 variant="h5"
-                color={"secondary.contrastText"}
                 sx={{
                     fontWeight: "bold",
                     textAlign: "center",
@@ -70,7 +69,7 @@ function EditCapitalBlock({
                 Edit your capital
             </Typography>
             <Textbox
-                colourVariant="primary"
+                colourVariant="secondary"
                 type="number"
                 placeholder="Enter your capital"
                 value={capital}

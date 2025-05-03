@@ -26,7 +26,7 @@ function StocksBlock() {
         }
     );
     const stocksCurrentValueObj =
-        JSON.parse(localStorage.getItem("stocksCurrentValueObj")) ?? {};
+        JSON.parse(localStorage.getItem("my-stocks-value")) ?? {};
 
     return (
         <>
@@ -104,7 +104,7 @@ function HoldingItem({
     const currentValue = useConvertToDollar(investment.amount * currentPrice);
     stocksCurrentValueObj[investment.ticker] = currentValue;
     localStorage.setItem(
-        "stocksCurrentValueObj",
+        "my-stocks-value",
         JSON.stringify(stocksCurrentValueObj)
     );
     console.log(stocksCurrentValueObj);
@@ -121,7 +121,8 @@ function HoldingItem({
 
                 width: "100%",
                 py: 2,
-                borderBottom: "2px solid #fff",
+                borderBottom: "2px solid",
+                borderColor: "primary.light",
             }}
         >
             <Typography

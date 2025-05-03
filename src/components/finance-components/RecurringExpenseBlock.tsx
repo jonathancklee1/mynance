@@ -63,14 +63,12 @@ function RecurringExpenseBlock({ isEditable }: { isEditable?: boolean }) {
                         <ListItemButton sx={{ px: 1 }}>
                             <ListItemIcon
                                 sx={{
-                                    color: "white",
+                                    color: "primary.light",
                                     minWidth: 20,
                                     marginRight: 2,
                                 }}
                             >
-                                <AttachMoneyIcon
-                                    sx={{ color: "white", width: 20 }}
-                                />
+                                <AttachMoneyIcon sx={{ width: 20 }} />
                             </ListItemIcon>
                             <ListItemText primary={expense.name} />
                             <Typography
@@ -134,7 +132,6 @@ function EditRecurringExpenseBlock({
         <>
             <Typography
                 variant="h5"
-                color={"secondary.contrastText"}
                 sx={{
                     fontWeight: "bold",
                     textAlign: "center",
@@ -147,7 +144,7 @@ function EditRecurringExpenseBlock({
                 <Textbox
                     label={"Name"}
                     variant={"outlined"}
-                    colourVariant={"primary"}
+                    colourVariant={"secondary"}
                     value={
                         recurringExpenses.find(
                             (expense: recurringExpenseItem) =>
@@ -174,7 +171,7 @@ function EditRecurringExpenseBlock({
                 <Textbox
                     label={"Amount ($)"}
                     variant={"outlined"}
-                    colourVariant={"primary"}
+                    colourVariant={"secondary"}
                     value={
                         recurringExpenses.find(
                             (expense: recurringExpenseItem) =>
@@ -188,7 +185,7 @@ function EditRecurringExpenseBlock({
                                     if (expense.id === selectedExpense.id) {
                                         return {
                                             ...expense,
-                                            amount: parseInt(e.target.value),
+                                            cost: parseInt(e.target.value),
                                         };
                                     }
                                     return expense;
@@ -199,15 +196,21 @@ function EditRecurringExpenseBlock({
                 ></Textbox>
                 <Button
                     variant="text"
+                    fullWidth
                     onClick={handleClose}
-                    sx={{ backgroundColor: "primary.main", fontWeight: "bold" }}
+                    sx={{
+                        backgroundColor: "primary.light",
+                        fontWeight: "bold",
+                    }}
                 >
                     Save Expense
                 </Button>
                 <Button
                     variant="text"
-                    color="error"
-                    sx={{ backgroundColor: "primary.main", fontWeight: "bold" }}
+                    sx={{
+                        backgroundColor: "primary.light",
+                        fontWeight: "bold",
+                    }}
                     onClick={() => {
                         setRecurringExpenses(
                             recurringExpenses.filter(
@@ -242,7 +245,6 @@ function AddRecurringExpenseBlock({
         <>
             <Typography
                 variant="h5"
-                color={"secondary.contrastText"}
                 sx={{
                     fontWeight: "bold",
                     textAlign: "center",
@@ -255,7 +257,7 @@ function AddRecurringExpenseBlock({
                 <Textbox
                     label={"Name"}
                     variant={"outlined"}
-                    colourVariant={"primary"}
+                    colourVariant={"secondary"}
                     value={newRecurringExpense.name}
                     onChange={(e) => {
                         setNewRecurringExpense((prev) => {
@@ -270,7 +272,7 @@ function AddRecurringExpenseBlock({
                 <Textbox
                     label={"Amount ($)"}
                     variant={"outlined"}
-                    colourVariant={"primary"}
+                    colourVariant={"secondary"}
                     type="number"
                     value={newRecurringExpense.cost}
                     onChange={(e) => {

@@ -30,7 +30,7 @@ function Dashboard() {
                         gridTemplateRows: "span 3 auto",
                         gap: 4,
                         px: 8,
-                        py: 4,
+                        py: 6,
                     },
                 }}
             >

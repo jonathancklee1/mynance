@@ -14,10 +14,10 @@ function Card({
     return (
         <Paper
             sx={{
-                backgroundColor: `${theme.palette.secondary.light}CC`, // 80% opacity// 80% opacity
+                backgroundColor: `${theme.palette.secondary.light}CC`,
                 p: 3,
-                backdropFilter: "blur(10px)",
-                boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
+                backdropFilter: "blur(15px)",
+                boxShadow: "0 0 30px rgba(0, 0, 0, 0.5)",
                 borderRadius: 5,
                 display: "flex",
                 alignItems: "center",

@@ -109,13 +109,8 @@ function InvestmentTableBlock() {
                         variant="filled"
                         type="number"
                         fullWidth
-                        color="secondary"
                         size="small"
                         colourVariant="secondary"
-                        sx={{
-                            input: { color: "text.primary", fontSize: 24 },
-                            backgroundColor: "secondary.main",
-                        }}
                         onChange={(e) =>
                             setInvestmentCost(Number(e.target.value))
                         }
@@ -135,13 +130,8 @@ function InvestmentTableBlock() {
                         variant="filled"
                         type="number"
                         fullWidth
-                        color="secondary"
                         size="small"
                         colourVariant="secondary"
-                        sx={{
-                            input: { color: "text.primary", fontSize: 24 },
-                            backgroundColor: "secondary.main",
-                        }}
                         onChange={(e) =>
                             setInvestmentAmount(Number(e.target.value))
                         }
@@ -149,7 +139,6 @@ function InvestmentTableBlock() {
                 </Box>
                 <Button
                     variant="text"
-                    color="secondary"
                     fullWidth
                     sx={{
                         width: "100%",
@@ -196,13 +185,19 @@ function InvestmentTableBlock() {
 
                         "& div": {
                             backgroundColor: "secondary.light",
-                            color: "secondary.contrastText",
-                            fill: "secondary.contrastText",
+                            color: "text.primary",
+                            fill: "text.primary",
                         },
-
+                        "& span": {
+                            color: "text.primary",
+                        },
                         "& button": {
-                            color: "secondary.contrastText",
+                            color: "text.primary",
                         },
+                        "& .css-1x4fnf-MuiButtonBase-root-MuiCheckbox-root.Mui-checked, .css-1x4fnf-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate":
+                            {
+                                color: "primary.contrastText",
+                            },
                     }}
                 />
             </Paper>
@@ -216,6 +211,8 @@ function InvestmentTableBlock() {
                         height: "60px",
                         marginTop: 2,
                         fontWeight: "bold",
+                        backgroundColor: "primary.light",
+                        color: "text.secondary",
                     }}
                     onClick={() =>
                         handleRowSelection(selectedRows, deleteInvestments)

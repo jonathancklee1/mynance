@@ -28,9 +28,16 @@ function Textbox(
                 size="small"
                 {...props}
                 sx={{
-                    input: { color: "text.primary", fontSize: 24 },
+                    input: { color: "text.secondary", fontSize: 22 },
                     backgroundColor: "secondary.main",
                     ...props.sx,
+                    "& .css-wtd6y2-MuiFormLabel-root-MuiInputLabel-root": {
+                        color: "primary.light",
+                    },
+                    "& .css-1358u98-MuiFormLabel-root-MuiInputLabel-root.Mui-focused":
+                        {
+                            color: "text.secondary",
+                        },
                 }}
             />
         ) : (

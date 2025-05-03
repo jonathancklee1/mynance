@@ -6,7 +6,7 @@ import useInvestmentStore from "../../stores/InvestmentStore";
 function PortfolioPieBlock() {
     const { getHoldings } = useInvestmentStore();
     const investedValueObj = JSON.parse(
-        localStorage.getItem("stocksCurrentValueObj") ?? "{}"
+        localStorage.getItem("my-stocks-value") ?? "{}"
     );
 
     const randColour = () => {

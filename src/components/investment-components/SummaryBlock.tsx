@@ -2,14 +2,15 @@ import { Box, Typography } from "@mui/material";
 import useInvestmentStore from "../../stores/InvestmentStore";
 import useGetPercentColour from "../../hooks/useGetPercentColour";
 import useConvertToDollar from "../../hooks/useConvertToDollar";
+import { useEffect } from "react";
 
 function SummaryBlock() {
     const { getTotalCost, getHoldings } = useInvestmentStore();
     const investedValueObj = JSON.parse(
-        localStorage.getItem("stocksCurrentValueObj") ?? "{}"
+        localStorage.getItem("my-stocks-value") ?? "{}"
     );
     const holdings = getHoldings();
-    console.log("holdings", holdings, investedValueObj);
+    useEffect(() => {}, [investedValueObj]);
     const totalInvestedValue: number = holdings.reduce((acc, value) => {
         Object.keys(investedValueObj).forEach((key) => {
             if (key === value.ticker) {
@@ -19,6 +20,7 @@ function SummaryBlock() {
         return acc;
     }, 0);
     const netValue = totalInvestedValue - getTotalCost();
+    console.log("holdings", holdings, investedValueObj);
     return (
         <Box
             sx={{

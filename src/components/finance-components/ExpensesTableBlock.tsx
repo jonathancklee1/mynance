@@ -112,6 +112,7 @@ function ExpensesTableBlock() {
                         marginTop: "auto",
                         fontWeight: "bold",
                         backgroundColor: "primary.light",
+                        color: "text.secondary",
                     }}
                     onClick={handleAddExpense}
                 >
@@ -151,13 +152,20 @@ function ExpensesTableBlock() {
 
                         "& div": {
                             backgroundColor: "secondary.light",
-                            color: "secondary.contrastText",
-                            fill: "secondary.contrastText",
+                            color: "primary.contrastText",
+                            fill: "primary.contrastText",
+                        },
+                        "& span": {
+                            color: "text.primary",
                         },
 
                         "& button": {
-                            color: "secondary.contrastText",
+                            color: "primary.contrastText",
                         },
+                        "& .css-1x4fnf-MuiButtonBase-root-MuiCheckbox-root.Mui-checked, .css-1x4fnf-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate":
+                            {
+                                color: "primary.contrastText",
+                            },
                     }}
                 />
             </Paper>
