@@ -17,7 +17,7 @@ function Card({
                 backgroundColor: `${theme.palette.secondary.light}CC`,
                 p: 3,
                 backdropFilter: "blur(15px)",
-                boxShadow: "0 0 30px rgba(0, 0, 0, 0.5)",
+                boxShadow: "0 0 20px rgba(0, 0, 0, 0.4)",
                 borderRadius: 5,
                 display: "flex",
                 alignItems: "center",

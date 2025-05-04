@@ -84,7 +84,11 @@ function RecurringExpenseBlock({ isEditable }: { isEditable?: boolean }) {
             <Button
                 variant="text"
                 fullWidth
-                sx={{ backgroundColor: "primary.light", fontWeight: "bold" }}
+                sx={{
+                    backgroundColor: "primary.light",
+                    color: "text.primary",
+                    fontWeight: "bold",
+                }}
                 onClick={() => {
                     handleAddOpen();
                 }}

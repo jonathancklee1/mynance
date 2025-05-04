@@ -6,19 +6,6 @@ const useInvestmentStore = create(
     persist(
         (set, get) => ({
             investments: [] as investmentItem[],
-            /**
-             * Calculates the holdings from the list of investments.
-             *
-             * This function aggregates the total value, amount, and average cost of
-             * each stock using its ticker symbol as the key. It outputs an array of
-             * objects containing the ticker, total value, total amount, and average
-             * cost for each unique stock in the investments.
-             *
-             * @returns {Array<{ticker: string, value: number, amount: number, avgCost: number}>}
-             * An array of objects where each object contains the ticker symbol, total
-             * value, total amount, and average cost of the stock.
-             */
-
             getHoldings: () => {
                 const holdingsObj = get().investments.reduce(
                     (acc, investment) => {

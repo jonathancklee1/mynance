@@ -156,7 +156,7 @@ function ExpensesTableBlock() {
                         },
                         "& .css-1x4fnf-MuiButtonBase-root-MuiCheckbox-root.Mui-checked, .css-1x4fnf-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate":
                             {
-                                color: "primary.contrastText",
+                                color: "primary.light",
                             },
                     }}
                 />

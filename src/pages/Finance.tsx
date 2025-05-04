@@ -22,7 +22,7 @@ function Finance() {
                     px: 2,
                     py: 2,
                     backgroundColor: "primary.main",
-                    paddingBottom: 8,
+                    paddingBottom: 10,
                     gridTemplateRows: "auto",
                     display: "grid",
                     gridTemplateColumns: "repeat(12, 1fr)",

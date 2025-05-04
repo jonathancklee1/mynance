@@ -30,7 +30,7 @@ function SummaryBlock() {
                 alignItems: "center",
             }}
         >
-            <Typography variant="h5" sx={{ fontWeight: "bold", fontSize: 34 }}>
+            <Typography variant="h5" sx={{ fontWeight: "bold", fontSize: 40 }}>
                 ${useConvertToDollar(totalInvestedValue)}
             </Typography>
             <Box

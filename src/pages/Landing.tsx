@@ -1,17 +1,21 @@
-import { Box, Button, Container, Stack, styled } from "@mui/material";
+import { Box, Button, Container, Stack, styled, useTheme } from "@mui/material";
 import NavBar from "../components/NavBar";
 import Typography from "@mui/material/Typography";
 import Textbox from "../components/Textbox";
 import { SetStateAction, useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { ChevronRight } from "@mui/icons-material";
+import useThemeStore from "../stores/ThemeStore";
 
 function Landing() {
     const [name, setName] = useState("");
     const [isError, setIsError] = useState(false);
-    const [themeSelected, setThemeSelected] = useState("");
+    const [themeSelected, setThemeSelected] = useState<
+        "theme1" | "theme2" | "theme3" | string
+    >("theme1");
+    const { setTheme } = useThemeStore();
     const [height, setHeight] = useState(0);
-    const themes = ["dark", "light", "custom"];
+    const themes = ["theme1", "theme2", "theme3"];
     const navigate = useNavigate();
     const ThemeButton = styled(Button)(() => {
         return {
@@ -25,14 +29,17 @@ function Landing() {
         const height = componentRef.current?.offsetHeight;
         setHeight(height);
     }, []);
+    const themePalette = useTheme();
 
     return (
-        <Container
+        <Box
             sx={{
                 minHeight: "100vh",
                 p: 0,
-                backgroundColor: "primary.main",
                 color: "primary.contrastText",
+                width: "100%",
+                maxWidth: "none",
+                backgroundColor: "primary.main",
             }}
         >
             <NavBar ref={componentRef}></NavBar>
@@ -44,7 +51,6 @@ function Landing() {
                     alignItems: "center",
                     justifyContent: "center",
                     paddingBlock: 4,
-                    backgroundColor: "primary.main",
                 }}
             >
                 <Typography
@@ -54,7 +60,16 @@ function Landing() {
                     textAlign={"center"}
                     marginBottom={3}
                 >
-                    Welcome to MYNANCE!
+                    Welcome to{" "}
+                    <Typography
+                        variant="h3"
+                        component={"span"}
+                        color={"primary.light"}
+                        fontWeight={"bold"}
+                    >
+                        MYNANCE
+                    </Typography>
+                    !
                 </Typography>
                 <Typography
                     textAlign={"center"}
@@ -118,16 +133,21 @@ function Landing() {
                             alignItems: "center",
                         }}
                     >
-                        {themes.map((theme) => {
+                        {themes.map((theme, index) => {
                             return (
                                 <ThemeButton
-                                    onClick={() => setThemeSelected(theme)}
+                                    key={index}
+                                    onClick={() => {
+                                        setThemeSelected(theme);
+                                        setTheme(theme);
+                                    }}
                                     sx={{
                                         width: "100px",
                                         py: 2,
                                         background:
                                             theme === themeSelected
-                                                ? "secondary.main"
+                                                ? themePalette.palette.primary
+                                                      .light
                                                 : "transparent",
                                     }}
                                 >
@@ -141,6 +161,14 @@ function Landing() {
                                     <Typography
                                         variant="body1"
                                         fontWeight={"bold"}
+                                        sx={{
+                                            color:
+                                                theme === themeSelected
+                                                    ? themePalette.palette.text
+                                                          .secondary
+                                                    : themePalette.palette.text
+                                                          .primary,
+                                        }}
                                     >
                                         {theme}
                                     </Typography>
@@ -171,7 +199,7 @@ function Landing() {
                             navigate("/dashboard");
                         }
                     }}
-                    variant="outlined"
+                    variant="contained"
                     sx={{
                         width: "60%",
                         fontWeight: "bold",
@@ -179,8 +207,14 @@ function Landing() {
                         py: 2,
                         fontSize: "1.1rem",
                         borderRadius: 4,
+                        backgroundColor: "transparent",
+                        border: "2px solid",
+                        borderColor: "primary.light",
+                        color: "primary.light",
+                        transition: "all .3s ease-in-out",
                         "&:hover": {
-                            backgroundColor: "primary.main",
+                            backgroundColor: "primary.light",
+                            color: "text.secondary",
                         },
                     }}
                 >
@@ -193,7 +227,7 @@ function Landing() {
                     </Typography>
                 )}
             </Container>
-        </Container>
+        </Box>
     );
 }
 

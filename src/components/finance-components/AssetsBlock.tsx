@@ -195,6 +195,9 @@ function EditAssetBlock({
                     "& span": {
                         color: "text.primary",
                     },
+                    "& .Mui-checked": {
+                        color: "primary.light",
+                    },
                     "& .Mui-focused": {
                         backgroundColor: "secondary.main",
                         color: "text.secondary",

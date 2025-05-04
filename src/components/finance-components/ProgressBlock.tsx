@@ -117,7 +117,7 @@ function ProgressBarWithLabel({ expense, budget }: ProgressBarWithLabelProps) {
                 sx={{
                     flex: 1,
                     "&.MuiLinearProgress-root": {
-                        background: "#FFF",
+                        background: "primary.main",
                         height: 12,
                         borderRadius: 5,
                     },
