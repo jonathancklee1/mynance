@@ -71,10 +71,6 @@ function ExpensesTableBlock() {
                         fullWidth
                         size="small"
                         colourVariant="secondary"
-                        sx={{
-                            input: { color: "text.primary", fontSize: 24 },
-                            backgroundColor: "secondary.main",
-                        }}
                         onChange={(e) => setExpenseName(e.target.value)}
                     />
                 </Box>
@@ -95,10 +91,6 @@ function ExpensesTableBlock() {
                         color="secondary"
                         size="small"
                         colourVariant="secondary"
-                        sx={{
-                            input: { color: "text.primary", fontSize: 24 },
-                            backgroundColor: "secondary.main",
-                        }}
                         onChange={(e) => setExpenseCost(e.target.value)}
                     />
                 </Box>
@@ -179,6 +171,12 @@ function ExpensesTableBlock() {
                         height: "60px",
                         marginTop: 2,
                         fontWeight: "bold",
+                        backgroundColor: "primary.light",
+                        color: "text.secondary",
+                        "@media (min-width: 1024px)": {
+                            width: "20%",
+                            float: "right",
+                        },
                     }}
                     onClick={() =>
                         handleRowSelection(selectedRows, deleteExpenses)

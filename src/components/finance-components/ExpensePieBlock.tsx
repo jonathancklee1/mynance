@@ -42,7 +42,7 @@ function ExpensePieBlock() {
                 series={[
                     {
                         data: expensePieData,
-                        cx: 150,
+                        cx: 175,
                         cy: 100,
                         valueFormatter: (params) => {
                             const total = expensePieData.reduce(
@@ -54,8 +54,8 @@ function ExpensePieBlock() {
                         },
                     },
                 ]}
-                width={300}
-                height={200}
+                width={350}
+                height={250}
                 slotProps={{
                     legend: { hidden: true },
                     popper: {

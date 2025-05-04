@@ -213,6 +213,10 @@ function InvestmentTableBlock() {
                         fontWeight: "bold",
                         backgroundColor: "primary.light",
                         color: "text.secondary",
+                        "@media (min-width: 1024px)": {
+                            width: "20%",
+                            float: "right",
+                        },
                     }}
                     onClick={() =>
                         handleRowSelection(selectedRows, deleteInvestments)

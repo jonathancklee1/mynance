@@ -118,7 +118,7 @@ function ProgressBarWithLabel({ expense, budget }: ProgressBarWithLabelProps) {
                     flex: 1,
                     "&.MuiLinearProgress-root": {
                         background: "#FFF",
-                        height: 8,
+                        height: 12,
                         borderRadius: 5,
                     },
                     "& .MuiLinearProgress-bar": {
@@ -127,7 +127,9 @@ function ProgressBarWithLabel({ expense, budget }: ProgressBarWithLabelProps) {
                     },
                 }}
             />
-            <Typography variant="body1">{expensePercentage}%</Typography>
+            <Typography variant="body1">
+                {expensePercentage > 100 ? 100 : expensePercentage}%
+            </Typography>
         </Box>
     );
 }

@@ -85,11 +85,7 @@ function AssetsBlock({ isEditable }: { isEditable?: boolean }) {
                                     height={20}
                                     bgcolor={asset.color}
                                 ></Box>
-                                <Typography
-                                    variant="body2"
-                                    color={"secondary.contrastText"}
-                                    flexGrow={1}
-                                >
+                                <Typography variant="body2" flexGrow={1}>
                                     {asset.name}
                                 </Typography>
                                 <Typography variant="body1">

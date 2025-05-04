@@ -14,7 +14,6 @@ function Dashboard() {
     return (
         <>
             <NavBar />
-
             <Box
                 sx={{
                     px: 2,
@@ -25,7 +24,7 @@ function Dashboard() {
                     display: "grid",
                     gridTemplateColumns: "repeat(12, 1fr)",
                     gap: 2,
-                    marginBottom: 8,
+                    marginBottom: 10,
                     "@media (min-width: 1024px)": {
                         gridTemplateRows: "span 3 auto",
                         gap: 4,

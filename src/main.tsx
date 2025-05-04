@@ -5,7 +5,8 @@ import App from "./App.tsx";
 import { BrowserRouter } from "react-router";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material";
-const theme = createTheme({
+const themeVariant = localStorage.getItem("theme") ?? "dark";
+const theme1 = createTheme({
     palette: {
         primary: {
             main: "#14213d",
@@ -45,19 +46,8 @@ const theme = createTheme({
         MuiTextField: {
             styleOverrides: {
                 root: {
-                    color: "#fff",
                     backgroundColor: "#0C0637",
                     borderRadius: 5,
-                    "& .css-17est1k-MuiFormLabel-root-MuiInputLabel-root": {
-                        color: "#FFF",
-                    },
-                    "& .css-17est1k-MuiFormLabel-root-MuiInputLabel-root.Mui-focused":
-                        {
-                            color: "#FFF",
-                        },
-                    "& .css-tsjiwq-MuiFormLabel-root-MuiInputLabel-root": {
-                        color: "#FFF",
-                    },
                 },
             },
         },
@@ -65,7 +55,6 @@ const theme = createTheme({
             styleOverrides: {
                 root: {
                     backgroundColor: "primary.light",
-                    color: "secondary.contrastText",
                     borderRadius: 5,
                     fontWeight: "bold",
                 },
@@ -103,7 +92,7 @@ const theme = createTheme({
 });
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={themeVariant === "theme1" ? theme1 : theme1}>
             <BrowserRouter>
                 <App />
             </BrowserRouter>

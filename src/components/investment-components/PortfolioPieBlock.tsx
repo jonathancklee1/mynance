@@ -30,7 +30,7 @@ function PortfolioPieBlock() {
                 series={[
                     {
                         data: investmentPieData,
-                        cx: 150,
+                        cx: 175,
                         cy: 100,
                         valueFormatter: (params) => {
                             const percent = params.value / 100;
@@ -39,11 +39,11 @@ function PortfolioPieBlock() {
                     },
                 ]}
                 sx={{
-                    "@media (min-width: 1024px)": { scale: "1.3" },
+                    "@media (min-width: 1024px)": {},
                     "& text": { textAnchor: "start" },
                 }}
-                width={300}
-                height={200}
+                width={350}
+                height={250}
                 slotProps={{
                     legend: { hidden: true },
                     popper: {
