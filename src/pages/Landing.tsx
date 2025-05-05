@@ -151,13 +151,40 @@ function Landing() {
                                                 : "transparent",
                                     }}
                                 >
-                                    <Box
-                                        width={50}
-                                        height={50}
-                                        bgcolor={"white"}
-                                        borderRadius={"100%"}
-                                        marginBottom={2}
-                                    ></Box>
+                                    {index === 0 && (
+                                        <Box
+                                            width={50}
+                                            height={50}
+                                            borderRadius={"100%"}
+                                            marginBottom={2}
+                                            sx={{
+                                                backgroundImage: `conic-gradient(#14213d 0deg, #FFA500 120deg,#48e5c2 270deg)`,
+                                            }}
+                                        ></Box>
+                                    )}
+                                    {index === 1 && (
+                                        <Box
+                                            width={50}
+                                            height={50}
+                                            borderRadius={"100%"}
+                                            marginBottom={2}
+                                            sx={{
+                                                backgroundImage: `conic-gradient(#e1e5f2 0deg, #ff595e 120deg, #04052e 270deg)`,
+                                            }}
+                                        ></Box>
+                                    )}
+                                    {index === 2 && (
+                                        <Box
+                                            width={50}
+                                            height={50}
+                                            borderRadius={"100%"}
+                                            marginBottom={2}
+                                            sx={{
+                                                backgroundImage: `conic-gradient(#3d348b 0deg,#7dcfb6 120deg,#858ae3 270deg)`,
+                                            }}
+                                        ></Box>
+                                    )}
+
                                     <Typography
                                         variant="body1"
                                         fontWeight={"bold"}
@@ -170,7 +197,9 @@ function Landing() {
                                                           .primary,
                                         }}
                                     >
-                                        {theme}
+                                        {theme.substring(0, 5) +
+                                            " " +
+                                            theme.substring(5)}
                                     </Typography>
                                 </ThemeButton>
                             );

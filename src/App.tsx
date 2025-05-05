@@ -51,8 +51,8 @@ function App() {
                 paper: "#14213d",
             },
             text: {
-                primary: "#022b3a",
-                secondary: "#022b3a",
+                primary: "#48e5c2",
+                secondary: "#ffffff",
                 disabled: "#48e5c2",
             },
         },

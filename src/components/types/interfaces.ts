@@ -33,3 +33,8 @@ export interface HoldingsItem {
     amount: number;
     avgCost: number;
 }
+
+export interface ThemeStore {
+    theme: string;
+    setTheme: (theme: string) => void;
+}

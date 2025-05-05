@@ -27,14 +27,13 @@ function StocksBlock() {
     );
     const stocksCurrentValueObj =
         JSON.parse(localStorage.getItem("my-stocks-value")) ?? {};
-
     return (
         <>
             <Autocomplete
                 disablePortal
                 fullWidth
                 options={investments.map(
-                    (investment: investmentItem) => investment.name
+                    (investment: investmentItem) => investment.ticker
                 )}
                 renderInput={(params) => (
                     <TextField
@@ -72,6 +71,7 @@ function StocksBlock() {
                     width: "100%",
                     maxHeight: 420,
                     overflowY: "auto",
+                    flexGrow: 1,
                 }}
             >
                 {filteredInvestments.map((investment, index: number) => {

@@ -86,7 +86,7 @@ function RecurringExpenseBlock({ isEditable }: { isEditable?: boolean }) {
                 fullWidth
                 sx={{
                     backgroundColor: "primary.light",
-                    color: "text.primary",
+                    color: "text.secondary",
                     fontWeight: "bold",
                 }}
                 onClick={() => {

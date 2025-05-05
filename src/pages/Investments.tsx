@@ -74,7 +74,7 @@ function Investments() {
                     }}
                 >
                     <Card cardHeader="My Holdings">
-                        <StocksBlock></StocksBlock>
+                        <StocksBlock />
                     </Card>
                 </Box>
                 <Box
