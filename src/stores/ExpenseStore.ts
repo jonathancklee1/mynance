@@ -2,10 +2,11 @@ import { create } from "zustand";
 import {
     recurringExpenseItem,
     expenseItem,
+    ExpenseStore,
 } from "../components/types/interfaces";
 import { persist, createJSONStorage } from "zustand/middleware";
 const useExpenseStore = create(
-    persist(
+    persist<ExpenseStore>(
         (set, get) => ({
             expenses: [] as expenseItem[],
             recurringExpenses: [] as recurringExpenseItem[],
@@ -22,11 +23,11 @@ const useExpenseStore = create(
                 })),
             setRecurringExpenses: (recurringExpenses: recurringExpenseItem[]) =>
                 set({ recurringExpenses }),
-            addRecurringExpense: (expense: expenseItem) =>
+            addRecurringExpense: (expense: recurringExpenseItem) =>
                 set((state) => ({
                     recurringExpenses: [...state.recurringExpenses, expense],
                 })),
-            deleteRecurringExpense: (expenseItem: expenseItem) =>
+            deleteRecurringExpense: (expenseItem: recurringExpenseItem) =>
                 set((state) => ({
                     recurringExpenses: state.recurringExpenses.filter(
                         (expense) => {
@@ -54,8 +55,12 @@ const useExpenseStore = create(
                 const lastDayOfWeek = new Date(
                     today.setDate(today.getDate() + 6)
                 ).setHours(0, 0, 0, 0);
-                function isDateInCurrentWeek(date) {
-                    return date >= firstDayOfWeek && date <= lastDayOfWeek;
+                function isDateInCurrentWeek(date: Date) {
+                    console.log(date, firstDayOfWeek, lastDayOfWeek);
+                    return (
+                        date.setHours(0, 0, 0, 0) >= firstDayOfWeek &&
+                        date.setHours(0, 0, 0, 0) <= lastDayOfWeek
+                    );
                 }
 
                 get().expenses.forEach((expense: expenseItem) => {

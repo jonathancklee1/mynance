@@ -99,6 +99,18 @@ const NavBar = forwardRef<HTMLDivElement>((_, ref) => {
                             onClick={() => {
                                 setTheme("theme1");
                             }}
+                            sx={{
+                                cursor: "pointer",
+                                p: 1,
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                transition: "all 0.3 ease",
+                                "&:hover": {
+                                    bgcolor: "primary.main",
+                                    borderRadius: 4,
+                                },
+                            }}
                         >
                             <Box
                                 width={50}
@@ -124,6 +136,18 @@ const NavBar = forwardRef<HTMLDivElement>((_, ref) => {
                             onClick={() => {
                                 setTheme("theme2");
                             }}
+                            sx={{
+                                cursor: "pointer",
+                                p: 1,
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                transition: "all 0.3 ease",
+                                "&:hover": {
+                                    bgcolor: "primary.main",
+                                    borderRadius: 4,
+                                },
+                            }}
                         >
                             <Box
                                 width={50}
@@ -148,6 +172,18 @@ const NavBar = forwardRef<HTMLDivElement>((_, ref) => {
                         <Box
                             onClick={() => {
                                 setTheme("theme3");
+                            }}
+                            sx={{
+                                cursor: "pointer",
+                                p: 1,
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                transition: "all 0.3 ease",
+                                "&:hover": {
+                                    bgcolor: "primary.main",
+                                    borderRadius: 4,
+                                },
                             }}
                         >
                             <Box

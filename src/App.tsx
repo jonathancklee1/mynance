@@ -52,8 +52,8 @@ function App() {
             },
             text: {
                 primary: "#48e5c2",
-                secondary: "#ffffff",
-                disabled: "#48e5c2",
+                secondary: "#14213d",
+                disabled: "#14213d",
             },
         },
         components: {

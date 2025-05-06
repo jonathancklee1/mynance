@@ -1,14 +1,21 @@
 import { create } from "zustand";
 
 import { persist, createJSONStorage } from "zustand/middleware";
-import { investmentItem } from "../components/types/interfaces";
+import {
+    HoldingsItem,
+    investmentItem,
+    InvestmentStore,
+} from "../components/types/interfaces";
 const useInvestmentStore = create(
-    persist(
+    persist<InvestmentStore>(
         (set, get) => ({
             investments: [] as investmentItem[],
             getHoldings: () => {
                 const holdingsObj = get().investments.reduce(
-                    (acc, investment) => {
+                    (
+                        acc: { [key: string]: HoldingsItem },
+                        investment: investmentItem
+                    ) => {
                         if (acc[investment.ticker]) {
                             acc[investment.ticker].value +=
                                 investment.cost * investment.amount;
@@ -16,15 +23,13 @@ const useInvestmentStore = create(
                             acc[investment.ticker].avgCost =
                                 acc[investment.ticker].value /
                                 acc[investment.ticker].amount;
-                            acc[investment.ticker].name = investment.name;
-                            console.log("exist");
+                            acc[investment.ticker].ticker = investment.name;
                         } else {
-                            console.log("not exist", investment.ticker);
                             acc[investment.ticker] = {
                                 value: investment.cost * investment.amount,
                                 amount: investment.amount,
                                 avgCost: investment.cost,
-                                name: investment.name,
+                                ticker: investment.name,
                             };
                         }
                         return acc;

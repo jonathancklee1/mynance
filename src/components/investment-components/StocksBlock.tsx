@@ -18,7 +18,7 @@ function StocksBlock() {
     const { investments, getHoldings } = useInvestmentStore();
     const [filterValue, setFilterValue] = useState<string>("");
     const filteredInvestments = getHoldings().filter(
-        (investment: investmentItem) => {
+        (investment: HoldingsItem) => {
             if (!filterValue) return true;
             return (
                 investment.ticker?.toLowerCase() === filterValue.toLowerCase()
@@ -26,15 +26,17 @@ function StocksBlock() {
         }
     );
     const stocksCurrentValueObj =
-        JSON.parse(localStorage.getItem("my-stocks-value")) ?? {};
+        JSON.parse(localStorage.getItem("my-stocks-value") ?? "{}") ?? {};
+    const mappedHoldings = investments.map(
+        (investment: investmentItem) => investment.ticker
+    );
+    const filteredHoldings = [...new Set(mappedHoldings)];
     return (
         <>
             <Autocomplete
                 disablePortal
                 fullWidth
-                options={investments.map(
-                    (investment: investmentItem) => investment.ticker
-                )}
+                options={filteredHoldings}
                 renderInput={(params) => (
                     <TextField
                         {...params}
@@ -102,7 +104,7 @@ function HoldingItem({
     const { data } = useApi(endpoint, investment.ticker);
     const currentPrice = data?.c;
     const currentValue = useConvertToDollar(investment.amount * currentPrice);
-    stocksCurrentValueObj[investment.ticker] = currentValue;
+    stocksCurrentValueObj[investment.ticker] = +currentValue;
     localStorage.setItem(
         "my-stocks-value",
         JSON.stringify(stocksCurrentValueObj)

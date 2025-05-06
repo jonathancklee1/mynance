@@ -1,7 +1,7 @@
 export interface recurringExpenseItem {
     id: string;
     name: string;
-    cost: number;
+    cost: string;
 }
 
 export interface expenseItem {
@@ -23,7 +23,7 @@ export interface investmentItem {
     name: string;
     cost: number;
     amount: number;
-    ticker?: string;
+    ticker: string;
     date: string;
 }
 
@@ -37,4 +37,23 @@ export interface HoldingsItem {
 export interface ThemeStore {
     theme: string;
     setTheme: (theme: string) => void;
+}
+
+export interface ExpenseStore {
+    expenses: expenseItem[];
+    recurringExpenses: recurringExpenseItem[];
+    addExpenses: (expense: expenseItem[]) => void;
+    deleteExpenses: (expenseArray: string[]) => void;
+    addRecurringExpense: (expense: recurringExpenseItem) => void;
+    deleteRecurringExpense: (expenseItem: recurringExpenseItem) => void;
+    getTotalExpenses: () => number;
+    getWeekExpenses: () => { weekExpenses: expenseItem[] };
+}
+
+export interface InvestmentStore {
+    investments: investmentItem[];
+    addInvestments: (investment: investmentItem[]) => void;
+    deleteInvestments: (investmentArray: string[]) => void;
+    getHoldings: () => HoldingsItem[];
+    getTotalCost: () => number;
 }
