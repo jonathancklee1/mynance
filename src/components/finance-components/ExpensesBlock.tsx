@@ -8,7 +8,7 @@ interface ExpenseBlockData {
 }
 function ExpensesBlock() {
     const { getWeekExpenses } = useExpenseStore();
-    const { weekExpenses, firstDayOfWeek, lastDayOfWeek } = getWeekExpenses();
+    const { weekExpenses } = getWeekExpenses();
     const initialExpenseData = [
         { day: "Sun", amount: 0 },
         { day: "Mon", amount: 0 },

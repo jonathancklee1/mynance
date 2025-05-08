@@ -192,9 +192,11 @@ function EditMoversBlock({
                     backgroundColor: "secondary.main",
                     color: "primary.light",
                 }}
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    handleAddTicker(e.target[0].value);
+                onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
+                    event.preventDefault();
+                    const tickerInput = event.currentTarget
+                        .elements[0] as HTMLInputElement;
+                    handleAddTicker(tickerInput.value);
                 }}
             >
                 <InputBase

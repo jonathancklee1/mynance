@@ -24,10 +24,10 @@ function Landing() {
             alignItems: "center",
         };
     });
-    const componentRef = useRef(null);
+    const componentRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
-        const height = componentRef.current?.offsetHeight;
-        setHeight(height);
+        const navBarHeight = componentRef.current?.offsetHeight || 0;
+        setHeight(navBarHeight);
     }, []);
     const themePalette = useTheme();
 

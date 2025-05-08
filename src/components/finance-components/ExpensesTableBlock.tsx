@@ -1,6 +1,6 @@
 import { Box, Typography, Button, Paper, Stack } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
 import Textbox from "../Textbox";
 import useExpenseStore from "../../stores/ExpenseStore";
 
@@ -38,10 +38,7 @@ function ExpensesTableBlock() {
 
     function handleRowSelection(
         selectedRows: string[],
-        deleteExpenses: {
-            (value: SetStateAction<string[]>): void;
-            (arg0: never[]): void;
-        }
+        deleteExpenses: (expenseArray: string[]) => void
     ) {
         deleteExpenses(selectedRows);
     }

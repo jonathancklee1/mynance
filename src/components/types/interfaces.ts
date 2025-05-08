@@ -1,12 +1,12 @@
 export interface recurringExpenseItem {
     id: string;
     name: string;
-    cost: string;
+    cost: number;
 }
 
 export interface expenseItem {
     id: string;
-    date: string;
+    date: number;
     expense: string;
     cost: string;
 }
@@ -47,7 +47,8 @@ export interface ExpenseStore {
     addRecurringExpense: (expense: recurringExpenseItem) => void;
     deleteRecurringExpense: (expenseItem: recurringExpenseItem) => void;
     getTotalExpenses: () => number;
-    getWeekExpenses: () => { weekExpenses: expenseItem[] };
+    getWeekExpenses: () => weeklyExpensesObj;
+    setRecurringExpenses: (recurringExpenses: recurringExpenseItem[]) => void;
 }
 
 export interface InvestmentStore {
@@ -56,4 +57,10 @@ export interface InvestmentStore {
     deleteInvestments: (investmentArray: string[]) => void;
     getHoldings: () => HoldingsItem[];
     getTotalCost: () => number;
+}
+
+interface weeklyExpensesObj {
+    weekExpenses: expenseItem[];
+    firstDayString: string;
+    lastDayString: string;
 }

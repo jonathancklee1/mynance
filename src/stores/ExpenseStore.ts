@@ -41,7 +41,7 @@ const useExpenseStore = create(
                     totalExpenses += parseInt(expense.cost);
                 });
                 get().recurringExpenses.forEach((expense) => {
-                    totalExpenses += parseInt(expense.cost);
+                    totalExpenses += expense.cost;
                 });
                 return totalExpenses;
             },

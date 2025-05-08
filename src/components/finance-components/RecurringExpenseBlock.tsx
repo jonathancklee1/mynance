@@ -126,9 +126,7 @@ function EditRecurringExpenseBlock({
 }: {
     selectedExpense: recurringExpenseItem;
     recurringExpenses: recurringExpenseItem[];
-    setRecurringExpenses: React.Dispatch<
-        React.SetStateAction<recurringExpenseItem[]>
-    >;
+    setRecurringExpenses: (recurringExpenses: recurringExpenseItem[]) => void;
     handleClose: () => void;
     deleteRecurringExpense: (expenseItem: recurringExpenseItem) => void;
 }) {
@@ -189,7 +187,7 @@ function EditRecurringExpenseBlock({
                                     if (expense.id === selectedExpense.id) {
                                         return {
                                             ...expense,
-                                            cost: parseInt(e.target.value),
+                                            cost: Number(e.target.value),
                                         };
                                     }
                                     return expense;

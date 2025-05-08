@@ -20,7 +20,7 @@ function ExpensePieBlock() {
             return {
                 id: crypto.randomUUID(),
                 label: item.name,
-                value: item.cost,
+                value: Number(item.cost),
                 color: randColour(),
             };
         }
@@ -30,7 +30,7 @@ function ExpensePieBlock() {
             return {
                 id: crypto.randomUUID(),
                 label: item.expense,
-                value: item.cost,
+                value: Number(item.cost),
                 color: randColour(),
             };
         })

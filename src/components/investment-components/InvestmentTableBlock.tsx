@@ -1,6 +1,6 @@
 import { Box, Stack, Typography, Button, Paper } from "@mui/material";
 import { GridColDef, DataGrid } from "@mui/x-data-grid";
-import { useState, SetStateAction } from "react";
+import { useState } from "react";
 import Textbox from "../Textbox";
 import useInvestmentStore from "../../stores/InvestmentStore";
 
@@ -30,7 +30,7 @@ function InvestmentTableBlock() {
             addInvestments([
                 {
                     id: crypto.randomUUID(),
-                    date: new Date().getTime(),
+                    date: new Date().getTime().toString(),
                     name: investmentName,
                     cost: investmentCost,
                     amount: investmentAmount,
@@ -42,10 +42,7 @@ function InvestmentTableBlock() {
 
     function handleRowSelection(
         selectedRows: string[],
-        deleteInvestments: {
-            (value: SetStateAction<string[]>): void;
-            (arg0: never[]): void;
-        }
+        deleteInvestments: (expenseArray: string[]) => void
     ) {
         deleteInvestments(selectedRows);
     }
