@@ -35,7 +35,6 @@ function ExpensePieBlock() {
             };
         })
     );
-    console.log(expensePieData);
     return (
         <>
             <PieChart
@@ -56,6 +55,11 @@ function ExpensePieBlock() {
                 ]}
                 width={350}
                 height={250}
+                sx={{
+                    "& text": {
+                        textAnchor: "unset",
+                    },
+                }}
                 slotProps={{
                     legend: { hidden: true },
                     popper: {

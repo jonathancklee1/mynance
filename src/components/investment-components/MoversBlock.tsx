@@ -21,7 +21,6 @@ function MoversBlock({ isEditable }: { isEditable?: boolean }) {
             ? JSON.parse(localStorage.getItem("daily-movers") ?? "")
             : []
     );
-    console.log(moverTickers, "tickers");
     const [open, setOpen] = useState(false);
 
     const handleOpen = () => {
@@ -39,26 +38,27 @@ function MoversBlock({ isEditable }: { isEditable?: boolean }) {
                 }}
                 onClick={handleOpen}
             >
-                <Box
-                    sx={{
-                        width: "100%",
-                        height: "100%",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 2,
-                        justifyContent: "space-between",
-                    }}
-                >
-                    {moverTickers.length < 1 && (
-                        <Typography sx={{ textAlign: "center" }}>
-                            No Movers Selected
-                        </Typography>
-                    )}
-                    {moverTickers.length > 0 &&
-                        moverTickers.map((ticker, index) => {
+                {moverTickers.length < 1 && (
+                    <Typography sx={{ textAlign: "center", my: "auto" }}>
+                        No Movers Selected
+                    </Typography>
+                )}
+                {moverTickers.length > 0 && (
+                    <Box
+                        sx={{
+                            width: "100%",
+                            height: "100%",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 2,
+                            justifyContent: "space-between",
+                        }}
+                    >
+                        {moverTickers.map((ticker, index) => {
                             return <MoversItem key={index} ticker={ticker} />;
                         })}
-                </Box>
+                    </Box>
+                )}
             </Stack>
             {isEditable && (
                 <EditModal open={open} setClose={handleClose}>

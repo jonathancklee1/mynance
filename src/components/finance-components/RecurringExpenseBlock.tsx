@@ -7,6 +7,7 @@ import {
     Stack,
     Typography,
     Button,
+    Box,
 } from "@mui/material";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import EditModal from "../EditModal";
@@ -43,7 +44,36 @@ function RecurringExpenseBlock({ isEditable }: { isEditable?: boolean }) {
         setAddOpen(false);
     };
     return (
-        <>
+        <Box
+            sx={{
+                width: "100%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "space-between",
+                height: "100%",
+            }}
+        >
+            {recurringExpenses.length === 0 && (
+                <Box
+                    sx={{
+                        width: "100%",
+                        flexGrow: 1,
+                        display: "grid",
+                        placeItems: "center",
+                    }}
+                >
+                    <Typography
+                        variant="body1"
+                        sx={{
+                            textAlign: "center",
+                        }}
+                    >
+                        No Recurring Expenses
+                    </Typography>
+                </Box>
+            )}
+
             <List sx={{ width: "100%" }}>
                 {recurringExpenses.map((expense: recurringExpenseItem) => (
                     <ListItem
@@ -83,11 +113,12 @@ function RecurringExpenseBlock({ isEditable }: { isEditable?: boolean }) {
             </List>
             <Button
                 variant="text"
-                fullWidth
                 sx={{
                     backgroundColor: "primary.light",
                     color: "text.secondary",
                     fontWeight: "bold",
+                    width: "100%",
+                    "@media (min-width: 769px)": { width: "60%" },
                 }}
                 onClick={() => {
                     handleAddOpen();
@@ -114,7 +145,7 @@ function RecurringExpenseBlock({ isEditable }: { isEditable?: boolean }) {
                     </EditModal>
                 </>
             )}
-        </>
+        </Box>
     );
 }
 function EditRecurringExpenseBlock({
