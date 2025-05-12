@@ -198,7 +198,6 @@ function EditRecurringExpenseBlock({
                                 }
                             )
                         );
-                        console.log("expense changes");
                     }}
                 ></Textbox>
                 <Textbox
@@ -299,7 +298,6 @@ function AddRecurringExpenseBlock({
                                 name: e.target.value,
                             };
                         });
-                        console.log("expense changes");
                     }}
                 ></Textbox>
                 <Textbox

@@ -56,7 +56,6 @@ const useExpenseStore = create(
                     today.setDate(today.getDate() + 6)
                 ).setHours(0, 0, 0, 0);
                 function isDateInCurrentWeek(date: Date) {
-                    console.log(date, firstDayOfWeek, lastDayOfWeek);
                     return (
                         date.setHours(0, 0, 0, 0) >= firstDayOfWeek &&
                         date.setHours(0, 0, 0, 0) <= lastDayOfWeek

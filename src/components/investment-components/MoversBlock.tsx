@@ -84,7 +84,6 @@ function MoversItem({ ticker }: { ticker: string }) {
         openPrice = data.o;
     }
     const percent = useGetPercentMove(openPrice, closePrice);
-    console.log(percent);
     return (
         <Box
             sx={{
@@ -151,7 +150,6 @@ function EditMoversBlock({
             return;
         } else {
             setIsError(false);
-            console.log(ticker);
             setMoverTickers((prev: string[]) => [
                 ...prev,
                 ticker.toUpperCase(),

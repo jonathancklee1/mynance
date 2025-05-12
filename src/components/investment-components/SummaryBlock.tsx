@@ -20,7 +20,6 @@ function SummaryBlock() {
         return acc;
     }, 0);
     const netValue = totalInvestedValue - getTotalCost();
-    console.log("holdings", holdings, investedValueObj);
     return (
         <Box
             sx={{

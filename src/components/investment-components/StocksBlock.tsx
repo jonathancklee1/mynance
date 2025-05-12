@@ -109,7 +109,6 @@ function HoldingItem({
         "my-stocks-value",
         JSON.stringify(stocksCurrentValueObj)
     );
-    console.log(stocksCurrentValueObj);
     const netValue = Number(currentValue) - investment.value;
     function getPercentChange(oldValue: number, currentValue: number) {
         return ((currentValue - oldValue) / oldValue) * 100;
