@@ -46,7 +46,7 @@ function InvestmentTableBlock() {
             addInvestments([
                 {
                     id: crypto.randomUUID(),
-                    date: new Date().getTime().toString(),
+                    date: new Date().getTime(),
                     name: investmentName,
                     cost: investmentCost,
                     amount: investmentAmount,
