@@ -5,16 +5,15 @@ import useConvertToDollar from "../../hooks/useConvertToDollar";
 import { useEffect } from "react";
 
 function SummaryBlock() {
-    const { getTotalCost, getHoldings } = useInvestmentStore();
-    const investedValueObj = JSON.parse(
-        localStorage.getItem("my-stocks-value") ?? "{}"
-    );
+    const { getTotalCost, getHoldings, stocksCurrentValueObj } =
+        useInvestmentStore();
+
     const holdings = getHoldings();
-    useEffect(() => {}, [investedValueObj]);
+    useEffect(() => {}, [stocksCurrentValueObj]);
     const totalInvestedValue: number = holdings.reduce((acc, value) => {
-        Object.keys(investedValueObj).forEach((key) => {
+        Object.keys(stocksCurrentValueObj).forEach((key) => {
             if (key === value.ticker) {
-                acc += Number(investedValueObj[key] * value.amount);
+                acc += Number(stocksCurrentValueObj[key] * value.amount);
             }
         });
         return acc;

@@ -1,4 +1,13 @@
-import { Box, Typography, Button, Paper, Stack } from "@mui/material";
+import {
+    Box,
+    Typography,
+    Button,
+    Paper,
+    Stack,
+    Alert,
+    Snackbar,
+    SnackbarCloseReason,
+} from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useState } from "react";
 import Textbox from "../Textbox";
@@ -21,6 +30,8 @@ function ExpensesTableBlock() {
     const [expenseName, setExpenseName] = useState<string>("");
     const [expenseCost, setExpenseCost] = useState<string>("0");
     const [selectedRows, setSelectedRows] = useState<string[]>([]);
+    const [snackOpen, setSnackOpen] = useState(false);
+
     function handleAddExpense() {
         if (expenseName && expenseCost) {
             addExpenses([
@@ -33,6 +44,8 @@ function ExpensesTableBlock() {
             ]);
             setExpenseName("");
             setExpenseCost("0");
+        } else {
+            setSnackOpen(true);
         }
     }
 
@@ -42,8 +55,32 @@ function ExpensesTableBlock() {
     ) {
         deleteExpenses(selectedRows);
     }
+    const handleClose = (
+        _event?: React.SyntheticEvent | Event,
+        reason?: SnackbarCloseReason
+    ) => {
+        if (reason === "clickaway") {
+            return;
+        }
+
+        setSnackOpen(false);
+    };
     return (
         <Box>
+            <Snackbar
+                open={snackOpen}
+                autoHideDuration={4000}
+                onClose={handleClose}
+            >
+                <Alert
+                    onClose={handleClose}
+                    severity="error"
+                    variant="filled"
+                    sx={{ width: "100%" }}
+                >
+                    Please fill out all fields
+                </Alert>
+            </Snackbar>
             <Stack
                 gap={2}
                 sx={{

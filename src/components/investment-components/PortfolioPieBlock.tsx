@@ -4,10 +4,7 @@ import { PieChartData } from "../types/interfaces";
 import useInvestmentStore from "../../stores/InvestmentStore";
 
 function PortfolioPieBlock() {
-    const { getHoldings } = useInvestmentStore();
-    const investedValueObj = JSON.parse(
-        localStorage.getItem("my-stocks-value") ?? "{}"
-    );
+    const { getHoldings, stocksCurrentValueObj } = useInvestmentStore();
 
     const randColour = () => {
         return (
@@ -16,7 +13,8 @@ function PortfolioPieBlock() {
         );
     };
     const investmentPieData = getHoldings().map((item) => {
-        const stockValue = investedValueObj[item.ticker] * item.amount;
+        const stockValue = stocksCurrentValueObj[item.ticker] * item.amount;
+
         return {
             id: crypto.randomUUID(),
             label: item.ticker,

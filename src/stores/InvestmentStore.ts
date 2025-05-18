@@ -43,6 +43,16 @@ const useInvestmentStore = create(
                     avgCost: holdingsObj[ticker].avgCost,
                 }));
             },
+
+            stocksCurrentValueObj: {} as { [key: string]: number },
+
+            setStocksCurrentValueObj: (stockValue: { [key: string]: number }) =>
+                set((state) => ({
+                    stocksCurrentValueObj: {
+                        ...state.stocksCurrentValueObj,
+                        ...stockValue,
+                    },
+                })),
             getTotalCost: () => {
                 return get().investments.reduce((acc, investment) => {
                     return acc + investment.cost * investment.amount;

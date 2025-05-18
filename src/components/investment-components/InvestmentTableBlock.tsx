@@ -1,4 +1,13 @@
-import { Box, Stack, Typography, Button, Paper } from "@mui/material";
+import {
+    Box,
+    Stack,
+    Typography,
+    Button,
+    Paper,
+    Alert,
+    Snackbar,
+    SnackbarCloseReason,
+} from "@mui/material";
 import { GridColDef, DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
 import Textbox from "../Textbox";
@@ -25,8 +34,15 @@ function InvestmentTableBlock() {
     const [investmentCost, setInvestmentCost] = useState<number>(0);
     const [investmentAmount, setInvestmentAmount] = useState<number>(0);
     const [selectedRows, setSelectedRows] = useState<string[]>([]);
+    const [snackOpen, setSnackOpen] = useState(false);
+
     function handleAddInvestment() {
-        if (investmentName && investmentCost) {
+        if (
+            investmentName &&
+            investmentTicker &&
+            investmentAmount &&
+            investmentCost
+        ) {
             addInvestments([
                 {
                     id: crypto.randomUUID(),
@@ -37,9 +53,20 @@ function InvestmentTableBlock() {
                     ticker: investmentTicker,
                 },
             ]);
+        } else {
+            setSnackOpen(true);
         }
     }
+    const handleClose = (
+        _event?: React.SyntheticEvent | Event,
+        reason?: SnackbarCloseReason
+    ) => {
+        if (reason === "clickaway") {
+            return;
+        }
 
+        setSnackOpen(false);
+    };
     function handleRowSelection(
         selectedRows: string[],
         deleteInvestments: (expenseArray: string[]) => void
@@ -48,6 +75,20 @@ function InvestmentTableBlock() {
     }
     return (
         <Box>
+            <Snackbar
+                open={snackOpen}
+                autoHideDuration={4000}
+                onClose={handleClose}
+            >
+                <Alert
+                    onClose={handleClose}
+                    severity="error"
+                    variant="filled"
+                    sx={{ width: "100%" }}
+                >
+                    Please fill out all fields
+                </Alert>
+            </Snackbar>
             <Stack
                 gap={2}
                 sx={{
@@ -64,7 +105,12 @@ function InvestmentTableBlock() {
                     >
                         Enter Investment Name
                     </Typography>
-                    <Box sx={{ display: "flex", gap: 2 }}>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            gap: 2,
+                        }}
+                    >
                         <Textbox
                             id="filled-basic"
                             label="Ticker"
@@ -72,7 +118,7 @@ function InvestmentTableBlock() {
                             size="small"
                             colourVariant="secondary"
                             sx={{
-                                flexBasis: "25% !important",
+                                flexBasis: "50% !important",
                             }}
                             onChange={(e) =>
                                 setInvestmentTicker(
@@ -92,7 +138,7 @@ function InvestmentTableBlock() {
                         />
                     </Box>
                 </Box>
-                <Box sx={{ width: "100%" }}>
+                <Box sx={{ "@media (min-width: 1024px)": { width: "70%" } }}>
                     <Typography
                         variant="body1"
                         fontWeight={"bold"}
@@ -113,7 +159,7 @@ function InvestmentTableBlock() {
                         }
                     />
                 </Box>
-                <Box sx={{ width: "100%" }}>
+                <Box sx={{ "@media (min-width: 1024px)": { width: "70%" } }}>
                     <Typography
                         variant="body1"
                         fontWeight={"bold"}
@@ -138,11 +184,11 @@ function InvestmentTableBlock() {
                     variant="text"
                     fullWidth
                     sx={{
-                        width: "100%",
                         height: "60px",
                         marginTop: "auto",
                         fontWeight: "bold",
                         backgroundColor: "primary.light",
+                        "@media (min-width: 1024px)": { width: "70%" },
                     }}
                     onClick={handleAddInvestment}
                 >

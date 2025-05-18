@@ -8,7 +8,7 @@ import {
     Typography,
 } from "@mui/material";
 import useInvestmentStore from "../../stores/InvestmentStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { investmentItem, HoldingsItem } from "../types/interfaces";
 import useConvertToDollar from "../../hooks/useConvertToDollar";
 import useApi from "../../hooks/useApi";
@@ -25,8 +25,7 @@ function StocksBlock() {
             );
         }
     );
-    const stocksCurrentValueObj =
-        JSON.parse(localStorage.getItem("my-stocks-value") ?? "{}") ?? {};
+
     const mappedHoldings = investments.map(
         (investment: investmentItem) => investment.ticker
     );
@@ -81,7 +80,6 @@ function StocksBlock() {
                         <HoldingItem
                             investment={investment}
                             index={index}
-                            stocksCurrentValueObj={stocksCurrentValueObj}
                             key={index}
                         />
                     );
@@ -94,21 +92,33 @@ function StocksBlock() {
 function HoldingItem({
     investment,
     index,
-    stocksCurrentValueObj,
 }: {
     investment: HoldingsItem;
-    stocksCurrentValueObj: { [key: string]: number };
     index: number;
 }) {
+    const { setStocksCurrentValueObj } = useInvestmentStore();
     const endpoint = `https://finnhub.io/api/v1/quote?symbol=${investment.ticker}`;
-    const { data } = useApi(endpoint, investment.ticker);
+    const { data, isPending } = useApi(endpoint, investment.ticker);
     const currentPrice = data?.c;
     const currentValue = useConvertToDollar(investment.amount * currentPrice);
-    stocksCurrentValueObj[investment.ticker] = +currentValue;
-    localStorage.setItem(
-        "my-stocks-value",
-        JSON.stringify(stocksCurrentValueObj)
-    );
+    const [previousPrice, setPreviousPrice] = useState<number | null>(null);
+
+    useEffect(() => {
+        if (currentPrice !== previousPrice) {
+            setStocksCurrentValueObj({
+                [investment.ticker]: currentPrice,
+            });
+            setPreviousPrice(currentPrice);
+        }
+    }, [
+        investment,
+        data,
+        setStocksCurrentValueObj,
+        currentPrice,
+        isPending,
+        previousPrice,
+    ]);
+
     const netValue = Number(currentValue) - investment.value;
     function getPercentChange(oldValue: number, currentValue: number) {
         return ((currentValue - oldValue) / oldValue) * 100;

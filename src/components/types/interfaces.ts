@@ -57,6 +57,8 @@ export interface InvestmentStore {
     deleteInvestments: (investmentArray: string[]) => void;
     getHoldings: () => HoldingsItem[];
     getTotalCost: () => number;
+    stocksCurrentValueObj: { [key: string]: number };
+    setStocksCurrentValueObj: (obj: { [key: string]: number }) => void;
 }
 
 interface weeklyExpensesObj {
