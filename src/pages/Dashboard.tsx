@@ -8,9 +8,15 @@ import ExpensesBlock from "../components/finance-components/ExpensesBlock";
 import ProgressBlock from "../components/finance-components/ProgressBlock";
 import PortfolioPieBlock from "../components/investment-components/PortfolioPieBlock";
 import ExpensePieBlock from "../components/finance-components/ExpensePieBlock";
+import { useContext } from "react";
+import AuthContext from "../context/authContext";
+import { AuthProviderObj } from "../types/interfaces";
 
 function Dashboard() {
-    const name = JSON.parse(localStorage.getItem("name") ?? "Unknown User");
+    const context = useContext<AuthProviderObj>(AuthContext);
+    const name =
+        context.currentUser.displayName ??
+        JSON.parse(localStorage.getItem("name") ?? "Unknown User");
     return (
         <>
             <NavBar />
