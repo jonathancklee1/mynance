@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 import { persist, createJSONStorage } from "zustand/middleware";
-import { ThemeStore } from "../components/types/interfaces";
+import { ThemeStore } from "../types/interfaces";
 const useThemeStore = create(
     persist<ThemeStore>(
         (set) => ({

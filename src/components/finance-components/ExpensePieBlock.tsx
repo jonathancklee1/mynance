@@ -5,7 +5,7 @@ import {
     expenseItem,
     recurringExpenseItem,
     PieChartData,
-} from "../types/interfaces";
+} from "../../types/interfaces";
 
 function ExpensePieBlock() {
     const randColour = () => {

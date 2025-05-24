@@ -6,6 +6,7 @@ import { SetStateAction, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import { ChevronRight } from "@mui/icons-material";
 import useThemeStore from "../stores/ThemeStore";
+import GoogleSignInButton from "../components/GoogleSignInButton";
 
 function Landing() {
     const [name, setName] = useState("");
@@ -87,7 +88,7 @@ function Landing() {
                 </Typography>
                 <Box
                     width={"100%"}
-                    marginBottom={8}
+                    marginBottom={2}
                     display={"flex"}
                     flexDirection={"column"}
                     alignItems={"center"}
@@ -115,7 +116,11 @@ function Landing() {
                         sx={{ width: "40%" }}
                     />
                 </Box>
-                <Box width={"100%"} marginBottom={8}>
+                <Typography sx={{ mb: 2 }}>
+                    -- or sign in with Google --
+                </Typography>
+                <GoogleSignInButton />
+                <Box width={"100%"} mb={8} mt={2}>
                     <Typography
                         variant="h5"
                         component={"h2"}

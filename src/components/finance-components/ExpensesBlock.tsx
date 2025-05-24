@@ -1,6 +1,6 @@
 import { BarChart } from "@mui/x-charts/BarChart/BarChart";
 import useExpenseStore from "../../stores/ExpenseStore";
-import { expenseItem } from "../types/interfaces";
+import { expenseItem } from "../../types/interfaces";
 
 interface ExpenseBlockData {
     day: string;

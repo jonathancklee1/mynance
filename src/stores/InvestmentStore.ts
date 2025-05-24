@@ -5,7 +5,7 @@ import {
     HoldingsItem,
     investmentItem,
     InvestmentStore,
-} from "../components/types/interfaces";
+} from "../types/interfaces";
 const useInvestmentStore = create(
     persist<InvestmentStore>(
         (set, get) => ({

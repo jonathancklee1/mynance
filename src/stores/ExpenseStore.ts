@@ -3,7 +3,7 @@ import {
     recurringExpenseItem,
     expenseItem,
     ExpenseStore,
-} from "../components/types/interfaces";
+} from "../types/interfaces";
 import { persist, createJSONStorage } from "zustand/middleware";
 const useExpenseStore = create(
     persist<ExpenseStore>(

@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import useInvestmentStore from "../../stores/InvestmentStore";
 import { useEffect, useState } from "react";
-import { investmentItem, HoldingsItem } from "../types/interfaces";
+import { investmentItem, HoldingsItem } from "../../types/interfaces";
 import useConvertToDollar from "../../hooks/useConvertToDollar";
 import useApi from "../../hooks/useApi";
 import useGetPercentColour from "../../hooks/useGetPercentColour";

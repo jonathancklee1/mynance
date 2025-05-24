@@ -13,7 +13,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import EditModal from "../EditModal";
 import { useState } from "react";
 import Textbox from "../Textbox";
-import { recurringExpenseItem } from "../types/interfaces";
+import { recurringExpenseItem } from "../../types/interfaces";
 import useExpenseStore from "../../stores/ExpenseStore";
 
 function RecurringExpenseBlock({ isEditable }: { isEditable?: boolean }) {

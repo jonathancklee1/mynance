@@ -66,3 +66,10 @@ interface weeklyExpensesObj {
     firstDayString: string;
     lastDayString: string;
 }
+
+export interface AuthProviderObj {
+    currentUser: any;
+    userLoggedIn: boolean;
+    loading: boolean;
+    initUser: (user: any) => void;
+}

@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { PieChart } from "@mui/x-charts";
-import { PieChartData } from "../types/interfaces";
+import { PieChartData } from "../../types/interfaces";
 import useInvestmentStore from "../../stores/InvestmentStore";
 
 function PortfolioPieBlock() {
