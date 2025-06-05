@@ -6,36 +6,44 @@ import {
     investmentItem,
     InvestmentStore,
 } from "../types/interfaces";
+import { getAuth } from "firebase/auth";
+import { setDoc, doc, getDocs, collection } from "firebase/firestore";
+import { db } from "../assets/firebase";
+
+const myCollectionRef = collection(db, "users");
+
 const useInvestmentStore = create(
     persist<InvestmentStore>(
         (set, get) => ({
             investments: [] as investmentItem[],
             getHoldings: () => {
-                const holdingsObj = get().investments.reduce(
-                    (
-                        acc: { [key: string]: HoldingsItem },
-                        investment: investmentItem
-                    ) => {
-                        if (acc[investment.ticker]) {
-                            acc[investment.ticker].value +=
-                                investment.cost * investment.amount;
-                            acc[investment.ticker].amount += investment.amount;
-                            acc[investment.ticker].avgCost =
-                                acc[investment.ticker].value /
-                                acc[investment.ticker].amount;
-                            acc[investment.ticker].ticker = investment.name;
-                        } else {
-                            acc[investment.ticker] = {
-                                value: investment.cost * investment.amount,
-                                amount: investment.amount,
-                                avgCost: investment.cost,
-                                ticker: investment.name,
-                            };
-                        }
-                        return acc;
-                    },
-                    {}
-                );
+                const holdingsObj =
+                    get().investments?.reduce(
+                        (
+                            acc: { [key: string]: HoldingsItem },
+                            investment: investmentItem
+                        ) => {
+                            if (acc[investment.ticker]) {
+                                acc[investment.ticker].value +=
+                                    investment.cost * investment.amount;
+                                acc[investment.ticker].amount +=
+                                    investment.amount;
+                                acc[investment.ticker].avgCost =
+                                    acc[investment.ticker].value /
+                                    acc[investment.ticker].amount;
+                                acc[investment.ticker].ticker = investment.name;
+                            } else {
+                                acc[investment.ticker] = {
+                                    value: investment.cost * investment.amount,
+                                    amount: investment.amount,
+                                    avgCost: investment.cost,
+                                    ticker: investment.name,
+                                };
+                            }
+                            return acc;
+                        },
+                        {}
+                    ) ?? {};
                 return Object.keys(holdingsObj).map((ticker) => ({
                     ticker,
                     value: holdingsObj[ticker].value,
@@ -54,17 +62,20 @@ const useInvestmentStore = create(
                     },
                 })),
             getTotalCost: () => {
-                return get().investments.reduce((acc, investment) => {
-                    return acc + investment.cost * investment.amount;
-                }, 0);
+                return (
+                    get().investments?.reduce((acc, investment) => {
+                        return acc + investment.cost * investment.amount;
+                    }, 0) ?? 0
+                );
             },
+
             addInvestments: (investment: investmentItem[]) =>
                 set((state) => ({
                     investments: [...investment, ...state.investments],
                 })),
             deleteInvestments: (investmentArray: string[]) =>
                 set((state) => ({
-                    investments: state.investments.filter((investment) => {
+                    investments: state.investments?.filter((investment) => {
                         return !investmentArray.includes(investment.id);
                     }),
                 })),
@@ -75,5 +86,33 @@ const useInvestmentStore = create(
         }
     )
 );
+useInvestmentStore.subscribe((state) => {
+    const currentAuth = getAuth();
+    const userId = currentAuth.currentUser?.uid;
+
+    console.log(state);
+    const storedState = {
+        investments: [...state.investments],
+        stocksCurrentValueObj: state.stocksCurrentValueObj,
+    };
+    console.log(storedState, userId);
+    if (userId) {
+        setDoc(doc(db, "users", userId), storedState);
+    }
+});
+
+getDocs(myCollectionRef).then((querySnapshot) => {
+    const currentAuth = getAuth();
+    const userId = currentAuth.currentUser?.uid;
+    querySnapshot.forEach((doc) => {
+        console.log(doc.id, userId);
+        if (doc.id === userId) {
+            useInvestmentStore.getState().investments = doc.data().investments;
+            useInvestmentStore.getState().stocksCurrentValueObj =
+                doc.data().stocksCurrentValueObj;
+            console.log("Firestore set to state");
+        }
+    });
+});
 
 export default useInvestmentStore;

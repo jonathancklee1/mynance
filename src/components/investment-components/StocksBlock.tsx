@@ -26,7 +26,7 @@ function StocksBlock() {
         }
     );
 
-    const mappedHoldings = investments.map(
+    const mappedHoldings = investments?.map(
         (investment: investmentItem) => investment.ticker
     );
     const filteredHoldings = [...new Set(mappedHoldings)];

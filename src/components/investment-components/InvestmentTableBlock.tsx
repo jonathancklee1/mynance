@@ -97,7 +97,14 @@ function InvestmentTableBlock() {
                     "@media (min-width: 1024px)": { flexDirection: "row" },
                 }}
             >
-                <Box sx={{ width: "100%" }}>
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        width: "100%",
+                    }}
+                >
                     <Typography
                         variant="body1"
                         fontWeight={"bold"}
@@ -138,7 +145,14 @@ function InvestmentTableBlock() {
                         />
                     </Box>
                 </Box>
-                <Box sx={{ "@media (min-width: 1024px)": { width: "70%" } }}>
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        "@media (min-width: 1024px)": { width: "70%" },
+                    }}
+                >
                     <Typography
                         variant="body1"
                         fontWeight={"bold"}
@@ -159,7 +173,14 @@ function InvestmentTableBlock() {
                         }
                     />
                 </Box>
-                <Box sx={{ "@media (min-width: 1024px)": { width: "70%" } }}>
+                <Box
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-between",
+                        "@media (min-width: 1024px)": { width: "70%" },
+                    }}
+                >
                     <Typography
                         variant="body1"
                         fontWeight={"bold"}
@@ -231,16 +252,12 @@ function InvestmentTableBlock() {
                             color: "text.primary",
                             fill: "text.primary",
                         },
-                        "& span": {
+                        "& span, & span.Mui-checked": {
                             color: "text.primary",
                         },
                         "& button": {
                             color: "text.primary",
                         },
-                        "& .css-1x4fnf-MuiButtonBase-root-MuiCheckbox-root.Mui-checked, .css-1x4fnf-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate":
-                            {
-                                color: "primary.light",
-                            },
                     }}
                 />
             </Paper>

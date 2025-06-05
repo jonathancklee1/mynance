@@ -15,7 +15,7 @@ import { AuthProviderObj } from "../types/interfaces";
 function Dashboard() {
     const context = useContext<AuthProviderObj>(AuthContext);
     const name =
-        context.currentUser.displayName ??
+        context.currentUser?.displayName ??
         JSON.parse(localStorage.getItem("name") ?? "Unknown User");
     return (
         <>

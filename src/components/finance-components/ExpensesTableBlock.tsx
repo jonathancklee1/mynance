@@ -181,17 +181,16 @@ function ExpensesTableBlock() {
                             color: "primary.contrastText",
                             fill: "primary.contrastText",
                         },
-                        "& span": {
+                        "& span, & span.Mui-checked": {
                             color: "text.primary",
                         },
 
                         "& button": {
                             color: "primary.contrastText",
                         },
-                        "& .css-1x4fnf-MuiButtonBase-root-MuiCheckbox-root.Mui-checked, .css-1x4fnf-MuiButtonBase-root-MuiCheckbox-root.MuiCheckbox-indeterminate":
-                            {
-                                color: "primary.light",
-                            },
+                        "& input": {
+                            fill: "primary.light",
+                        },
                     }}
                 />
             </Paper>
