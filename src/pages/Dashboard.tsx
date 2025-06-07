@@ -8,15 +8,23 @@ import ExpensesBlock from "../components/finance-components/ExpensesBlock";
 import ProgressBlock from "../components/finance-components/ProgressBlock";
 import PortfolioPieBlock from "../components/investment-components/PortfolioPieBlock";
 import ExpensePieBlock from "../components/finance-components/ExpensePieBlock";
-import { useContext } from "react";
-import AuthContext from "../context/authContext";
-import { AuthProviderObj } from "../types/interfaces";
+
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useState } from "react";
 
 function Dashboard() {
-    const context = useContext<AuthProviderObj>(AuthContext);
-    const name =
-        context.currentUser?.displayName ??
-        JSON.parse(localStorage.getItem("name") ?? "Unknown User");
+    const [name, setName] = useState(
+        JSON.parse(localStorage.getItem("name") ?? "Unknown User")
+    );
+
+    const currentAuth = getAuth();
+    onAuthStateChanged(currentAuth, (user) => {
+        if (user) {
+            console.log(user, "user");
+            setName(currentAuth.currentUser?.displayName);
+        }
+    });
+
     return (
         <>
             <NavBar />

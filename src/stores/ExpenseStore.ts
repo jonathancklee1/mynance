@@ -5,11 +5,13 @@ import {
     ExpenseStore,
 } from "../types/interfaces";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { collection, doc, getDocs, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 
-import { db } from "../assets/firebase";
+import { auth, db } from "../assets/firebase";
 
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useEffect } from "react";
+import { useLocation } from "react-router";
 
 const myCollectionRef = collection(db, "users");
 
@@ -94,7 +96,7 @@ useExpenseStore.subscribe((state) => {
     const currentAuth = getAuth();
     const userId = currentAuth.currentUser?.uid;
 
-    console.log(state);
+    console.log("state", state);
     const storedState = {
         expenses: [...state.expenses],
         recurringExpenses: [...state.recurringExpenses],
@@ -105,18 +107,35 @@ useExpenseStore.subscribe((state) => {
     }
 });
 
-getDocs(myCollectionRef).then((querySnapshot) => {
-    const currentAuth = getAuth();
-    const userId = currentAuth.currentUser?.uid;
-    querySnapshot.forEach((doc) => {
-        console.log(doc.id, userId);
-        if (doc.id === userId) {
-            useExpenseStore.getState().expenses = doc.data().expenses;
-            useExpenseStore.getState().recurringExpenses =
-                doc.data().recurringExpenses;
-            console.log("Firestore set to state");
-        }
-    });
-});
+onAuthStateChanged(auth, (user) => {
+    const myCollectionRef = collection(db, "users");
 
+    if (user) {
+        console.log(getDocs(myCollectionRef));
+        getDocs(myCollectionRef).then((querySnapshot) => {
+            const currentAuth = getAuth();
+            const userId = currentAuth.currentUser?.uid;
+
+            querySnapshot.forEach((doc) => {
+                console.log(doc.id, userId);
+                if (doc.id === userId) {
+                    useExpenseStore.getState().expenses = doc.data().expenses;
+                    useExpenseStore.getState().recurringExpenses =
+                        doc.data().recurringExpenses;
+                    console.log("Firestore set to state");
+                }
+            });
+            getDoc(doc(myCollectionRef, userId)).then((docSnapshot) => {
+                const userData = docSnapshot.data();
+                if (!userData) {
+                    setDoc(doc(myCollectionRef, userId), {
+                        expenses: [],
+                        recurringExpenses: [],
+                    });
+                    console.log("no users id");
+                }
+            });
+        });
+    }
+});
 export default useExpenseStore;

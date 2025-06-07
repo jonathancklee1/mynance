@@ -85,7 +85,6 @@ function ProgressBlock({ isEditable }: { isEditable?: boolean }) {
                     expense={getTotalExpenses()}
                     budget={budget}
                 ></ProgressBarWithLabel>
-                {/* <LinearProgress variant="determinate" value={80} /> */}
             </Box>
             {isEditable && (
                 <EditModal open={open} setClose={handleClose}>
@@ -117,7 +116,9 @@ function ProgressBarWithLabel({ expense, budget }: ProgressBarWithLabelProps) {
                 sx={{
                     flex: 1,
                     "&.MuiLinearProgress-root": {
-                        background: "primary.main",
+                        background: "white",
+                        border: "1px solid",
+                        borderColor: "primary.dark",
                         height: 12,
                         borderRadius: 5,
                     },

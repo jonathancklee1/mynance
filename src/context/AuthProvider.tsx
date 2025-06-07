@@ -41,7 +41,5 @@ function AuthProvider({ children }: AuthProviderProps) {
         <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
     );
 }
-// export function useAuth() {
-//     return useContext(authContext);
-// }
+
 export default AuthProvider;

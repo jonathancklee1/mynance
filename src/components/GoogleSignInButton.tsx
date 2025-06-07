@@ -4,7 +4,7 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../assets/firebase";
 import { useNavigate } from "react-router";
 import { useContext } from "react";
-import AuthContext from "../context/authContext";
+import AuthContext from "../context/AuthContext";
 import { AuthProviderObj } from "../types/interfaces";
 
 function GoogleSignInButton() {
