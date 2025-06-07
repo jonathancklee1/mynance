@@ -113,7 +113,7 @@ function Landing() {
                         label={"Name"}
                         colourVariant={"secondary"}
                         type={"text"}
-                        sx={{ width: "40%" }}
+                        sx={{ "@media (min-width: 769px)": { width: "40%" } }}
                     />
                 </Box>
                 <Typography sx={{ mb: 2 }}>
@@ -229,7 +229,6 @@ function Landing() {
                                 "theme",
                                 JSON.stringify(themeSelected)
                             );
-
                             navigate("/dashboard");
                         }
                     }}

@@ -40,6 +40,7 @@ export interface ThemeStore {
 }
 
 export interface ExpenseStore {
+    resetExpenseStore: () => void;
     expenses: expenseItem[];
     recurringExpenses: recurringExpenseItem[];
     addExpenses: (expense: expenseItem[]) => void;
@@ -52,6 +53,7 @@ export interface ExpenseStore {
 }
 
 export interface InvestmentStore {
+    resetInvestmentStore: () => void;
     investments: investmentItem[];
     addInvestments: (investment: investmentItem[]) => void;
     deleteInvestments: (investmentArray: string[]) => void;

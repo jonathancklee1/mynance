@@ -13,14 +13,15 @@ function GoogleSignInButton() {
 
     function googleLogin() {
         const provider = new GoogleAuthProvider();
-        signInWithPopup(auth, provider).then(async (result) => {
-            if (result.user) {
-                console.log(result.user);
-                context.initUser(result.user);
-                context.userLoggedIn = true;
-                navigate("/dashboard");
-            }
-        });
+        signInWithPopup(auth, provider)
+            .then(async (result) => {
+                if (result.user) {
+                    console.log(result.user);
+                    context.initUser(result.user);
+                    context.userLoggedIn = true;
+                }
+            })
+            .then(() => navigate("/dashboard", { replace: true }));
     }
     return (
         <Button

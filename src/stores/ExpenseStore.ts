@@ -10,8 +10,6 @@ import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 import { auth, db } from "../assets/firebase";
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useEffect } from "react";
-import { useLocation } from "react-router";
 
 const myCollectionRef = collection(db, "users");
 
@@ -85,6 +83,8 @@ const useExpenseStore = create(
                 const lastDayString = new Date(lastDayOfWeek).toDateString();
                 return { weekExpenses, firstDayString, lastDayString };
             },
+            resetExpenseStore: () =>
+                set({ expenses: [], recurringExpenses: [] }),
         }),
         {
             name: "expense-storage",
@@ -108,34 +108,37 @@ useExpenseStore.subscribe((state) => {
 });
 
 onAuthStateChanged(auth, (user) => {
-    const myCollectionRef = collection(db, "users");
-
     if (user) {
         console.log(getDocs(myCollectionRef));
-        getDocs(myCollectionRef).then((querySnapshot) => {
-            const currentAuth = getAuth();
-            const userId = currentAuth.currentUser?.uid;
 
-            querySnapshot.forEach((doc) => {
-                console.log(doc.id, userId);
-                if (doc.id === userId) {
-                    useExpenseStore.getState().expenses = doc.data().expenses;
-                    useExpenseStore.getState().recurringExpenses =
-                        doc.data().recurringExpenses;
-                    console.log("Firestore set to state");
-                }
+        getDocs(myCollectionRef)
+            .then((querySnapshot) => {
+                const currentAuth = getAuth();
+                const userId = currentAuth.currentUser?.uid;
+                querySnapshot.forEach((doc) => {
+                    console.log(doc.id, userId);
+                    if (doc.id === userId) {
+                        useExpenseStore.getState().expenses =
+                            doc.data().expenses;
+                        useExpenseStore.getState().recurringExpenses =
+                            doc.data().recurringExpenses;
+                        console.log("Firestore set to state");
+                    }
+                });
+                getDoc(doc(myCollectionRef, userId)).then((docSnapshot) => {
+                    const userData = docSnapshot.data();
+                    if (!userData) {
+                        setDoc(doc(myCollectionRef, userId), {
+                            expenses: [],
+                            recurringExpenses: [],
+                        });
+                        console.log("no users id");
+                    }
+                });
+            })
+            .catch((error) => {
+                console.log("Error getting documents: ", error);
             });
-            getDoc(doc(myCollectionRef, userId)).then((docSnapshot) => {
-                const userData = docSnapshot.data();
-                if (!userData) {
-                    setDoc(doc(myCollectionRef, userId), {
-                        expenses: [],
-                        recurringExpenses: [],
-                    });
-                    console.log("no users id");
-                }
-            });
-        });
     }
 });
 export default useExpenseStore;

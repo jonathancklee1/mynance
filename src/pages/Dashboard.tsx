@@ -10,13 +10,21 @@ import PortfolioPieBlock from "../components/investment-components/PortfolioPieB
 import ExpensePieBlock from "../components/finance-components/ExpensePieBlock";
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useExpenseStore from "../stores/ExpenseStore";
+import { useStore } from "zustand";
 
 function Dashboard() {
     const [name, setName] = useState(
         JSON.parse(localStorage.getItem("name") ?? "Unknown User")
     );
+    const [_, setRerender] = useState(false);
 
+    useEffect(() => {
+        setTimeout(() => {
+            setRerender(true);
+        }, 1000);
+    }, []);
     const currentAuth = getAuth();
     onAuthStateChanged(currentAuth, (user) => {
         if (user) {
@@ -24,7 +32,12 @@ function Dashboard() {
             setName(currentAuth.currentUser?.displayName);
         }
     });
-
+    const { expenses, recurringExpenses } = useStore(useExpenseStore);
+    useEffect(() => {
+        if (expenses && recurringExpenses) {
+            console.log("dashboard refreshed");
+        }
+    }, [expenses, recurringExpenses]);
     return (
         <>
             <NavBar />

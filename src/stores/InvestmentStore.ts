@@ -79,6 +79,11 @@ const useInvestmentStore = create(
                         return !investmentArray.includes(investment.id);
                     }),
                 })),
+            resetInvestmentStore: () =>
+                set(() => ({
+                    investments: [],
+                    stocksCurrentValueObj: {},
+                })),
         }),
         {
             name: "investment-storage",
@@ -90,7 +95,6 @@ useInvestmentStore.subscribe((state) => {
     const currentAuth = getAuth();
     const userId = currentAuth.currentUser?.uid;
 
-    console.log(state);
     const storedState = {
         investments: [...state.investments],
         stocksCurrentValueObj: state.stocksCurrentValueObj,
