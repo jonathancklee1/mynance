@@ -15,7 +15,7 @@ function ExpensePieBlock() {
         );
     };
     const { recurringExpenses, expenses } = useExpenseStore();
-    const expensePieData = recurringExpenses.map(
+    const expensePieData = recurringExpenses?.map(
         (item: recurringExpenseItem) => {
             return {
                 id: crypto.randomUUID(),
@@ -25,8 +25,8 @@ function ExpensePieBlock() {
             };
         }
     );
-    expensePieData.push(
-        ...expenses.map((item: expenseItem) => {
+    expensePieData?.push(
+        ...expenses?.map((item: expenseItem) => {
             return {
                 id: crypto.randomUUID(),
                 label: item.expense,
@@ -94,7 +94,7 @@ function ExpensePieBlock() {
                         },
                     }}
                 >
-                    {expensePieData.map((asset: PieChartData) => (
+                    {expensePieData?.map((asset: PieChartData) => (
                         <Box
                             display={"flex"}
                             alignItems={"center"}

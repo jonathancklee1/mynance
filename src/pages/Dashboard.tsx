@@ -16,15 +16,10 @@ import { useStore } from "zustand";
 
 function Dashboard() {
     const [name, setName] = useState(
-        JSON.parse(localStorage.getItem("name") ?? "Unknown User")
+        JSON.parse(localStorage.getItem("name") as string) ?? "Unknown User"
     );
     const [_, setRerender] = useState(false);
 
-    useEffect(() => {
-        setTimeout(() => {
-            setRerender(true);
-        }, 1000);
-    }, []);
     const currentAuth = getAuth();
     onAuthStateChanged(currentAuth, (user) => {
         if (user) {
@@ -38,6 +33,11 @@ function Dashboard() {
             console.log("dashboard refreshed");
         }
     }, [expenses, recurringExpenses]);
+    useEffect(() => {
+        setTimeout(() => {
+            setRerender(true);
+        }, 1000);
+    }, []);
     return (
         <>
             <NavBar />

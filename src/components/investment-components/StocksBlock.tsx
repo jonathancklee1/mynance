@@ -106,7 +106,7 @@ function HoldingItem({
     useEffect(() => {
         if (currentPrice !== previousPrice) {
             setStocksCurrentValueObj({
-                [investment.ticker]: currentPrice,
+                [investment.ticker]: currentPrice ?? null,
             });
             setPreviousPrice(currentPrice);
         }

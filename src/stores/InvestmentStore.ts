@@ -6,9 +6,9 @@ import {
     investmentItem,
     InvestmentStore,
 } from "../types/interfaces";
-import { getAuth } from "firebase/auth";
-import { setDoc, doc, getDocs, collection } from "firebase/firestore";
-import { db } from "../assets/firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { setDoc, doc, getDocs, collection, getDoc } from "firebase/firestore";
+import { auth, db } from "../assets/firebase";
 
 const myCollectionRef = collection(db, "users");
 
@@ -71,7 +71,7 @@ const useInvestmentStore = create(
 
             addInvestments: (investment: investmentItem[]) =>
                 set((state) => ({
-                    investments: [...investment, ...state.investments],
+                    investments: [...investment, ...(state.investments || [])],
                 })),
             deleteInvestments: (investmentArray: string[]) =>
                 set((state) => ({
@@ -91,32 +91,62 @@ const useInvestmentStore = create(
         }
     )
 );
+
 useInvestmentStore.subscribe((state) => {
     const currentAuth = getAuth();
     const userId = currentAuth.currentUser?.uid;
 
+    console.log("state", state);
     const storedState = {
         investments: [...state.investments],
         stocksCurrentValueObj: state.stocksCurrentValueObj,
     };
     console.log(storedState, userId);
     if (userId) {
-        setDoc(doc(db, "users", userId), storedState);
+        setDoc(doc(db, "users", userId), storedState, {
+            merge: true,
+        });
     }
 });
 
-getDocs(myCollectionRef).then((querySnapshot) => {
-    const currentAuth = getAuth();
-    const userId = currentAuth.currentUser?.uid;
-    querySnapshot.forEach((doc) => {
-        console.log(doc.id, userId);
-        if (doc.id === userId) {
-            useInvestmentStore.getState().investments = doc.data().investments;
-            useInvestmentStore.getState().stocksCurrentValueObj =
-                doc.data().stocksCurrentValueObj;
-            console.log("Firestore set to state");
-        }
-    });
-});
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        console.log(getDocs(myCollectionRef));
 
+        getDocs(myCollectionRef)
+            .then((querySnapshot) => {
+                const currentAuth = getAuth();
+                const userId = currentAuth.currentUser?.uid;
+                querySnapshot.forEach((doc) => {
+                    console.log(doc.id, userId);
+                    if (doc.id === userId) {
+                        useInvestmentStore.getState().investments =
+                            doc.data().investments;
+                        useInvestmentStore.getState().stocksCurrentValueObj =
+                            doc.data().stocksCurrentValueObj;
+                        console.log("Firestore set to state");
+                    }
+                });
+                getDoc(doc(myCollectionRef, userId)).then((docSnapshot) => {
+                    const userData = docSnapshot.data();
+                    if (!userData) {
+                        setDoc(
+                            doc(myCollectionRef, userId),
+                            {
+                                investments: [],
+                                stocksCurrentValueObj: {},
+                            },
+                            {
+                                merge: true,
+                            }
+                        );
+                        console.log("no users id");
+                    }
+                });
+            })
+            .catch((error) => {
+                console.error("Error getting documents: ", error);
+            });
+    }
+});
 export default useInvestmentStore;

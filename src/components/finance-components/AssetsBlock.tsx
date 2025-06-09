@@ -10,13 +10,9 @@ import { useEffect, useState } from "react";
 import { randomId } from "@mui/x-data-grid-generator";
 import EditModal from "../EditModal";
 import { useRandomColour } from "../../hooks/useRandomColour";
+import useExpenseStore from "../../stores/ExpenseStore";
+import { AssetDataItem } from "../../types/interfaces";
 
-interface AssetDataItem {
-    id: string;
-    value: number;
-    name: string;
-    color: string;
-}
 function AssetsBlock({ isEditable }: { isEditable?: boolean }) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => {
@@ -26,11 +22,7 @@ function AssetsBlock({ isEditable }: { isEditable?: boolean }) {
         setOpen(false);
     };
 
-    const [assetData, setAssetData] = useState<AssetDataItem[]>(
-        localStorage.getItem("assets")
-            ? JSON.parse(localStorage.getItem("assets") ?? "")
-            : []
-    );
+    const { assets, setAssets } = useExpenseStore();
 
     return (
         <>
@@ -48,7 +40,7 @@ function AssetsBlock({ isEditable }: { isEditable?: boolean }) {
                     <PieChart
                         series={[
                             {
-                                data: assetData,
+                                data: assets,
                                 cx: "75%",
                                 cy: "60%",
                             },
@@ -71,7 +63,7 @@ function AssetsBlock({ isEditable }: { isEditable?: boolean }) {
                 </Box>
                 <Box sx={{ width: "100%" }}>
                     <Stack spacing={2} display={"flex"}>
-                        {assetData.map((asset) => (
+                        {assets?.map((asset) => (
                             <Box
                                 display={"flex"}
                                 alignItems={"center"}
@@ -99,8 +91,8 @@ function AssetsBlock({ isEditable }: { isEditable?: boolean }) {
             {isEditable && (
                 <EditModal open={open} setClose={handleClose}>
                     <EditAssetBlock
-                        assetData={assetData}
-                        setAssetData={setAssetData}
+                        assetData={assets}
+                        setAssetData={setAssets}
                     ></EditAssetBlock>
                 </EditModal>
             )}
@@ -112,7 +104,7 @@ function EditAssetBlock({
     setAssetData,
 }: {
     assetData: AssetDataItem[];
-    setAssetData: React.Dispatch<React.SetStateAction<AssetDataItem[]>>;
+    setAssetData: (assetData: AssetDataItem[]) => void;
 }) {
     const [selectedRows, setSelectedRows] = useState<GridRowId[]>([]);
     useEffect(() => {
@@ -142,7 +134,7 @@ function EditAssetBlock({
         },
     ];
 
-    const rows: GridRowsProp = assetData.map((asset) => ({
+    const rows: GridRowsProp = assetData?.map((asset) => ({
         id: asset.id,
         value: asset.value,
         name: asset.name,
@@ -152,14 +144,14 @@ function EditAssetBlock({
     const colour = useRandomColour();
     const handleAddRow = () => {
         const id = randomId();
-        setAssetData((prevAsset) => [
+        setAssetData([
             { id: id, value: 0, name: "New Asset", color: colour },
-            ...prevAsset,
+            ...assetData,
         ]);
     };
     const handleDeleteRow = () => {
-        setAssetData((prevAsset) =>
-            prevAsset.filter((asset) => !selectedRows.includes(asset.id))
+        setAssetData(
+            assetData.filter((asset) => !selectedRows.includes(asset.id))
         );
     };
     return (
@@ -204,16 +196,14 @@ function EditAssetBlock({
                     },
                 }}
                 processRowUpdate={(newRow, _, params) => {
-                    setAssetData((prevAsset) => {
-                        const newArray = prevAsset.map((asset) => {
-                            if (asset.id === params.rowId) {
-                                return newRow;
-                            } else {
-                                return asset;
-                            }
-                        });
-                        return newArray;
+                    const newArray = assetData?.map((asset) => {
+                        if (asset.id === params.rowId) {
+                            return newRow;
+                        } else {
+                            return asset;
+                        }
                     });
+                    setAssetData(newArray);
                     return newRow;
                 }}
                 onProcessRowUpdateError={(params) => {

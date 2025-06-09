@@ -40,6 +40,10 @@ export interface ThemeStore {
 }
 
 export interface ExpenseStore {
+    capital: number;
+    setCapital: (capital: number) => void;
+    assets: AssetDataItem[];
+    setAssets: (assets: AssetDataItem[]) => void;
     resetExpenseStore: () => void;
     expenses: expenseItem[];
     recurringExpenses: recurringExpenseItem[];
@@ -74,4 +78,11 @@ export interface AuthProviderObj {
     userLoggedIn: boolean;
     loading: boolean;
     initUser: (user: any) => void;
+}
+
+export interface AssetDataItem {
+    id: string;
+    value: number;
+    name: string;
+    color: string;
 }

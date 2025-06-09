@@ -3,12 +3,12 @@ import EditModal from "../EditModal";
 import { useState } from "react";
 import Textbox from "../Textbox";
 import useConvertToDollar from "../../hooks/useConvertToDollar";
+import useExpenseStore from "../../stores/ExpenseStore";
 
 function CapitalBlock({ isEditable }: { isEditable?: boolean }) {
     const [open, setOpen] = useState(false);
-    const [capital, setCapital] = useState(
-        parseInt(localStorage.getItem("capital") ?? "0") ?? 0
-    );
+    const { capital, setCapital } = useExpenseStore();
+
     const handleOpen = () => {
         setOpen(true);
     };
@@ -53,7 +53,6 @@ function EditCapitalBlock({
         const capitalValue = e.target.value;
         if (!e.target.value || isNaN(parseInt(capitalValue))) setCapital(0);
         setCapital(parseInt(capitalValue));
-        localStorage.setItem("capital", capitalValue);
     }
     return (
         <>

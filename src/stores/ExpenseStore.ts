@@ -3,6 +3,7 @@ import {
     recurringExpenseItem,
     expenseItem,
     ExpenseStore,
+    AssetDataItem,
 } from "../types/interfaces";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
@@ -16,8 +17,12 @@ const myCollectionRef = collection(db, "users");
 const useExpenseStore = create(
     persist<ExpenseStore>(
         (set, get) => ({
+            capital: 0,
+            assets: [],
             expenses: [] as expenseItem[],
             recurringExpenses: [] as recurringExpenseItem[],
+            setCapital: (capital: number) => set({ capital }),
+            setAssets: (assets: AssetDataItem[]) => set({ assets }),
             addExpenses: (expense: expenseItem[]) =>
                 set((state) => {
                     return { expenses: [...expense, ...state.expenses] };
@@ -70,7 +75,7 @@ const useExpenseStore = create(
                     );
                 }
 
-                get().expenses.forEach((expense: expenseItem) => {
+                get().expenses?.forEach((expense: expenseItem) => {
                     const expenseDay = new Date(
                         new Date(expense.date).toDateString()
                     );
@@ -84,7 +89,12 @@ const useExpenseStore = create(
                 return { weekExpenses, firstDayString, lastDayString };
             },
             resetExpenseStore: () =>
-                set({ expenses: [], recurringExpenses: [] }),
+                set({
+                    expenses: [],
+                    recurringExpenses: [],
+                    capital: 0,
+                    assets: [],
+                }),
         }),
         {
             name: "expense-storage",
@@ -100,10 +110,14 @@ useExpenseStore.subscribe((state) => {
     const storedState = {
         expenses: [...state.expenses],
         recurringExpenses: [...state.recurringExpenses],
+        capital: state.capital,
+        assets: state.assets,
     };
     console.log(storedState, userId);
     if (userId) {
-        setDoc(doc(db, "users", userId), storedState);
+        setDoc(doc(db, "users", userId), storedState, {
+            merge: true,
+        });
     }
 });
 
@@ -122,22 +136,32 @@ onAuthStateChanged(auth, (user) => {
                             doc.data().expenses;
                         useExpenseStore.getState().recurringExpenses =
                             doc.data().recurringExpenses;
+                        useExpenseStore.getState().capital = doc.data().capital;
+                        useExpenseStore.getState().assets = doc.data().assets;
                         console.log("Firestore set to state");
                     }
                 });
                 getDoc(doc(myCollectionRef, userId)).then((docSnapshot) => {
                     const userData = docSnapshot.data();
                     if (!userData) {
-                        setDoc(doc(myCollectionRef, userId), {
-                            expenses: [],
-                            recurringExpenses: [],
-                        });
+                        setDoc(
+                            doc(myCollectionRef, userId),
+                            {
+                                expenses: [],
+                                recurringExpenses: [],
+                                capital: 0,
+                                assets: [],
+                            },
+                            {
+                                merge: true,
+                            }
+                        );
                         console.log("no users id");
                     }
                 });
             })
             .catch((error) => {
-                console.log("Error getting documents: ", error);
+                console.error("Error getting documents: ", error);
             });
     }
 });
