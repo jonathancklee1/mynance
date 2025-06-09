@@ -23,14 +23,12 @@ function Dashboard() {
     const currentAuth = getAuth();
     onAuthStateChanged(currentAuth, (user) => {
         if (user) {
-            console.log(user, "user");
             setName(currentAuth.currentUser?.displayName);
         }
     });
     const { expenses, recurringExpenses } = useStore(useExpenseStore);
     useEffect(() => {
         if (expenses && recurringExpenses) {
-            console.log("dashboard refreshed");
         }
     }, [expenses, recurringExpenses]);
     useEffect(() => {

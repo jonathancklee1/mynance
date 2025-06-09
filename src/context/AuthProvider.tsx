@@ -20,7 +20,6 @@ function AuthProvider({ children }: AuthProviderProps) {
     }, []);
 
     const initUser = async (user: SetStateAction<null>) => {
-        console.log("init user", user);
         if (user) {
             setCurrentUser(user);
             setUserLoggedIn(true);
@@ -36,7 +35,6 @@ function AuthProvider({ children }: AuthProviderProps) {
         loading,
         initUser,
     };
-    console.log(currentUser);
     return (
         <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
     );

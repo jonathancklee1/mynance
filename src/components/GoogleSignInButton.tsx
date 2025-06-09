@@ -16,7 +16,6 @@ function GoogleSignInButton() {
         signInWithPopup(auth, provider)
             .then(async (result) => {
                 if (result.user) {
-                    console.log(result.user);
                     context.initUser(result.user);
                     context.userLoggedIn = true;
                 }

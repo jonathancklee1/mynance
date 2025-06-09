@@ -16,7 +16,6 @@ const NavBar = forwardRef<HTMLDivElement>((_, ref) => {
 
     const { theme, setTheme } = useThemeStore();
     const location = useLocation();
-    console.log(location.pathname);
     return (
         <Toolbar
             ref={ref}

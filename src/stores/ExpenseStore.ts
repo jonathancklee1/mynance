@@ -106,14 +106,12 @@ useExpenseStore.subscribe((state) => {
     const currentAuth = getAuth();
     const userId = currentAuth.currentUser?.uid;
 
-    console.log("state", state);
     const storedState = {
         expenses: [...state.expenses],
         recurringExpenses: [...state.recurringExpenses],
         capital: state.capital,
         assets: state.assets,
     };
-    console.log(storedState, userId);
     if (userId) {
         setDoc(doc(db, "users", userId), storedState, {
             merge: true,
@@ -123,14 +121,11 @@ useExpenseStore.subscribe((state) => {
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        console.log(getDocs(myCollectionRef));
-
         getDocs(myCollectionRef)
             .then((querySnapshot) => {
                 const currentAuth = getAuth();
                 const userId = currentAuth.currentUser?.uid;
                 querySnapshot.forEach((doc) => {
-                    console.log(doc.id, userId);
                     if (doc.id === userId) {
                         useExpenseStore.getState().expenses =
                             doc.data().expenses;
@@ -138,7 +133,6 @@ onAuthStateChanged(auth, (user) => {
                             doc.data().recurringExpenses;
                         useExpenseStore.getState().capital = doc.data().capital;
                         useExpenseStore.getState().assets = doc.data().assets;
-                        console.log("Firestore set to state");
                     }
                 });
                 getDoc(doc(myCollectionRef, userId)).then((docSnapshot) => {
@@ -156,7 +150,6 @@ onAuthStateChanged(auth, (user) => {
                                 merge: true,
                             }
                         );
-                        console.log("no users id");
                     }
                 });
             })

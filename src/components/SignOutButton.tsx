@@ -12,7 +12,6 @@ function SignOutButton() {
     function handleSignOut() {
         signOut(auth)
             .then(() => {
-                console.log("User signed out successfully");
                 navigate("/");
             })
             .catch((error) => {

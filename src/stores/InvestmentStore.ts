@@ -96,12 +96,10 @@ useInvestmentStore.subscribe((state) => {
     const currentAuth = getAuth();
     const userId = currentAuth.currentUser?.uid;
 
-    console.log("state", state);
     const storedState = {
         investments: [...state.investments],
         stocksCurrentValueObj: state.stocksCurrentValueObj,
     };
-    console.log(storedState, userId);
     if (userId) {
         setDoc(doc(db, "users", userId), storedState, {
             merge: true,
@@ -111,20 +109,16 @@ useInvestmentStore.subscribe((state) => {
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        console.log(getDocs(myCollectionRef));
-
         getDocs(myCollectionRef)
             .then((querySnapshot) => {
                 const currentAuth = getAuth();
                 const userId = currentAuth.currentUser?.uid;
                 querySnapshot.forEach((doc) => {
-                    console.log(doc.id, userId);
                     if (doc.id === userId) {
                         useInvestmentStore.getState().investments =
                             doc.data().investments;
                         useInvestmentStore.getState().stocksCurrentValueObj =
                             doc.data().stocksCurrentValueObj;
-                        console.log("Firestore set to state");
                     }
                 });
                 getDoc(doc(myCollectionRef, userId)).then((docSnapshot) => {
@@ -140,7 +134,6 @@ onAuthStateChanged(auth, (user) => {
                                 merge: true,
                             }
                         );
-                        console.log("no users id");
                     }
                 });
             })
