@@ -35,6 +35,7 @@ const NavBar = forwardRef<HTMLDivElement>((_, ref) => {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
+                overflow: "hidden",
             }}
         >
             <Typography variant="h5" sx={{ fontWeight: "bold" }}>
@@ -113,6 +114,7 @@ const NavBar = forwardRef<HTMLDivElement>((_, ref) => {
                                     "&:hover": {
                                         bgcolor: "primary.main",
                                         borderRadius: 4,
+                                        color: "primary.contrastText",
                                     },
                                 }}
                             >
@@ -126,13 +128,7 @@ const NavBar = forwardRef<HTMLDivElement>((_, ref) => {
                                         cursor: "pointer",
                                     }}
                                 ></Box>
-                                <Typography
-                                    variant="body1"
-                                    fontWeight={"bold"}
-                                    sx={{
-                                        color: "text.secondary",
-                                    }}
-                                >
+                                <Typography variant="body1" fontWeight={"bold"}>
                                     Theme 1
                                 </Typography>
                             </Box>
@@ -150,6 +146,7 @@ const NavBar = forwardRef<HTMLDivElement>((_, ref) => {
                                     "&:hover": {
                                         bgcolor: "primary.main",
                                         borderRadius: 4,
+                                        color: "primary.contrastText",
                                     },
                                 }}
                             >
@@ -161,15 +158,10 @@ const NavBar = forwardRef<HTMLDivElement>((_, ref) => {
                                     sx={{
                                         backgroundImage: `conic-gradient(#e1e5f2 0deg, #ff595e 120deg, #04052e 270deg)`,
                                         cursor: "pointer",
+                                        color: "primary.contrastText",
                                     }}
                                 ></Box>
-                                <Typography
-                                    variant="body1"
-                                    fontWeight={"bold"}
-                                    sx={{
-                                        color: "text.secondary",
-                                    }}
-                                >
+                                <Typography variant="body1" fontWeight={"bold"}>
                                     Theme 2
                                 </Typography>
                             </Box>
@@ -187,6 +179,7 @@ const NavBar = forwardRef<HTMLDivElement>((_, ref) => {
                                     "&:hover": {
                                         bgcolor: "primary.main",
                                         borderRadius: 4,
+                                        color: "primary.contrastText",
                                     },
                                 }}
                             >
@@ -200,20 +193,13 @@ const NavBar = forwardRef<HTMLDivElement>((_, ref) => {
                                         cursor: "pointer",
                                     }}
                                 ></Box>
-                                <Typography
-                                    variant="body1"
-                                    fontWeight={"bold"}
-                                    sx={{
-                                        color: "text.secondary",
-                                    }}
-                                >
+                                <Typography variant="body1" fontWeight={"bold"}>
                                     Theme 3
                                 </Typography>
                             </Box>
                         </Stack>
                     </Box>
                 </Popper>
-                {/* //Add signout button if user signed in */}
                 {location.pathname !== "/" && <SignOutButton />}
             </Box>
         </Toolbar>
