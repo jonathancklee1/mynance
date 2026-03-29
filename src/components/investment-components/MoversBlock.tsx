@@ -1,5 +1,6 @@
 import {
     Box,
+    Button,
     Chip,
     IconButton,
     InputBase,
@@ -19,7 +20,7 @@ function MoversBlock({ isEditable }: { isEditable?: boolean }) {
     const [moverTickers, setMoverTickers] = useState<string[]>(
         localStorage.getItem("daily-movers")
             ? JSON.parse(localStorage.getItem("daily-movers") ?? "")
-            : []
+            : [],
     );
     const [open, setOpen] = useState(false);
 
@@ -36,13 +37,26 @@ function MoversBlock({ isEditable }: { isEditable?: boolean }) {
                     width: "100%",
                     height: "100%",
                 }}
-                onClick={handleOpen}
             >
                 {moverTickers.length < 1 && (
-                    <Typography sx={{ textAlign: "center", my: "auto" }}>
-                        No Movers Selected
-                    </Typography>
+                    <>
+                        <Typography sx={{ textAlign: "center", my: "auto" }}>
+                            No Movers Selected
+                        </Typography>
+                        <Button
+                            onClick={handleOpen}
+                            variant="text"
+                            color="primary"
+                            sx={{
+                                mt: 4,
+                                backgroundColor: "primary.light",
+                            }}
+                        >
+                            Add Movers
+                        </Button>
+                    </>
                 )}
+
                 {moverTickers.length > 0 && (
                     <Box
                         sx={{
@@ -118,7 +132,7 @@ function MoversItem({ ticker }: { ticker: string }) {
                         fontWeight: "bold",
                         fontSize: 20,
                         color: useGetPercentColour(
-                            Number(percent.split("%")[0])
+                            Number(percent.split("%")[0]),
                         ),
                     }}
                 >
@@ -211,9 +225,10 @@ function EditMoversBlock({
                     sx={{ p: "10px" }}
                     aria-label="search"
                 >
-                    <AddCircleOutline sx={{ color: "primary.light" }} />
+                    <AddCircleOutline />
                 </IconButton>
             </Paper>
+
             {isError && (
                 <Typography
                     sx={{
@@ -233,7 +248,6 @@ function EditMoversBlock({
                     display: "flex",
                     flexDirection: "column",
                     "@media (min-width: 1024px)": {
-                        flexDirection: "row",
                         alignItems: "center",
                         gap: 3,
                         marginTop: 2,

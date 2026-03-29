@@ -59,7 +59,7 @@ function InvestmentTableBlock() {
     }
     const handleClose = (
         _event?: React.SyntheticEvent | Event,
-        reason?: SnackbarCloseReason
+        reason?: SnackbarCloseReason,
     ) => {
         if (reason === "clickaway") {
             return;
@@ -69,7 +69,7 @@ function InvestmentTableBlock() {
     };
     function handleRowSelection(
         selectedRows: string[],
-        deleteInvestments: (expenseArray: string[]) => void
+        deleteInvestments: (expenseArray: string[]) => void,
     ) {
         deleteInvestments(selectedRows);
     }
@@ -79,6 +79,7 @@ function InvestmentTableBlock() {
                 open={snackOpen}
                 autoHideDuration={4000}
                 onClose={handleClose}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
                 <Alert
                     onClose={handleClose}
@@ -129,7 +130,7 @@ function InvestmentTableBlock() {
                             }}
                             onChange={(e) =>
                                 setInvestmentTicker(
-                                    e.target.value.toUpperCase()
+                                    e.target.value.toUpperCase(),
                                 )
                             }
                         />

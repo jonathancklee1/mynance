@@ -51,13 +51,13 @@ function ExpensesTableBlock() {
 
     function handleRowSelection(
         selectedRows: string[],
-        deleteExpenses: (expenseArray: string[]) => void
+        deleteExpenses: (expenseArray: string[]) => void,
     ) {
         deleteExpenses(selectedRows);
     }
     const handleClose = (
         _event?: React.SyntheticEvent | Event,
-        reason?: SnackbarCloseReason
+        reason?: SnackbarCloseReason,
     ) => {
         if (reason === "clickaway") {
             return;
@@ -71,6 +71,7 @@ function ExpensesTableBlock() {
                 open={snackOpen}
                 autoHideDuration={4000}
                 onClose={handleClose}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
             >
                 <Alert
                     onClose={handleClose}

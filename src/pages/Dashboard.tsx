@@ -16,7 +16,7 @@ import { useStore } from "zustand";
 
 function Dashboard() {
     const [name, setName] = useState(
-        JSON.parse(localStorage.getItem("name") as string) ?? "Unknown User"
+        JSON.parse(localStorage.getItem("name") as string) ?? "Unknown User",
     );
     const [_, setRerender] = useState(false);
 
@@ -51,7 +51,7 @@ function Dashboard() {
                     gap: 2,
                     marginBottom: 8,
                     "@media (min-width: 1024px)": {
-                        gridTemplateRows: "span 3 auto",
+                        gridTemplateRows: "span-3 auto",
                         gap: 4,
                         px: 8,
                         py: 6,

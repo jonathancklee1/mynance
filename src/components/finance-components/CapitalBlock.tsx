@@ -24,7 +24,6 @@ function CapitalBlock({ isEditable }: { isEditable?: boolean }) {
                     color={"primary.light"}
                     sx={{
                         fontWeight: "bold",
-                        textAlign: "center",
                         cursor: "pointer",
                     }}
                 >

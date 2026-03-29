@@ -1,4 +1,13 @@
-import { Box, Button, Container, Stack, styled, useTheme } from "@mui/material";
+import {
+    Alert,
+    Box,
+    Button,
+    Container,
+    Snackbar,
+    Stack,
+    styled,
+    useTheme,
+} from "@mui/material";
 import NavBar from "../components/NavBar";
 import Typography from "@mui/material/Typography";
 import Textbox from "../components/Textbox";
@@ -7,6 +16,7 @@ import { useNavigate } from "react-router";
 import { ChevronRight } from "@mui/icons-material";
 import useThemeStore from "../stores/ThemeStore";
 import GoogleSignInButton from "../components/GoogleSignInButton";
+import { useLocation } from "react-router";
 
 function Landing() {
     const [name, setName] = useState("");
@@ -16,6 +26,8 @@ function Landing() {
     >("theme1");
     const { setTheme } = useThemeStore();
     const [height, setHeight] = useState(0);
+    const [snackOpen, setSnackOpen] = useState(false);
+
     const themes = ["theme1", "theme2", "theme3"];
     const navigate = useNavigate();
     const ThemeButton = styled(Button)(() => {
@@ -32,6 +44,12 @@ function Landing() {
     }, []);
     const themePalette = useTheme();
 
+    const location = useLocation();
+    useEffect(() => {
+        if (location.state?.message) {
+            setSnackOpen(true);
+        }
+    }, [location]);
     return (
         <Box
             sx={{
@@ -43,6 +61,22 @@ function Landing() {
                 backgroundColor: "primary.main",
             }}
         >
+            <Snackbar
+                open={snackOpen}
+                autoHideDuration={4000}
+                onClose={() => setSnackOpen(false)}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+                <Alert
+                    onClose={() => setSnackOpen(false)}
+                    severity="success"
+                    variant="filled"
+                    sx={{ width: "100%" }}
+                >
+                    {location.state?.message ||
+                        "Action completed successfully!"}
+                </Alert>
+            </Snackbar>
             <NavBar ref={componentRef}></NavBar>
             <Container
                 sx={{
@@ -227,7 +261,7 @@ function Landing() {
                             localStorage.setItem("name", JSON.stringify(name));
                             localStorage.setItem(
                                 "theme",
-                                JSON.stringify(themeSelected)
+                                JSON.stringify(themeSelected),
                             );
                             navigate("/dashboard");
                         }

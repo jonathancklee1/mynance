@@ -29,7 +29,7 @@ function Finance() {
                     gap: 2,
                     marginBottom: 10,
                     "@media (min-width: 1024px)": {
-                        gridTemplateRows: "span 3 auto",
+                        gridTemplateRows: "span-3 auto",
                         gap: 4,
                         px: 8,
                         py: 4,
@@ -87,7 +87,7 @@ function Finance() {
                     sx={{
                         gridColumn: "span 12",
                         "@media (min-width: 1024px)": {
-                            gridColumn: "span 5",
+                            gridColumn: "span 4",
                         },
                     }}
                 >
@@ -99,8 +99,7 @@ function Finance() {
                     sx={{
                         gridColumn: "span 12",
                         "@media (min-width: 1024px)": {
-                            gridColumn: "span 5",
-                            gridColumnStart: 6,
+                            gridColumn: "span 4",
                         },
                     }}
                 >
@@ -112,7 +111,7 @@ function Finance() {
                     sx={{
                         gridColumn: "span 12",
                         "@media (min-width: 1024px)": {
-                            gridColumn: "span 6",
+                            gridColumn: "span 4",
                         },
                     }}
                 >

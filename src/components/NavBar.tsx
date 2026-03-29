@@ -1,4 +1,13 @@
-import { Box, Button, Popper, Stack, Toolbar, Typography } from "@mui/material";
+import {
+    Alert,
+    Box,
+    Button,
+    Popper,
+    Snackbar,
+    Stack,
+    Toolbar,
+    Typography,
+} from "@mui/material";
 import { forwardRef, useState } from "react";
 import useThemeStore from "../stores/ThemeStore";
 import { useLocation } from "react-router";
@@ -6,6 +15,7 @@ import SignOutButton from "./SignOutButton";
 
 const NavBar = forwardRef<HTMLDivElement>((_, ref) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [snackOpen, setSnackOpen] = useState(false);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -49,8 +59,8 @@ const NavBar = forwardRef<HTMLDivElement>((_, ref) => {
                             theme === "theme1"
                                 ? "#FFA500"
                                 : theme === "theme2"
-                                ? "#ff595e"
-                                : "#858ae3",
+                                  ? "#ff595e"
+                                  : "#858ae3",
                         borderRadius: "100%",
                         height: 40,
                         width: 40,
@@ -66,28 +76,6 @@ const NavBar = forwardRef<HTMLDivElement>((_, ref) => {
                     open={open}
                     anchorEl={anchorEl}
                     sx={{ zIndex: 1 }}
-                    modifiers={[
-                        {
-                            name: "flip",
-                            enabled: true,
-                            options: {
-                                altBoundary: true,
-                                rootBoundary: "document",
-                                padding: 8,
-                            },
-                        },
-                        {
-                            name: "preventOverflow",
-                            enabled: true,
-                            options: {
-                                altAxis: true,
-                                altBoundary: true,
-                                tether: true,
-                                rootBoundary: "document",
-                                padding: 8,
-                            },
-                        },
-                    ]}
                 >
                     <Box
                         sx={{
@@ -200,8 +188,25 @@ const NavBar = forwardRef<HTMLDivElement>((_, ref) => {
                         </Stack>
                     </Box>
                 </Popper>
-                {location.pathname !== "/" && <SignOutButton />}
+                {location.pathname !== "/" && (
+                    <SignOutButton setSnackOpen={setSnackOpen} />
+                )}
             </Box>
+            <Snackbar
+                open={snackOpen}
+                autoHideDuration={4000}
+                onClose={() => setSnackOpen(false)}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+                <Alert
+                    onClose={() => setSnackOpen(false)}
+                    severity="error"
+                    variant="filled"
+                    sx={{ width: "100%" }}
+                >
+                    Please fill out all fields
+                </Alert>
+            </Snackbar>
         </Toolbar>
     );
 });

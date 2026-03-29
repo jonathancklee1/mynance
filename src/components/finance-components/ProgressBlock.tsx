@@ -50,7 +50,7 @@ function ProgressBlock({ isEditable }: { isEditable?: boolean }) {
                             fontWeight: "bold",
                             display: "inline-block",
                             color: useGetPercentColour(
-                                budget - getTotalExpenses()
+                                budget - getTotalExpenses(),
                             ),
 
                             fontSize: 20,
@@ -66,6 +66,12 @@ function ProgressBlock({ isEditable }: { isEditable?: boolean }) {
                             padding: 0,
                             backgroundColor: "primary.light",
                             p: 0.5,
+                            color: "primary.main",
+
+                            "&:hover": {
+                                backgroundColor: "primary.main",
+                                color: "primary.contrastText",
+                            },
                         }}
                     >
                         <Typography
@@ -73,7 +79,6 @@ function ProgressBlock({ isEditable }: { isEditable?: boolean }) {
                             sx={{
                                 fontWeight: "bold",
                                 display: "inline-block",
-                                color: "primary.main",
                             }}
                         >
                             ${budget}

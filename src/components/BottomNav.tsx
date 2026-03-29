@@ -19,10 +19,17 @@ const BottomNav = () => {
                         : theme.palette.text.primary + " !important",
             },
             "& span": {
+                fontSize: "1rem !important",
+                fontWeight: "bold",
                 color:
                     location.pathname === `/${path}`
                         ? theme.palette.primary.light + " !important"
                         : theme.palette.text.primary + " !important",
+            },
+            "&:hover": {
+                borderRadius: 4,
+                transition: "background-color 0.3s ease",
+                background: theme.palette.primary.light + "30",
             },
         };
         return navButtonSx;
